@@ -16,7 +16,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -29,7 +31,12 @@ public class BlackJackGUI extends JPanel implements ActionListener{
     private JButton leaderboard;
     private JButton exit;
     
+    private JLabel name;
+    private JTextField nameField;
+    private JButton enter;
+    
     private JPanel homePanel;
+    private JPanel newPlayerPanel;
     
     public BlackJackGUI(){
         super(new BorderLayout());
@@ -40,13 +47,28 @@ public class BlackJackGUI extends JPanel implements ActionListener{
         leaderboard = new JButton("Leaderboard");
         exit = new JButton("X");
         
-        
+        newPlayer.addActionListener(this);
+        //home
         homePanel.add(newPlayer);
         homePanel.add(returnPlayer);
         homePanel.add(leaderboard);
         homePanel.add(exit);
         
-        add(homePanel,BorderLayout.CENTER);
+        //newplayer
+        newPlayerPanel = new JPanel();
+        name = new JLabel("Name: ");
+        nameField = new JTextField("");
+        nameField.setSize(100, 100);
+        enter = new JButton("Enter");
+        newPlayerPanel.add(name);
+        newPlayerPanel.add(nameField);
+        newPlayerPanel.add(enter);
+        
+        add(homePanel,BorderLayout.NORTH);
+        add(newPlayerPanel, BorderLayout.CENTER);
+        newPlayerPanel.setVisible(false);
+        
+        
         
         
     }
@@ -69,6 +91,15 @@ public class BlackJackGUI extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Object source = e.getSource();
+        
+        if(source == newPlayer)
+        {
+            homePanel.setVisible(false);
+            newPlayerPanel.setVisible(true);
+            
+            
+        }
+        
     }
 }
