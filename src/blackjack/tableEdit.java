@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.ResultSet;
 
 public class tableEdit {
 
@@ -57,7 +58,7 @@ public class tableEdit {
             
             
             
-            
+            rs.close();
             
             
         }catch(SQLException e){
