@@ -26,15 +26,16 @@ public class HomePanel extends JPanel{
         
         public HomePanel()
         {
-            setPreferredSize(new Dimension(500, 500));
-            setBackground(Color.WHITE);
-//            this.image = new ImageIcon("./resources/T06_bg.jpg").getImage();
+            setPreferredSize(new Dimension(800, 600));
+//            setBackground(Color.WHITE);
+            this.image = new ImageIcon("./resources/Untitled.jpg").getImage();
         }
         
         @Override
         public void paintComponent(Graphics g)
         {
             super.paintComponent(g);
+            g.drawImage(this.image, 0, 0, null);
             
         }
     }

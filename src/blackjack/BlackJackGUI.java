@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.sql.ResultSet;
 
 /**
  *
@@ -48,6 +49,7 @@ public class BlackJackGUI extends JPanel implements ActionListener{
         exit = new JButton("X");
         
         newPlayer.addActionListener(this);
+        
         //home
         homePanel.add(newPlayer);
         homePanel.add(returnPlayer);
@@ -57,13 +59,14 @@ public class BlackJackGUI extends JPanel implements ActionListener{
         //newplayer
         newPlayerPanel = new JPanel();
         name = new JLabel("Name: ");
-        nameField = new JTextField("");
-        nameField.setSize(100, 100);
+        nameField = new JTextField("      ");
+//        nameField.setSize(100, 100);
         enter = new JButton("Enter");
         newPlayerPanel.add(name);
         newPlayerPanel.add(nameField);
         newPlayerPanel.add(enter);
         
+        enter.addActionListener(this);
         add(homePanel,BorderLayout.NORTH);
         add(newPlayerPanel, BorderLayout.CENTER);
         newPlayerPanel.setVisible(false);
@@ -99,6 +102,22 @@ public class BlackJackGUI extends JPanel implements ActionListener{
             newPlayerPanel.setVisible(true);
             
             
+        }
+        
+        if(source == enter)
+        {
+            tableEdit edit = new tableEdit();
+            ResultSet rs = edit.getPlayer();
+            edit.createPlayerTable(rs);
+            String name = nameField.getText();
+            System.out.println(name);
+            Integer score = 1000;
+            
+<<<<<<< HEAD
+            edit.addNewPlayer(name, score.floatValue(), rs);
+=======
+            edit.addNewPlayer(name, score.floatValue());
+>>>>>>> f089a947627930e1051f7b2ae54bc642c492471b
         }
         
     }

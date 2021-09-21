@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.ResultSet;
 
 public class tableEdit {
 
@@ -57,7 +58,7 @@ public class tableEdit {
             
             
             
-            
+            rs.close();
             
             
         }catch(SQLException e){
@@ -93,18 +94,36 @@ public class tableEdit {
 
     }
     
-    public void addNewPlayer(String name, Float score)
+    public User addNewPlayer(String name, Float score, ResultSet rs)
     {
+        int counter = 0;
+        User a;
         try{
             dbManager.establishConnection();
             Statement statement = conn.createStatement();
             
             
             
+            while(rs.next())
+                if(rs.getString(1).equals(name)){
+                    System.out.println("Record of " + name + " already exists.");
+                    counter++;
+                }
             
+            if(counter == 0){
             
-            String sqlInsert="INSERT INTO PLAYER VALUES ('" + name + "', " + score + ")";
-            statement.executeUpdate(sqlInsert);
+                String sqlInsert="INSERT INTO PLAYER VALUES ('" + name + "', " + score + ")";
+                statement.executeUpdate(sqlInsert);
+                
+                a = new User(name, 1000, true);    
+                
+                return a;
+            }
+            else
+            {
+                a = new User(name, 1000, false);
+                return a;
+            }
             
             
             
@@ -115,6 +134,9 @@ public class tableEdit {
         }catch(SQLException e){
             System.err.println("SQLException: " + e.getMessage());
         }
+        return null;
+        
+        
     }
 
 }
