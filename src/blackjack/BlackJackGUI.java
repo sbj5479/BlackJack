@@ -113,11 +113,8 @@ public class BlackJackGUI extends JPanel implements ActionListener{
             System.out.println(name);
             Integer score = 1000;
             
-<<<<<<< HEAD
-            edit.addNewPlayer(name, score.floatValue(), rs);
-=======
             edit.addNewPlayer(name, score.floatValue());
->>>>>>> f089a947627930e1051f7b2ae54bc642c492471b
+
         }
         
     }

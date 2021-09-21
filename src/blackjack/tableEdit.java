@@ -94,7 +94,7 @@ public class tableEdit {
 
     }
     
-    public User addNewPlayer(String name, Float score, ResultSet rs)
+    public User addNewPlayer(String name, Float score)
     {
         int counter = 0;
         User a;
@@ -104,26 +104,26 @@ public class tableEdit {
             
             
             
-            while(rs.next())
-                if(rs.getString(1).equals(name)){
-                    System.out.println("Record of " + name + " already exists.");
-                    counter++;
-                }
-            
-            if(counter == 0){
-            
+//            while(rs.next())
+//                if(rs.getString(1).equals(name)){
+//                    System.out.println("Record of " + name + " already exists.");
+//                    counter++;
+//                }
+//            
+//            if(counter == 0){
+//            
                 String sqlInsert="INSERT INTO PLAYER VALUES ('" + name + "', " + score + ")";
                 statement.executeUpdate(sqlInsert);
                 
-                a = new User(name, 1000, true);    
+//                a = new User(name, 1000, true);    
                 
-                return a;
-            }
-            else
-            {
-                a = new User(name, 1000, false);
-                return a;
-            }
+//                return a;
+//            }
+//            else
+//            {
+//                a = new User(name, 1000, false);
+//                return a;
+//            }
             
             
             
