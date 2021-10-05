@@ -1,0 +1,13 @@
+Pablo=925
+James=800
+Harry=1100
+Benny=1000
+John=1000
+Mark=1880
+Ben=1000
+Connor=990
+Cam=1414
+Kenneth=1020
+Nathan=1000
+Ken=995
+Dealer=50000

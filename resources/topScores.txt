@@ -1,0 +1,5 @@
+Kenneth=1020
+Harry=1100
+Mark=1880
+Cam=1414
+Dealer=50000
