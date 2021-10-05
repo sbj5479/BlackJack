@@ -25,8 +25,9 @@ Caused by: ERROR XSDB6: Another instance of Derby may have already booted the da
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
 	at org.apache.derby.impl.store.raw.data.BaseDataFileFactory.privGetJBMSLockOnDB(Unknown Source)
-	at org.apache.derby.impl.store.raw.data.BaseDataFileFactory.run(Unknown Source)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:554)
+	at org.apache.derby.impl.store.----------------------------------------------------------------
+Thu Sep 23 12:15:08 NZST 2021: Shutting down Derby engine
+java:554)
 	at org.apache.derby.impl.store.raw.data.BaseDataFileFactory.getJBMSLockOnDB(Unknown Source)
 	at org.apache.derby.impl.store.raw.data.BaseDataFileFactory.boot(Unknown Source)
 	at org.apache.derby.impl.services.monitor.BaseMonitor.boot(Unknown Source)
