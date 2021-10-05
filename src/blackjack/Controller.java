@@ -40,6 +40,11 @@ public class Controller implements ActionListener{
 
         }
         
+        if(source == view.getExit())
+        {
+            model.exit();
+        }
+        
     }
     
     public void addModel(Model m)
