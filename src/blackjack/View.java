@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -71,6 +72,7 @@ public class View extends JPanel implements Observer{
         super(new BorderLayout());
         
         this.homePanel = new HomePanel();
+        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.X_AXIS));
         this.newPlayer = new JButton("New Player");
         this.returnPlayer = new JButton("Returning Player");
         this.leaderboard = new JButton("Leaderboard");
