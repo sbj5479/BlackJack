@@ -88,8 +88,9 @@ public class View extends JPanel implements Observer{
         
         //newplayer
         newPlayerPanel = new JPanel();
+        newPlayerPanel.setLayout(new BoxLayout(newPlayerPanel, BoxLayout.Y_AXIS));
         name = new JLabel("Name: ");
-        nameField = new JTextField("      ");
+        nameField = new JTextField();
 //        nameField.setSize(100, 100);
         enter = new JButton("Enter");
         newPlayerPanel.add(name);
@@ -125,5 +126,6 @@ public class View extends JPanel implements Observer{
 //        System.out.println("View      : adding controller");
         //need a controller before adding it as a listener 
         newPlayer.addActionListener(controller);
+        exit.addActionListener(controller);
     }
 }
