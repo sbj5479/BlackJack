@@ -28,19 +28,29 @@ public class Controller implements ActionListener{
         String command = e.getActionCommand(); // Obtain the text displayed on the component.
         switch (command) {
             case "New Player":
+                this.view.newLoginScreen();
+                break;
+            case "Returning Player":
+                this.view.reLoginScreen();
                 
                 break;
-            case "Next":
-                
-                break;
-            case "Quit":
-                
+            case "login":
+                String username = this.view.nameField.getText();
+                this.model.checkName(username);
                 break;
             default:
                 break;
         }
     }
     
-    
+//    public void addModel(Model model)
+//    {
+//        this.model = model;
+//    }
+//    
+//    public void addView(View view)
+//    {
+//        this.view = view;
+//    }
     
 }
