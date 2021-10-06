@@ -40,4 +40,17 @@ public class Model extends Observable{
         this.notifyObservers(this.data);
     }
     
+    public void newName(String username)
+    {
+        this.username = username;
+        this.data = this.db.newName(username);
+        
+        if(data.loginFlag)
+        {
+            System.out.println("successful2");
+        }
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+    
 }

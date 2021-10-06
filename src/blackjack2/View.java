@@ -60,7 +60,7 @@ public class View extends JFrame implements Observer{
         
         
         loginButton = new JButton("login");
-        
+        createButton = new JButton("create");
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 600);
@@ -74,7 +74,7 @@ public class View extends JFrame implements Observer{
         newLoginPanel = new JPanel();
         name = new JLabel("Name:");
         nameField = new JTextField(20);
-        createButton = new JButton("create");
+        
         failLogin = new JLabel("");
         newLoginPanel.add(name);
         newLoginPanel.add(nameField);
@@ -117,6 +117,7 @@ public class View extends JFrame implements Observer{
         this.returnPlayer.addActionListener(listener);
         this.exit.addActionListener(listener);
         this.loginButton.addActionListener(listener);
+        this.createButton.addActionListener(listener);
     }
     
     @Override

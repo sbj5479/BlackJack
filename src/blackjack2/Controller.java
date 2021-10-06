@@ -26,6 +26,7 @@ public class Controller implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand(); // Obtain the text displayed on the component.
+        String username;
         switch (command) {
             case "New Player":
                 this.view.newLoginScreen();
@@ -35,8 +36,12 @@ public class Controller implements ActionListener{
                 
                 break;
             case "login":
-                String username = this.view.nameField.getText();
+                username = this.view.nameField.getText();
                 this.model.checkName(username);
+                break;
+            case "create":
+                username = this.view.nameField.getText();
+                this.model.newName(username);
                 break;
             default:
                 break;

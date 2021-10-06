@@ -60,4 +60,57 @@ public class TempDatabase {
         }
         return data;
     }
+    
+    public Data newName(String username)
+    {
+        Data data = new Data(); // Initialize an instance of Data.
+        this.username = username;
+        ArrayList nameList;
+        HashMap scoreMap;
+        int counter = 0;
+        
+        
+        //create central file components for each file
+        FileIO namesinout = new FileIO("names");
+        FileIO scoresinout = new FileIO("scores");
+        
+        //read from names.txt and add contents to arraylist
+        nameList = namesinout.ReadL();
+        //read from scores.txt and add contents to hashmap
+        scoreMap = scoresinout.ReadH();
+        
+        
+            
+        //loop and search for existing user with name input
+        for(Object e : nameList)
+        {
+            //if already exists
+            if(e.equals(username))
+            {
+                
+                counter++;
+            } 
+        }
+        //if user does not exist
+        if(counter == 0)
+        {
+            
+            nameList.add(username);
+            scoreMap.put(username, 1000);
+            User a = new User(username, 1000,true);
+            
+            //write new list of names to names.txt 
+            namesinout.WriteL(nameList);
+            //write new hashmap of names with scores to scores.txt
+            scoresinout.WriteH(scoreMap);
+            //return created user
+            data.loginFlag = true;
+        } 
+        //user already exists with same name
+        else
+        {
+            data.loginFlag = false;
+        }
+        return data;
+    }
 }

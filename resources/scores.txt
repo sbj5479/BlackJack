@@ -9,5 +9,6 @@ Connor=990
 Cam=1414
 Kenneth=1020
 Nathan=1000
+Tom=1000
 Ken=995
 Dealer=50000
