@@ -7,6 +7,7 @@ package blackjack2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  *
@@ -38,8 +39,23 @@ public class Controller implements ActionListener {
                 break;
             case "Returning Player":
                 this.view.reLoginScreen();
+                break;
+                
+            case "Leaderboard":
+                ArrayList<Player> top5 = this.model.getTopScores();
+                view.first.setText(top5.get(0).getName() + " " + top5.get(0).getCoins());
+                view.second.setText(top5.get(1).getName() + " " + top5.get(1).getCoins());
+                view.third.setText(top5.get(2).getName() + " " + top5.get(2).getCoins());
+                view.fourth.setText(top5.get(3).getName() + " " + top5.get(3).getCoins());
+                view.fifth.setText(top5.get(4).getName() + " " + top5.get(4).getCoins());
+                this.view.leaderboardScreen();
 
                 break;
+                
+            case "close":
+                this.view.homeScreen();
+                break;
+                
             case "login":
                 username = this.view.nameField.getText();
                 this.model.checkName(username);
@@ -55,8 +71,8 @@ public class Controller implements ActionListener {
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("" + this.model.addFunds(1, bank));
-                this.view.pot.setText("" + model.data.pot);
+                this.view.bank.setText("Bank: $" + this.model.addFunds(1, bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
 
                 
                 if (bank - 1 < 100) {
@@ -85,8 +101,8 @@ public class Controller implements ActionListener {
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("" + this.model.addFunds(5, bank));
-                this.view.pot.setText("" + model.data.pot);
+                this.view.bank.setText("Bank: $" + this.model.addFunds(5, bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
                 
                 if (bank - 5 < 100) {
                     view.add100.setEnabled(false);
@@ -114,8 +130,8 @@ public class Controller implements ActionListener {
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("" + this.model.addFunds(10, bank));
-                this.view.pot.setText("" + model.data.pot);
+                this.view.bank.setText("Bank: $" + this.model.addFunds(10, bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
                 
                 if (bank - 10 < 100) {
                     view.add100.setEnabled(false);
@@ -143,8 +159,8 @@ public class Controller implements ActionListener {
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("" + this.model.addFunds(25, bank));
-                this.view.pot.setText("" + model.data.pot);
+                this.view.bank.setText("Bank: $" + this.model.addFunds(25, bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
                 
                 if (bank - 25 < 100) {
                     view.add100.setEnabled(false);
@@ -172,8 +188,8 @@ public class Controller implements ActionListener {
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("" + this.model.addFunds(50, bank));
-                this.view.pot.setText("" + model.data.pot);
+                this.view.bank.setText("Bank: $" + this.model.addFunds(50, bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
                 
                 if (bank - 50 < 100) {
                     view.add100.setEnabled(false);
@@ -201,8 +217,8 @@ public class Controller implements ActionListener {
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("" + this.model.addFunds(100, bank));
-                this.view.pot.setText("" + model.data.pot);
+                this.view.bank.setText("Bank: $" + this.model.addFunds(100, bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
 
                 if (bank - 100 < 100) {
                     view.add100.setEnabled(false);
@@ -231,8 +247,8 @@ public class Controller implements ActionListener {
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("" + this.model.addFunds(bank, bank));
-                this.view.pot.setText("" + model.data.pot);
+                this.view.bank.setText("Bank: $" + this.model.addFunds(bank, bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
 
                 this.view.playGame(model.data.roundCounter);
                 break;

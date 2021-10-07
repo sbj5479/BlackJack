@@ -7,6 +7,7 @@ package blackjack2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -114,4 +115,83 @@ public class TempDatabase {
         }
         return data;
     }
+    
+    
+    public ArrayList topScores()
+    {
+         //instantiate variables
+        ArrayList<Player> nameList = new ArrayList<>();
+        ArrayList name = new ArrayList();
+        ArrayList score = new ArrayList();
+        HashMap scoreMap;
+        
+        //create central file components for scores.txt
+        FileIO scoresinout = new FileIO("scores");
+        
+        //read from scores.txt and add contents to hashmap
+        scoreMap = scoresinout.ReadH();
+        //create entrySet for scoreMap
+        Set sSet = scoreMap.entrySet();
+        //loop through each object in the hashmap/set
+        for(Object e : sSet)
+        {
+            //split the name from score and store in each arraylist
+            String str[] = e.toString().split("=");
+            name.add(str[0]);
+            score.add(str[1]); 
+        }
+        
+        //add players to list
+        for(int i = 0 ; i < name.size(); i ++)
+        {
+            //convert name and score into string and int respectively
+            String namev = name.get(i).toString();
+            int scorev = Integer.parseInt((String) score.get(i));
+            //add all players
+            if(namev.equals("Dealer"))
+            {
+                Player dealer = new Dealer("Dealer");
+                nameList.add(dealer);
+            }
+            else
+            {
+                Player user = new User(namev, scorev, false);
+                nameList.add(user);
+            }
+        }
+        //find 5 highest scores
+        ArrayList<Player> topScores = new ArrayList<>();
+        HashMap topPlayers = new HashMap();
+        for(int i = 0; i < 5; i ++)
+        {
+            Player top = nameList.get(0);
+            for(int j=0; j< nameList.size(); j++)
+            {
+                if(nameList.get(j).getCoins()> top.getCoins())
+                {
+                    top = nameList.get(j);
+                }
+            }
+            //add top 5 players to arraylist and hashmap
+            topScores.add(top);
+            topPlayers.put(top.getName(), top.getCoins());
+            nameList.remove(top);
+        }
+        //print out top scores
+//        System.out.println("---------------------------------------------------------------");
+        for(int k = 0 ; k < topScores.size(); k++)
+        {
+//            System.out.println(k+1 + "." + topScores.get(k).getName() + "  " + topScores.get(k).getCoins());
+        }
+//        System.out.println("---------------------------------------------------------------");
+        
+        
+        //create central file components for topScores.txt
+        FileIO topinout = new FileIO("topScores");
+        //write to topScores.txt 
+        topinout.WriteH(topPlayers);
+        
+        return topScores;
+    }
+    
 }

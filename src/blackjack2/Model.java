@@ -58,8 +58,13 @@ public class Model extends Observable{
         
         this.data.pot += coins;
         bank -= coins;
-        System.out.println("bank : " + bank);
         return bank;
+    }
+    
+    public ArrayList<Player> getTopScores()
+    {
+        ArrayList<Player> leaderboard = db.topScores();
+        return leaderboard;
     }
     
 }

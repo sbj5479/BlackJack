@@ -7,8 +7,11 @@ package blackjack2;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,6 +44,14 @@ public class View extends JFrame implements Observer{
     private JPanel reLoginPanel;
     private JButton loginButton;
     
+    //leaderboard
+    private JPanel leaderboardPanel;
+    public JLabel first;
+    public JLabel second;
+    public JLabel third;
+    public JLabel fourth;
+    public JLabel fifth;
+    private JButton close;
     
     
     //bidding
@@ -68,6 +79,7 @@ public class View extends JFrame implements Observer{
     
     public View()
     {
+        //home
         this.homePanel = new JPanel();
         homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.X_AXIS));
         this.newPlayer = new JButton("New Player");
@@ -86,6 +98,14 @@ public class View extends JFrame implements Observer{
         //login buttons
         loginButton = new JButton("login");
         createButton = new JButton("create");
+        
+        //leaderboard buttons and labels
+        close = new JButton("close");
+        first = new JLabel("");
+        second = new JLabel("");
+        third = new JLabel("");
+        fourth = new JLabel("");
+        fifth = new JLabel("");
         
         //betting buttons
         add1 = new JButton("$1");
@@ -106,6 +126,22 @@ public class View extends JFrame implements Observer{
         this.setSize(600, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+    
+    public void homeScreen()
+    {
+        homePanel.add(newPlayer);
+        homePanel.add(returnPlayer);
+        homePanel.add(leaderboard);
+        homePanel.add(exit);
+        
+        
+        
+        this.getContentPane().removeAll();
+        homePanel.setVisible(true);
+        this.add(homePanel);
+        this.revalidate();
+        this.repaint();
     }
     
     public void newLoginScreen()
@@ -148,6 +184,27 @@ public class View extends JFrame implements Observer{
         this.add(reLoginPanel);
         this.revalidate();
         this.repaint();
+    }
+    
+    public void leaderboardScreen()
+    {
+        leaderboardPanel = new JPanel();
+        
+        
+        leaderboardPanel.add(first);
+        leaderboardPanel.add(second);
+        leaderboardPanel.add(third);
+        leaderboardPanel.add(fourth);
+        leaderboardPanel.add(fifth);
+        
+        leaderboardPanel.add(close);
+        
+        this.getContentPane().removeAll();
+        leaderboardPanel.setVisible(true);
+        this.add(leaderboardPanel);
+        this.revalidate();
+        this.repaint();
+        
     }
     
     public void bettingScreen(User user)
@@ -210,11 +267,15 @@ public class View extends JFrame implements Observer{
         //home
         this.newPlayer.addActionListener(listener);
         this.returnPlayer.addActionListener(listener);
+        this.leaderboard.addActionListener(listener);
         this.exit.addActionListener(listener);
         
         //login
         this.loginButton.addActionListener(listener);
         this.createButton.addActionListener(listener);
+        
+        //leaderboard
+        this.close.addActionListener(listener);
         
         //betting
         this.add1.addActionListener(listener);
@@ -241,16 +302,18 @@ public class View extends JFrame implements Observer{
         }
         else 
         {
-            System.out.println("starting game");
+            if(data.user.getCoins() > 0)
+            {
+                System.out.println("starting game");
             
-            this.bettingScreen(data.user);
+                this.bettingScreen(data.user);
+            }
+            else
+            {
+                System.out.println("Insufficient coins");
+            }
         }
     }
-    
-//    public void addContoller(Controller controller)
-//    {
-//        
-//    }
     
     
 }
