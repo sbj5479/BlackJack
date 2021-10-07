@@ -257,26 +257,28 @@ public class Controller implements ActionListener {
             case "PLAY":
 //                this.view.playGame(model.data.roundCounter, model.data.user);
                 model.finishBets();
+                model.startGame();
+                updateScores();
                 break;
 
             case "HIT":
-//                view.doubleButton.setVisible(false);
-//                model.data.roundCounter++;
-//                model.data.hitClicked = true;
-                model.bust();
+                model.drawCard();
+                updateScores();
+                
+            case "restart":
+//                view.getContentPane().removeAll();
+                
             default:
 
                 break;
         }
     }
+    
+    
+    public void updateScores()
+    {
+        view.dealerScore.setText("Dealer: " + model.data.dealerScore);
+        view.userScore.setText("Dealer: " + model.data.userScore);
+    }
 
-//    public void addModel(Model model)
-//    {
-//        this.model = model;
-//    }
-//    
-//    public void addView(View view)
-//    {
-//        this.view = view;
-//    }
 }

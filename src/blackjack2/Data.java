@@ -22,6 +22,7 @@ public class Data {
     
     int roundCounter = 0;
     int userScore = 0;
+    int dealerScore = 0;
     
     boolean hitClicked = false;
     
