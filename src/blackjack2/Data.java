@@ -15,7 +15,16 @@ public class Data {
     int pot = 0;
     User user = new User();
     
+    boolean betFinish = false;
+    boolean standClicked = false;
+    boolean bust = false;
+    
+    
     int roundCounter = 0;
+    int userScore = 0;
+    
+    boolean hitClicked = false;
+    
     
     
     

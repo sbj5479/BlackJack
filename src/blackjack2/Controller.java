@@ -249,17 +249,21 @@ public class Controller implements ActionListener {
 
                 this.view.bank.setText("Bank: $" + this.model.addFunds(bank, bank));
                 this.view.pot.setText("Pot: $" + model.data.pot);
+                model.finishBets();
 
-                this.view.playGame(model.data.roundCounter);
+//                this.view.playGame(model.data.roundCounter, model.data.user);
                 break;
 
             case "PLAY":
-                this.view.playGame(model.data.roundCounter);
-
+//                this.view.playGame(model.data.roundCounter, model.data.user);
+                model.finishBets();
                 break;
 
             case "HIT":
-                model.data.roundCounter++;
+//                view.doubleButton.setVisible(false);
+//                model.data.roundCounter++;
+//                model.data.hitClicked = true;
+                model.bust();
             default:
 
                 break;

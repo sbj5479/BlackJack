@@ -74,7 +74,9 @@ public class View extends JFrame implements Observer{
     private JPanel gamePanel;
     private JButton hitButton;
     private JButton standButton;
-    private JButton doubleButton;
+    public JButton doubleButton;
+    public JLabel userScore;
+    public JLabel dealerScore;
     
     
     public View()
@@ -121,6 +123,8 @@ public class View extends JFrame implements Observer{
         hitButton = new JButton("HIT");
         standButton = new JButton("STAND");
         doubleButton = new JButton("DOUBLE");
+        userScore = new JLabel("You have: 0");
+        dealerScore = new JLabel("Dealer has: 0");
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 600);
@@ -239,13 +243,15 @@ public class View extends JFrame implements Observer{
         this.repaint();
     }
     
-    public void playGame(int rounds)
+    public void playGame(View view, Data data)
     {
         
         gamePanel = new JPanel();
         gamePanel.add(hitButton);
         gamePanel.add(standButton);
         gamePanel.add(doubleButton);
+        gamePanel.add(userScore);
+        gamePanel.add(dealerScore);
         
         this.getContentPane().removeAll();
         gamePanel.setVisible(true);
@@ -253,10 +259,14 @@ public class View extends JFrame implements Observer{
         this.revalidate();
         this.repaint();
         
+        Game game = new Game(this, data);
+        User user = data.user;
+        Dealer dealer = new Dealer("Dealer");
+        game.play(user, dealer);
         
         
-        if(rounds > 0)
-            doubleButton.setVisible(false);
+        
+        
         
         
     }
@@ -302,16 +312,32 @@ public class View extends JFrame implements Observer{
         }
         else 
         {
-            if(data.user.getCoins() > 0)
+            if(data.user.getCoins() > 0 || !data.quitFlag)
             {
                 System.out.println("starting game");
             
                 this.bettingScreen(data.user);
+                if(data.betFinish)
+                {
+                    System.out.println("bet over");
+                    this.playGame(this, data);
+                    
+                    if(!data.bust || !data.standClicked)
+                    {
+                        if(data.hitClicked)
+                        {
+                            
+                        }
+                    }
+                }
+                
+                System.out.println("restart?");
+                
             }
-            else
-            {
-                System.out.println("Insufficient coins");
-            }
+//            if
+//            {
+//                System.out.println("Insufficient coins");
+//            }
         }
     }
     

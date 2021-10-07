@@ -53,6 +53,13 @@ public class Model extends Observable{
         this.notifyObservers(this.data);
     }
     
+    public void finishBets()
+    {
+        this.data.betFinish = true;
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+    
     public int addFunds(int coins, int bank)
     {
         
@@ -65,6 +72,14 @@ public class Model extends Observable{
     {
         ArrayList<Player> leaderboard = db.topScores();
         return leaderboard;
+    }
+    
+    public void bust()
+    {
+        this.data.bust = true;
+        this.data.betFinish = false;
+        this.setChanged();
+        this.notifyObservers(this.data);
     }
     
 }
