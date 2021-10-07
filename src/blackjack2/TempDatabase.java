@@ -48,9 +48,10 @@ public class TempDatabase {
         //if found
         if(counter == 1)
         {
+            
+            int pCoins = Integer.valueOf((String)scoreMap.get(username)); 
+            data.user = new User(username, pCoins, true);
             data.loginFlag = true;
-            int pCoins = Integer.valueOf((String)scoreMap.get(username));
-            blackjack.User a = new blackjack.User(username, pCoins, true);
             
             
         }
@@ -97,8 +98,8 @@ public class TempDatabase {
             
             nameList.add(username);
             scoreMap.put(username, 1000);
-            User a = new User(username, 1000,true);
-            
+            data.user = new User(username, 1000,true);
+            System.out.println("a " + data.user.getCoins());
             //write new list of names to names.txt 
             namesinout.WriteL(nameList);
             //write new hashmap of names with scores to scores.txt

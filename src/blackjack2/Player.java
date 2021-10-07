@@ -10,8 +10,8 @@ package blackjack2;
  * @author greay
  */
 public abstract class Player {
-    private String name;
-    private int coins;
+    protected String name;
+    protected int coins;
 
     
     public Player(){

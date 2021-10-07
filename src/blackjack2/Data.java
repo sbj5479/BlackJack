@@ -13,5 +13,11 @@ public class Data {
     boolean loginFlag = false;
     boolean quitFlag = false;
     int pot = 0;
-    int score = 0;
+    User user = new User();
+    
+    int roundCounter = 0;
+    
+    
+    
+    
 }

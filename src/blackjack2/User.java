@@ -12,7 +12,7 @@ package blackjack2;
 public class User extends Player{
     
     private boolean creation;
-    private int coins;
+    
     
     public User()
     {

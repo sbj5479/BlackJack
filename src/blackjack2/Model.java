@@ -53,4 +53,13 @@ public class Model extends Observable{
         this.notifyObservers(this.data);
     }
     
+    public int addFunds(int coins, int bank)
+    {
+        
+        this.data.pot += coins;
+        bank -= coins;
+        System.out.println("bank : " + bank);
+        return bank;
+    }
+    
 }
