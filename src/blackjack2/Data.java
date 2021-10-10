@@ -16,8 +16,18 @@ public class Data {
     User user = new User();
     
     boolean betFinish = false;
-    boolean standClicked = false;
+    boolean gameFinish = false;
+    
     boolean bust = false;
+    boolean blackjack = false;
+    
+    
+    
+    
+    boolean standClicked = false;
+    
+    boolean restart = true;
+    
     
     
     int roundCounter = 0;

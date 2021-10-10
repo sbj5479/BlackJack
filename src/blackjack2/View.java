@@ -317,6 +317,7 @@ public class View extends JFrame implements Observer{
         
         //restart
         this.restartButton.addActionListener(listener);
+        this.endGameButton.addActionListener(listener);
         
         
     }
@@ -334,21 +335,56 @@ public class View extends JFrame implements Observer{
             //main loop
             if(data.user.getCoins() > 0 && !data.quitFlag)
             {
-                System.out.println("starting game");
-                //betting
-                this.bettingScreen(data.user);
-                if(data.betFinish)
+                if(data.restart)
                 {
-                    //start game
-                    System.out.println("bet over");
-                    this.playGame(this, data);
-                    
-                    
-                    
-                    if(data.bust)
-                    //game has ended
-                        this.restartScreen();
-                    //play again
+                    System.out.println("starting game");
+                    //betting
+                    this.bettingScreen(data.user);
+                    if(data.betFinish)
+                    {
+                        //start game
+                        System.out.println("bet over");
+                        this.playGame(this, data);
+
+                        if(data.gameFinish)
+                        {
+                            System.out.println("game stop");
+                            if(data.bust)
+                            {
+                                //minus coins
+                                System.out.println("minus");
+                            }
+                            else if(data.blackjack)
+                            {
+                                //double coins
+                                System.out.println("double");
+                            }
+                            
+                            //restart?
+                            this.restartScreen();
+                            if(!data.restart)
+                            {
+                                System.out.println("stop!!!!");
+                            }
+                            else
+                            {
+                                System.out.println("restart");
+                            }
+                        }
+
+//                        if(data.bust)
+//                        {
+//                        //game has ended
+//                            System.out.println("bust");
+//                            this.restartScreen();
+//
+//                        }
+                        //play again
+//                        
+//                        else {
+//                           this.bettingScreen(data.user);
+//                       }
+                    }
                 }
                 
                 

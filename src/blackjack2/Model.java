@@ -58,6 +58,7 @@ public class Model extends Observable {
 
     public void finishBets() {
         this.data.betFinish = true;
+        data.gameFinish = false;
         this.setChanged();
         this.notifyObservers(this.data);
     }
@@ -75,6 +76,9 @@ public class Model extends Observable {
     }
 
     public void startGame() {
+        
+        data.userScore = 0;
+        data.dealerScore = 0;
         //new deck, cards are avaialble to be drawn
         deck.shuffle();
 
@@ -203,9 +207,34 @@ public class Model extends Observable {
 
 public void bust() {
         this.data.bust = true;
-        this.data.betFinish = false;
+        this.data.gameFinish = true;
         this.setChanged();
         this.notifyObservers(this.data);
     }
+
+public void blackjack()
+{
+    this.data.blackjack = true;
+    this.data.gameFinish = true;
+    this.setChanged();
+    this.notifyObservers(this.data);
+}
+
+
+public void restart()
+{
+    this.data.restart = true;
+    this.data.betFinish = false;
+    this.setChanged();
+    this.notifyObservers(this.data);
+}
+
+public void quit()
+{
+    this.data.restart = false;
+    this.data.quitFlag = true;
+    this.setChanged();
+    this.notifyObservers(this.data);
+}
 
 }

@@ -265,9 +265,15 @@ public class Controller implements ActionListener {
                 model.drawCard();
                 updateScores();
                 
-            case "restart":
-//                view.getContentPane().removeAll();
+                break;
                 
+            case "restart":
+                model.restart();
+                break;
+//                view.getContentPane().removeAll();
+            case "end game":
+                model.quit();
+                break;
             default:
 
                 break;
@@ -279,6 +285,14 @@ public class Controller implements ActionListener {
     {
         view.dealerScore.setText("Dealer: " + model.data.dealerScore);
         view.userScore.setText("Dealer: " + model.data.userScore);
+        if(model.data.userScore > 21)
+        {
+            model.bust();
+        }
+        else if(model.data.userScore == 21)
+        {
+            model.blackjack();
+        }
     }
 
 }
