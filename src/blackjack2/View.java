@@ -6,6 +6,7 @@
 package blackjack2;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.TextListener;
 import java.beans.PropertyChangeListener;
@@ -17,6 +18,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,7 +75,7 @@ public class View extends JFrame implements Observer {
     private JButton playButton;
 
     //playing
-    private JPanel gamePanel;
+    public JPanel gamePanel;
     private JButton hitButton;
     private JButton standButton;
     public JButton doubleButton;
@@ -93,6 +95,9 @@ public class View extends JFrame implements Observer {
     private JLabel loseLabel;
     private JLabel blackjackLabel;
 
+    
+    private Image diamondCard;
+    
     public View() {
         //home
         this.homePanel = new JPanel();
@@ -138,6 +143,8 @@ public class View extends JFrame implements Observer {
         doubleButton = new JButton("DOUBLE");
         userScore = new JLabel("You have: 0");
         dealerScore = new JLabel("Dealer has: 0");
+        
+        diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
 
         //restart buttons
         restartButton = new JButton("restart");
@@ -384,10 +391,12 @@ public class View extends JFrame implements Observer {
 //                            System.out.println("DEALER SCORE CHANGED HERE\n");
                             dealerScore.setText("Dealer: " + data.dealerScore);
                             userScore.setText("Dealer: " + data.userScore);
+                            
                             this.revalidate();
                             this.repaint();
                             data.scoreChanged = false;
                         }
+                        
                         if (data.gameFinish) {
                             System.out.println("game stop");
                             if (data.win == 2) {

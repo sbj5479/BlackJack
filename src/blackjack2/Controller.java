@@ -5,13 +5,22 @@
  */
 package blackjack2;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -262,14 +271,28 @@ public class Controller implements ActionListener {
 //                this.view.playGame(model.data.roundCounter, model.data.user);
                 model.finishBets();
                 model.startGame();
-                updateScores();
+            {
+                try {
+                    updateScores();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
                 break;
+
 
             case "HIT":
                 model.drawCard();
-                updateScores();
+            {
+                try {
+                    updateScores();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
                 
                 break;
+
                 
             case "STAND":
                 model.stand();
@@ -277,8 +300,15 @@ public class Controller implements ActionListener {
                 
             case "DOUBLE":
                 model.doub();
-                updateScores();
+            {
+                try {
+                    updateScores();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
                 break;
+
                 
             case "restart":
                 model.addCoins();
@@ -296,10 +326,17 @@ public class Controller implements ActionListener {
     }
     
     
-    public void updateScores()
+    public void updateScores() throws IOException
     {
         view.dealerScore.setText("Dealer: " + model.data.dealerScore);
         view.userScore.setText("Dealer: " + model.data.userScore);
+        
+        BufferedImage card = ImageIO.read(new File("./resources/diamonds.jpg"));
+        JLabel picLabel = new JLabel(new ImageIcon(card));
+        view.gamePanel.add(picLabel);
+        
+//        Image card = new Image("./resources/diamond.jpg") {};
+//        view.gamePanel.add(card);
         if(model.data.userScore > 21)
         {
             model.bust();
@@ -308,6 +345,8 @@ public class Controller implements ActionListener {
         {
             model.blackjack();
         }
+        
+        
     }
 
 //    @Override
