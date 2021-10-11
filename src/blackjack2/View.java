@@ -314,6 +314,8 @@ public class View extends JFrame implements Observer{
         
         //playing
         this.hitButton.addActionListener(listener);
+        this.standButton.addActionListener(listener);
+        this.doubleButton.addActionListener(listener);
         
         //restart
         this.restartButton.addActionListener(listener);
@@ -353,12 +355,37 @@ public class View extends JFrame implements Observer{
                             {
                                 //minus coins
                                 System.out.println("minus");
+                                if(data.doub)
+                                {
+                                    double multipot = data.pot * 1.5;
+                                    data.user.coins -= multipot;
+                                }
+                                else
+                                    
+                                    data.user.coins -= data.pot;
                             }
                             else if(data.blackjack)
                             {
                                 //double coins
                                 System.out.println("double");
+                                double multipot = data.pot * 1.5;
+                                data.user.coins += multipot;
                             }
+                            
+                            else
+                            {
+                                System.out.println("win");
+                                if(data.doub)
+                                {
+                                    System.out.println("doub");
+                                    double multipot = data.pot * 2;
+                                    data.user.coins += multipot;
+                                }
+                                else
+                                    data.user.coins += data.pot;
+                            }
+                            
+                            
                             
                             //restart?
                             this.restartScreen();
@@ -390,6 +417,7 @@ public class View extends JFrame implements Observer{
                 
                 
             }
+//            System.out.println("GAME IS NOW FINSIHED");
 //            if
 //            {
 //                System.out.println("Insufficient coins");

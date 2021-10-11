@@ -20,7 +20,10 @@ public class Data {
     
     boolean bust = false;
     boolean blackjack = false;
+    boolean stand = false;
+    boolean doub = false;
     
+    int win = 0;
     
     
     

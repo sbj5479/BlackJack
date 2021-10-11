@@ -76,7 +76,7 @@ public class Model extends Observable {
     }
 
     public void startGame() {
-        
+
         data.userScore = 0;
         data.dealerScore = 0;
         //new deck, cards are avaialble to be drawn
@@ -163,7 +163,7 @@ public class Model extends Observable {
         deck.draw();
         switch (deck.getN()) {
             case 11:
-//                System.out.println("Card " + i + ": " + deck.getS());
+                System.out.println("Card : " + deck.getS());
                 //act as a 1
                 if (data.userScore > 10) {
                     data.userScore = (data.userScore + 1);
@@ -176,7 +176,7 @@ public class Model extends Observable {
                 break;
             //normal case
             default:
-//                System.out.println("Card " + i + ": " + deck.getS());
+                System.out.println("Card  : " + deck.getS());
                 data.userScore = data.userScore + deck.getN();
                 break;
 
@@ -190,51 +190,196 @@ public class Model extends Observable {
         //print final score (21) before dealers cards are revealed
         if (data.userScore == 21) {
             System.out.println("You have: " + data.userScore);
+            stand();
         } //if bust
-        else if (data.userScore> 21) {
+        else if (data.userScore > 21) {
             System.out.println("You have: " + data.userScore);
             System.out.println("BUST");
 //            setWin(2);
+            data.win = 2;
             bust();
-            
-            return;
 
+//            return;
         }
 
     }
 
-        
+    public void dealerGame() {
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("Dealers score: " + data.dealerScore);
+        deck.draw();
+        switch (deck.getN()) {
+            case 11:
+                System.out.println("Dealers first card: " + deck.getS());
+                if (data.dealerScore > 10) {
+                    data.dealerScore = (data.dealerScore + 1);
 
-public void bust() {
+                } else {
+                    data.dealerScore = (data.dealerScore + deck.getN());
+                    DealerAce1 = true;
+                }
+                break;
+
+            default:
+                System.out.println("Dealers first card: " + deck.getS());
+                data.dealerScore = (data.dealerScore + deck.getN());
+                break;
+
+        }
+
+        System.out.println("Dealer has: " + data.dealerScore);
+
+        if (data.dealerScore > 21 && DealerAce1) {
+            System.out.println("MINUS 10 from ACE");
+            data.dealerScore = (data.dealerScore - 10);
+            DealerAce1 = false;
+        }
+
+        if (data.dealerScore == 21 && data.userScore == 21) {
+            System.out.println("DEALER BLACKJACK");
+//            System.out.println("DRAW");
+            data.win = 3;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+        } else if (data.dealerScore == 21) {
+            System.out.println("DEALER BLACKJACK");
+//            System.out.println("YOU LOSE");
+            data.win = 2;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+
+        } else if (data.dealerScore > data.userScore) {
+//            System.out.println("YOU LOSE");
+            data.win = 2;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+        } else if (data.blackjack && data.dealerScore < 21) {
+//            System.out.println("YOU WIN");
+            data.win = 1;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+
+        } else if (data.dealerScore == data.userScore && data.userScore != 21) {
+//            System.out.println("DRAW");
+            data.win = 3;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+        } else {
+//            while(getbScore() <= getaScore() && getbScore() < 21)
+
+            int j = 2;
+            while (data.dealerScore < 17) {
+                j++;
+                deck.draw();
+                switch (deck.getN()) {
+                    case 11:
+                        System.out.println("Card " + j + ": " + deck.getS());
+                        if (data.dealerScore > 10) {
+                            data.dealerScore = (data.dealerScore + 1);
+
+                        } else {
+                            data.dealerScore = (data.dealerScore + deck.getN());
+                            DealerAce1 = true;
+                        }
+                        break;
+
+                    default:
+                        System.out.println("Card " + j + ": " + deck.getS());
+                        data.dealerScore = (data.dealerScore + deck.getN());
+                        break;
+
+                }
+
+                System.out.println("Dealer has: " + data.dealerScore);
+
+                if (data.dealerScore > 21 && DealerAce1) {
+                    System.out.println("MINUS 10 from ACE");
+                    data.dealerScore = (data.dealerScore - 10);
+                    DealerAce1 = false;
+                }
+
+            }
+
+            if (data.dealerScore > data.userScore && data.dealerScore < 22) {
+//                System.out.println("YOU LOSE");
+                data.win = 2;
+                this.data.gameFinish = true;
+                this.setChanged();
+                this.notifyObservers(this.data);
+            } else if (data.dealerScore > 21) {
+                System.out.println("DEALER BUST");
+//                System.out.println("YOU WIN ");
+                data.win = 1;
+                this.data.gameFinish = true;
+                this.setChanged();
+                this.notifyObservers(this.data);
+            } else if (data.dealerScore == data.userScore) {
+//                System.out.println("DRAW");
+                data.win = 3;
+                this.data.gameFinish = true;
+                this.setChanged();
+                this.notifyObservers(this.data);
+            } else if (data.userScore > data.dealerScore) {
+//                System.out.println("YOU WIN");
+                data.win = 1;
+                this.data.gameFinish = true;
+                this.setChanged();
+                this.notifyObservers(this.data);
+            }
+        }
+
+    }
+
+    public void bust() {
         this.data.bust = true;
         this.data.gameFinish = true;
         this.setChanged();
         this.notifyObservers(this.data);
     }
 
-public void blackjack()
-{
-    this.data.blackjack = true;
-    this.data.gameFinish = true;
-    this.setChanged();
-    this.notifyObservers(this.data);
-}
+    public void blackjack() {
+        this.data.blackjack = true;
+        this.data.gameFinish = true;
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
 
+    public void stand() {
+        this.data.stand = true;
+        dealerGame();
+//    this.data.gameFinish = true;
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
 
-public void restart()
-{
-    this.data.restart = true;
-    this.data.betFinish = false;
-    this.setChanged();
-    this.notifyObservers(this.data);
-}
+    public void doub() {
+        this.data.doub = true;
+        drawCard();
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
 
-public void quit()
-{
-    this.data.restart = false;
-    this.data.quitFlag = true;
-    this.setChanged();
-    this.notifyObservers(this.data);
-}
+    public void restart() {
+        this.data.restart = true;
+        this.data.bust = false;
+        this.data.blackjack = false;
+        this.data.stand = false;
+        this.data.betFinish = false;
+        this.data.pot = 0;
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
+
+    public void quit() {
+        this.data.restart = false;
+        this.data.quitFlag = true;
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
 
 }

@@ -267,6 +267,15 @@ public class Controller implements ActionListener {
                 
                 break;
                 
+            case "STAND":
+                model.stand();
+                break;
+                
+            case "DOUBLE":
+                model.doub();
+                updateScores();
+                break;
+                
             case "restart":
                 model.restart();
                 break;
