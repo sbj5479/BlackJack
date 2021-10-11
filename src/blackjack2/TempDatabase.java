@@ -194,4 +194,27 @@ public class TempDatabase {
         return topScores;
     }
     
+    
+    public void addCoins(User a)
+    {
+        //instantiate variables
+        
+        int coins = a.getCoins();
+        String name = a.getName();
+        HashMap scoreMap;
+        
+        //create central file components for each scores.txt
+        FileIO scoresinout = new FileIO("scores");
+        
+        //read from scores.txt and add contents to hashmap
+        scoreMap = scoresinout.ReadH();
+        
+        //remove user
+        scoreMap.remove(name);
+        //put in user with new coins
+        scoreMap.put(name, coins);
+        
+        //write to scores.txt 
+        scoresinout.WriteH(scoreMap);
+    }
 }

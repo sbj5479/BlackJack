@@ -24,6 +24,7 @@ public class Data {
     boolean doub = false;
     
     int win = 0;
+    boolean scoreChanged = false;
     
     
     

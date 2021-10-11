@@ -7,6 +7,10 @@ package blackjack2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 /**
@@ -277,10 +281,12 @@ public class Controller implements ActionListener {
                 break;
                 
             case "restart":
+                model.addCoins();
                 model.restart();
                 break;
 //                view.getContentPane().removeAll();
             case "end game":
+                model.addCoins();
                 model.quit();
                 break;
             default:
@@ -303,5 +309,21 @@ public class Controller implements ActionListener {
             model.blackjack();
         }
     }
+
+//    @Override
+//    public void propertyChange(PropertyChangeEvent evt) {
+//        String name  = evt.getPropertyName();
+//        System.out.println(name);
+//        if("model.data.dealerScore".equals(name))
+//        {
+//            System.out.println("update");
+//            updateScores();
+//        }
+//    }
+            
+            
+    
+
+    
 
 }

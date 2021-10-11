@@ -8,6 +8,8 @@ package blackjack2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -155,7 +157,9 @@ public class Model extends Observable {
         if (data.userScore == 21) {
             System.out.println("You have: " + data.userScore);
             System.out.println("BLACKJACK");
+            data.blackjack = true;
             Blackjack = true;
+            dealerGame();
         }
     }
 
@@ -228,6 +232,14 @@ public class Model extends Observable {
         }
 
         System.out.println("Dealer has: " + data.dealerScore);
+        this.data.scoreChanged = true;
+        this.setChanged();
+        this.notifyObservers(this.data);
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         if (data.dealerScore > 21 && DealerAce1) {
             System.out.println("MINUS 10 from ACE");
@@ -296,6 +308,14 @@ public class Model extends Observable {
                 }
 
                 System.out.println("Dealer has: " + data.dealerScore);
+                this.data.scoreChanged = true;
+                this.setChanged();
+                this.notifyObservers(this.data);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+//                }
 
                 if (data.dealerScore > 21 && DealerAce1) {
                     System.out.println("MINUS 10 from ACE");
@@ -380,6 +400,17 @@ public class Model extends Observable {
         this.data.quitFlag = true;
         this.setChanged();
         this.notifyObservers(this.data);
+    }
+    
+    
+    public void addCoins()
+    {
+        
+        this.db.addCoins(data.user);
+        
+        
+        
+        
     }
 
 }
