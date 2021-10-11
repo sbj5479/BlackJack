@@ -16,6 +16,8 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -44,14 +46,19 @@ public class Controller implements ActionListener {
         String text;
         String number;
         int bank;
+        Queue cardQueue = null;
+        String suit;
 
         switch (command) {
             //login
             case "New Player":
                 this.view.newLoginScreen();
+//                this.model.newLogin();
+                
                 break;
             case "Returning Player":
                 this.view.reLoginScreen();
+//                this.model.reLogin();
                 break;
                 
             case "Leaderboard":
@@ -269,11 +276,12 @@ public class Controller implements ActionListener {
 
             case "PLAY":
 //                this.view.playGame(model.data.roundCounter, model.data.user);
+                
                 model.finishBets();
-                model.startGame();
+                cardQueue = model.startGame();
             {
                 try {
-                    updateScores();
+                    updateScores(cardQueue);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -282,10 +290,11 @@ public class Controller implements ActionListener {
 
 
             case "HIT":
-                model.drawCard();
+                suit = model.drawCard();
+                cardQueue.offer(suit);
             {
                 try {
-                    updateScores();
+                    updateScores(cardQueue);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -300,9 +309,11 @@ public class Controller implements ActionListener {
                 
             case "DOUBLE":
                 model.doub();
+                suit  = model.drawCard();
+                cardQueue.offer(suit);
             {
                 try {
-                    updateScores();
+                    updateScores(cardQueue);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -326,14 +337,60 @@ public class Controller implements ActionListener {
     }
     
     
-    public void updateScores() throws IOException
+    public void updateScores(Queue<String> queue) throws IOException
     {
         view.dealerScore.setText("Dealer: " + model.data.dealerScore);
         view.userScore.setText("Dealer: " + model.data.userScore);
+        int origSize = queue.size();
+        for(int i = 0; i < origSize; i ++)
+        {
+//            System.out.println(i);
+            String card = queue.poll();
+            String subCard = card.substring(5);
+            subCard = subCard.strip();
+            System.out.println("SUBSTRING: " + subCard);
+            
+            //m = random but after substring
+            if(subCard.equals("m"))
+            {
+                BufferedImage cardImage = ImageIO.read(new File("./resources/random.jpg"));
+                JLabel picLabel = new JLabel(new ImageIcon(cardImage));
+                view.gamePanel.add(picLabel);
+            }
+            else if(subCard.equals("Diamonds"))
+            {
+                BufferedImage cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
+                JLabel picLabel = new JLabel(new ImageIcon(cardImage));
+                view.gamePanel.add(picLabel);
+            }
+            else if(subCard.strip().equals("Spades"))
+            {
+                BufferedImage cardImage = ImageIO.read(new File("./resources/spades.jpg"));
+                JLabel picLabel = new JLabel(new ImageIcon(cardImage));
+                view.gamePanel.add(picLabel);
+            }
+            else if(subCard.strip().equals("Clubs"))
+            {
+                BufferedImage cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
+                JLabel picLabel = new JLabel(new ImageIcon(cardImage));
+                view.gamePanel.add(picLabel);
+            }
+            else
+            {
+                
+                BufferedImage cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
+                JLabel picLabel = new JLabel(new ImageIcon(cardImage));
+                view.gamePanel.add(picLabel);
+            
+            }
+        }
+////        if(suit.equals)
+//        for(String s : queue)
+//        {
+//            
+//                
+//        }
         
-        BufferedImage card = ImageIO.read(new File("./resources/diamonds.jpg"));
-        JLabel picLabel = new JLabel(new ImageIcon(card));
-        view.gamePanel.add(picLabel);
         
 //        Image card = new Image("./resources/diamond.jpg") {};
 //        view.gamePanel.add(card);

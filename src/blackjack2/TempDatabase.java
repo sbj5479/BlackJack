@@ -15,15 +15,15 @@ import java.util.Set;
  */
 public class TempDatabase {
     String username;
-    
+    Data data;
     public TempDatabase()
     {
-        
+        data = new Data(); // Initialize an instance of Data.
     }
     
     public Data checkName(String username)
     {
-        Data data = new Data(); // Initialize an instance of Data.
+        
         this.username = username;
         ArrayList nameList;
         HashMap scoreMap;
@@ -65,7 +65,7 @@ public class TempDatabase {
     
     public Data newName(String username)
     {
-        Data data = new Data(); // Initialize an instance of Data.
+//        Data data = new Data(); // Initialize an instance of Data.
         this.username = username;
         ArrayList nameList;
         HashMap scoreMap;

@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -42,13 +43,17 @@ public class View extends JFrame implements Observer {
     //new login
     private JPanel newLoginPanel;
     private JButton createButton;
+    private JLabel existLabel;
+    public JButton LOGIN;
     //both login
     private JLabel name;
     public JTextField nameField;
-    private JLabel failLogin;
+    private JOptionPane failMessage;
     //relogin
     private JPanel reLoginPanel;
     private JButton loginButton;
+    private JLabel newLabel;
+    public JButton CREATE;
 
     //leaderboard
     private JPanel leaderboardPanel;
@@ -118,6 +123,11 @@ public class View extends JFrame implements Observer {
         //login buttons
         loginButton = new JButton("login");
         createButton = new JButton("create");
+        LOGIN = new JButton("LOGIN");
+        CREATE = new JButton("CREATE");
+        newLabel = new JLabel("First time playing? Click here ->");
+        existLabel = new JLabel("Played before? Click here ->");
+        failMessage = new JOptionPane("Name already exists");
 
         //leaderboard buttons and labels
         close = new JButton("close");
@@ -175,11 +185,13 @@ public class View extends JFrame implements Observer {
         name = new JLabel("Name:");
         nameField = new JTextField(20);
 
-        failLogin = new JLabel("");
+        
         newLoginPanel.add(name);
         newLoginPanel.add(nameField);
         newLoginPanel.add(createButton);
-        newLoginPanel.add(failLogin, BorderLayout.SOUTH);
+        newLoginPanel.add(existLabel);
+        newLoginPanel.add(LOGIN);
+        
 
         this.getContentPane().removeAll();
         newLoginPanel.setVisible(true);
@@ -193,11 +205,13 @@ public class View extends JFrame implements Observer {
         name = new JLabel("Name:");
         nameField = new JTextField(20);
 
-        failLogin = new JLabel("");
+        
         reLoginPanel.add(name);
         reLoginPanel.add(nameField);
         reLoginPanel.add(loginButton);
-        reLoginPanel.add(failLogin, BorderLayout.SOUTH);
+        reLoginPanel.add(newLabel);
+        reLoginPanel.add(CREATE);
+        
 
         this.getContentPane().removeAll();
         reLoginPanel.setVisible(true);
@@ -374,8 +388,20 @@ public class View extends JFrame implements Observer {
         Data data = (Data) arg;
         if (!data.loginFlag) {
             this.nameField.setText("");
-            this.failLogin.setText("Invalid name");
-        } else {
+//            if(data.reFlag)
+//            {
+//                
+                this.failMessage.showMessageDialog(null, "Invalid name");
+                
+//            }
+//            if(data.newFlag)
+//            {
+                
+//                this.failMessage.showMessageDialog(null, "Name already exists");
+//            }
+        } 
+        else 
+        {
             //main loop
             if (data.user.getCoins() > 0 && !data.quitFlag) {
                 if (data.restart) {

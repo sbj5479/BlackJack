@@ -7,7 +7,9 @@ package blackjack2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Observable;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,6 +59,24 @@ public class Model extends Observable {
         this.setChanged();
         this.notifyObservers(this.data);
     }
+    
+//    public void newLogin()
+//    {
+////        Data dataOne = new Data();
+////        data.newFlag = true;
+//        this.setChanged();
+//        this.notifyObservers(this.data);
+//        
+//    }
+//    
+//    public void reLogin()
+//    {
+////        Data dataTwo = new Data();
+////        data.reFlag = true;
+//        this.setChanged();
+//        this.notifyObservers(this.data);
+//        
+//    }
 
     public void finishBets() {
         this.data.betFinish = true;
@@ -77,8 +97,8 @@ public class Model extends Observable {
         return leaderboard;
     }
 
-    public void startGame() {
-
+    public Queue<String> startGame() {
+        Queue<String> cardQueue = new LinkedList();
         data.userScore = 0;
         data.dealerScore = 0;
         //new deck, cards are avaialble to be drawn
@@ -104,7 +124,10 @@ public class Model extends Observable {
                 break;
 
         }
-
+        cardQueue.offer("random");
+        cardQueue.offer(deck.getS());
+        
+        
         System.out.println("---------------------------------------------------------------");
         System.out.println("You draw: ");
         //draw a card
@@ -122,7 +145,7 @@ public class Model extends Observable {
                 break;
 
         }
-
+        cardQueue.offer(deck.getS());
         //draw a card
         deck.draw();
         switch (deck.getN()) {
@@ -145,6 +168,7 @@ public class Model extends Observable {
                 break;
 
         }
+        cardQueue.offer(deck.getS());
 
         //if score is a bust but have an ace acting as an 11
         if (data.userScore > 21 && Ace1) {
@@ -161,9 +185,11 @@ public class Model extends Observable {
             Blackjack = true;
             dealerGame();
         }
+        
+        return cardQueue;
     }
 
-    public void drawCard() {
+    public String drawCard() {
         deck.draw();
         switch (deck.getN()) {
             case 11:
@@ -205,6 +231,7 @@ public class Model extends Observable {
 
 //            return;
         }
+        return deck.getS();
 
     }
 
@@ -379,7 +406,7 @@ public class Model extends Observable {
 
     public void doub() {
         this.data.doub = true;
-        drawCard();
+        
         this.setChanged();
         this.notifyObservers(this.data);
     }
