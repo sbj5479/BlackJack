@@ -358,6 +358,8 @@ public class View extends JFrame implements Observer {
         //login
         this.loginButton.addActionListener(listener);
         this.createButton.addActionListener(listener);
+        this.CREATE.addActionListener(listener);
+        this.LOGIN.addActionListener(listener);
 
         //leaderboard
         this.close.addActionListener(listener);

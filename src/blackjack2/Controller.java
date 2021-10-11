@@ -32,6 +32,7 @@ public class Controller implements ActionListener {
 
     View view;
     Model model;
+    Queue cardQueue;
 
     public Controller(View view, Model model) {
         this.view = view;
@@ -46,7 +47,6 @@ public class Controller implements ActionListener {
         String text;
         String number;
         int bank;
-        Queue cardQueue = null;
         String suit;
 
         switch (command) {
@@ -83,6 +83,14 @@ public class Controller implements ActionListener {
             case "create":
                 username = this.view.nameField.getText();
                 this.model.newName(username);
+                break;
+                
+            case"CREATE":
+                this.view.newLoginScreen();
+                break;
+                
+            case "LOGIN":
+                this.view.reLoginScreen();
                 break;
 
             //betting
@@ -270,12 +278,9 @@ public class Controller implements ActionListener {
                 this.view.bank.setText("Bank: $" + this.model.addFunds(bank, bank));
                 this.view.pot.setText("Pot: $" + model.data.pot);
                 model.finishBets();
-
-//                this.view.playGame(model.data.roundCounter, model.data.user);
                 break;
 
             case "PLAY":
-//                this.view.playGame(model.data.roundCounter, model.data.user);
                 
                 model.finishBets();
                 cardQueue = model.startGame();
@@ -384,16 +389,7 @@ public class Controller implements ActionListener {
             
             }
         }
-////        if(suit.equals)
-//        for(String s : queue)
-//        {
-//            
-//                
-//        }
-        
-        
-//        Image card = new Image("./resources/diamond.jpg") {};
-//        view.gamePanel.add(card);
+
         if(model.data.userScore > 21)
         {
             model.bust();
@@ -403,23 +399,6 @@ public class Controller implements ActionListener {
             model.blackjack();
         }
         
-        
     }
-
-//    @Override
-//    public void propertyChange(PropertyChangeEvent evt) {
-//        String name  = evt.getPropertyName();
-//        System.out.println(name);
-//        if("model.data.dealerScore".equals(name))
-//        {
-//            System.out.println("update");
-//            updateScores();
-//        }
-//    }
             
-            
-    
-
-    
-
 }
