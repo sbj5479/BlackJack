@@ -29,4 +29,9 @@ public class Model {
 
         edit.addNewPlayer(name, score.floatValue());
     }
+    
+    public void exit()
+    {
+        System.exit(0);
+    }
 }
