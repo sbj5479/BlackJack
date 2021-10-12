@@ -6,12 +6,9 @@
 package blackjack2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,9 +27,9 @@ public class Model extends Observable {
     public Model() {
         this.db = new TempDatabase();
         deck = new Deck();
-        Ace1 = false;
-        DealerAce1 = false;
-        Blackjack = false;
+//        Ace1 = false;
+//        DealerAce1 = false;
+//        Blackjack = false;
     }
     //setChanged();
     //notifyObservers("");
@@ -42,9 +39,6 @@ public class Model extends Observable {
         this.username = username;
         this.data = this.db.checkName(username);
 
-//        if (data.loginFlag) {
-//            System.out.println("successful");
-//        }
         this.setChanged();
         this.notifyObservers(this.data);
     }
@@ -53,9 +47,6 @@ public class Model extends Observable {
         this.username = username;
         this.data = this.db.newName(username);
 
-//        if (data.loginFlag) {
-//            System.out.println("successful2");
-//        }
         this.setChanged();
         this.notifyObservers(this.data);
     }
@@ -99,6 +90,11 @@ public class Model extends Observable {
 
     public Queue<String> startGame() {
         Queue<String> cardQueue = new LinkedList();
+        
+        Ace1 = false;
+        DealerAce1 = false;
+        Blackjack = false;
+        
         data.userScore = 0;
         data.dealerScore = 0;
         //new deck, cards are avaialble to be drawn
@@ -194,7 +190,13 @@ public class Model extends Observable {
             System.out.println("BLACKJACK");
             data.blackjack = true;
             Blackjack = true;
-            dealerGame();
+            Queue<String> endgameQueue = dealerGame();
+            int queueSize = endgameQueue.size();
+            for(int i = 0 ; i < queueSize; i ++)
+            {
+                String card = endgameQueue.poll();
+                cardQueue.offer(card);
+            }
         }
         
         return cardQueue;
@@ -208,6 +210,13 @@ public class Model extends Observable {
         deck.shuffle();
         
         return cardQueue;
+    }
+    
+    public void showDoub()
+    {
+        data.showDoub = false;
+        this.setChanged();
+        this.notifyObservers(this.data);
     }
 
     public String dealerCard()
@@ -233,15 +242,11 @@ public class Model extends Observable {
                 break;
 
         }
-        //if score is bust but have an ace acting as an 11
-        if (data.dealerScore > 21 && DealerAce1) {
-            System.out.println("MINUS 10 from ACE");
-            data.dealerScore = data.dealerScore - 10;
-            DealerAce1 = false;
-        }
+        
         //print final score (21) before dealers cards are revealed
         if (data.dealerScore == 21) {
             System.out.println("Dealer has: " + data.dealerScore);
+            data.win = 3;
             
         } //if bust
         else if (data.dealerScore > 21) {
@@ -287,7 +292,8 @@ public class Model extends Observable {
         //print final score (21) before dealers cards are revealed
         if (data.userScore == 21) {
             System.out.println("You have: " + data.userScore);
-            stand();
+            data.startdealer = true;
+//            stand();
         } //if bust
         else if (data.userScore > 21) {
             System.out.println("You have: " + data.userScore);
@@ -304,7 +310,8 @@ public class Model extends Observable {
 
     }
 
-    public void dealerGame() {
+    public Queue<String> dealerGame() {
+        Queue<String> cardQueue = new LinkedList();
         System.out.println("---------------------------------------------------------------");
         System.out.println("Dealers score: " + data.dealerScore);
         deck.draw();
@@ -326,7 +333,7 @@ public class Model extends Observable {
                 break;
 
         }
-
+        cardQueue.offer(deck.getS());
         System.out.println("Dealer has: " + data.dealerScore);
 //        this.data.scoreChanged = true;
 //        this.setChanged();
@@ -371,7 +378,7 @@ public class Model extends Observable {
             this.setChanged();
             this.notifyObservers(this.data);
 
-        } else if (data.dealerScore == data.userScore && data.userScore != 21) {
+        } else if (data.dealerScore == data.userScore && data.userScore != 21 && data.dealerScore > 16) {
 //            System.out.println("DRAW");
             data.win = 3;
             this.data.gameFinish = true;
@@ -402,7 +409,7 @@ public class Model extends Observable {
                         break;
 
                 }
-
+                cardQueue.offer(deck.getS());
                 System.out.println("Dealer has: " + data.dealerScore);
 //                this.data.scoreChanged = true;
 //                this.setChanged();
@@ -448,30 +455,30 @@ public class Model extends Observable {
                 this.notifyObservers(this.data);
             }
         }
-
+        return cardQueue;
     }
 
-    public void bust() {
-        this.data.bust = true;
-        this.data.gameFinish = true;
-        this.setChanged();
-        this.notifyObservers(this.data);
-    }
-
-    public void blackjack() {
-        this.data.blackjack = true;
-        this.data.gameFinish = true;
-        this.setChanged();
-        this.notifyObservers(this.data);
-    }
-
-    public void stand() {
-//        this.data.stand = true;
-        dealerGame();
-//    this.data.gameFinish = true;
+//    public void bust() {
+//        this.data.bust = true;
+//        this.data.gameFinish = true;
 //        this.setChanged();
 //        this.notifyObservers(this.data);
-    }
+//    }
+
+//    public void blackjack() {
+//        this.data.blackjack = true;
+//        this.data.gameFinish = true;
+//        this.setChanged();
+//        this.notifyObservers(this.data);
+//    }
+
+//    public void stand() {
+////        this.data.stand = true;
+//        dealerGame();
+////    this.data.gameFinish = true;
+////        this.setChanged();
+////        this.notifyObservers(this.data);
+//    }
 
     public void doub() {
         this.data.doub = true;

@@ -269,18 +269,18 @@ public class View extends JFrame implements Observer {
     public void playGame(View view, Data data) {
 
         topCardPanel = new JPanel();
-        topCardPanel.setLayout(new GridLayout(1, 5));
+//        topCardPanel.setLayout(new GridLayout(1, 6));
         bottomCardPanel = new JPanel();
-        bottomCardPanel.setLayout(new GridLayout(1,5));
+//        bottomCardPanel.setLayout(new GridLayout(1,6));
         
         gamePanel = new JPanel();
         gamePanel.setLayout(new GridLayout(3, 2));
         gamePanel.add(dealerScore);
         gamePanel.add(hitButton);
-        gamePanel.add(userScore);
-        gamePanel.add(standButton);
         JLabel temp = new JLabel("");
         gamePanel.add(temp);
+        gamePanel.add(standButton);
+        gamePanel.add(userScore);
         gamePanel.add(doubleButton);
         
         
@@ -350,8 +350,8 @@ public class View extends JFrame implements Observer {
     
     public void addButtons()
     {
-        gamePanel.add(restartButton);
-        gamePanel.add(endGameButton);
+        bottomCardPanel.add(restartButton);
+        bottomCardPanel.add(endGameButton);
         this.revalidate();
         this.repaint();
         
@@ -417,13 +417,14 @@ public class View extends JFrame implements Observer {
         {
             //main loop
             if (data.user.getCoins() > 0 && !data.quitFlag) {
-                if (data.restart) {
+                do {
                     System.out.println("starting game");
                     //betting
                     this.bettingScreen(data.user);
                     if (data.betFinish) {
                         //start game
                         System.out.println("bet over");
+                        
                         this.playGame(this, data);
 //                        if(data.scoreChanged)
 //                        {
@@ -435,9 +436,18 @@ public class View extends JFrame implements Observer {
 //                            this.repaint();
 //                            data.scoreChanged = false;
 //                        }
-                        
+
+
+
+//                        if(!data.showDoub)
+//                        {
+//                            doubleButton.setEnabled(false);
+//                        }
+
+
+
                         if (data.gameFinish) {
-                            System.out.println("game stop");
+//                            System.out.println("game stop");
                             if (data.win == 2) {
                                 //minus coins
                                 System.out.println("minus");
@@ -513,7 +523,7 @@ public class View extends JFrame implements Observer {
 //                       }
                     }
                 }
-
+                while(!data.restart);
             }
 //            System.out.println("GAME IS NOW FINSIHED");
 //            if
