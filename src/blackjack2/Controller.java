@@ -580,6 +580,7 @@ public class Controller implements ActionListener {
         } //player gets 21 and auto stands
         else {
             for (int i = 0; i < origSize; i++) {
+                System.out.println("DEALER STARTS HERE");
 //            System.out.println("drawing");
 //            System.out.println(i);
                 String card = queue.poll();
@@ -638,6 +639,11 @@ public class Controller implements ActionListener {
                 view.topCardPanel.add(picLabel);
 
             }
+            
+            
+            model.checkWin();
+            
+            
         }
 
     }

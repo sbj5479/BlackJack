@@ -104,13 +104,13 @@ public class Model extends Observable {
         deck.draw();
         switch (deck.getN()) {
             case 11:
-                System.out.println("Card 1: " + deck.getS());
+                System.out.println("Your Card 1: " + deck.getS());
                 data.userScore = data.userScore + deck.getN();
                 Ace1 = true;
                 break;
 
             default:
-                System.out.println("Card 1: " + deck.getS());
+                System.out.println("Your Card 1: " + deck.getS());
                 data.userScore = data.userScore + deck.getN();
                 break;
 
@@ -127,7 +127,7 @@ public class Model extends Observable {
         deck.draw();
         switch (deck.getN()) {
             case 11:
-                System.out.println("Card 2: " + deck.getS());
+                System.out.println("Your Card 2: " + deck.getS());
                 //act as a 1
                 if (data.userScore > 10) {
                     data.userScore = data.userScore + 1;
@@ -140,7 +140,7 @@ public class Model extends Observable {
                 break;
 
             default:
-                System.out.println("Card 2: " + deck.getS());
+                System.out.println("Your Card 2: " + deck.getS());
                 data.userScore = data.userScore + deck.getN();
                 break;
 
@@ -155,7 +155,7 @@ public class Model extends Observable {
         switch (deck.getN()) {
             //if ace
             case 11:
-                System.out.println("Card 2: " + deck.getS());
+                System.out.println("Dealer Card 2: " + deck.getS());
 
                 data.dealerScore = data.dealerScore + deck.getN();
                 DealerAce1 = true;
@@ -163,7 +163,7 @@ public class Model extends Observable {
                 break;
             //normal case
             default:
-                System.out.println("Card 2: " + deck.getS());
+                System.out.println("Dealer Card 2: " + deck.getS());
                 data.dealerScore = data.dealerScore + deck.getN();
                 break;
 
@@ -176,7 +176,7 @@ public class Model extends Observable {
         //draw a card
         
         
-
+        System.out.println("Current score: " + data.userScore);
         //if score is a bust but have an ace acting as an 11
         if (data.userScore > 21 && Ace1) {
             System.out.println("MINUS 10 from ACE");
@@ -288,11 +288,13 @@ public class Model extends Observable {
             System.out.println("MINUS 10 from ACE");
             data.userScore = data.userScore - 10;
             Ace1 = false;
+            System.out.println("SCORE AFTER ACE: " + data.userScore);
         }
         //print final score (21) before dealers cards are revealed
-        if (data.userScore == 21) {
+        else if (data.userScore == 21) {
             System.out.println("You have: " + data.userScore);
             data.startdealer = true;
+            System.out.println("STARTING DEALER");
 //            stand();
         } //if bust
         else if (data.userScore > 21) {
@@ -514,6 +516,24 @@ public class Model extends Observable {
         
         
         
+    }
+    
+    public void checkWin()
+    {
+        if(data.dealerScore < data.userScore)
+        {
+            data.win = 1;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+        }
+        else if(data.dealerScore == 21)
+        {
+            data.win = 3;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+        }
     }
 
 }
