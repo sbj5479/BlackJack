@@ -106,7 +106,7 @@ public class View extends JFrame implements Observer {
     public View() {
         //home
         this.homePanel = new JPanel();
-        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.X_AXIS));
+        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.Y_AXIS));
         this.newPlayer = new JButton("New Player");
         this.returnPlayer = new JButton("Returning Player");
         this.leaderboard = new JButton("Leaderboard");
@@ -414,16 +414,16 @@ public class View extends JFrame implements Observer {
                         //start game
                         System.out.println("bet over");
                         this.playGame(this, data);
-                        if(data.scoreChanged)
-                        {
-//                            System.out.println("DEALER SCORE CHANGED HERE\n");
-                            dealerScore.setText("Dealer: " + data.dealerScore);
-                            userScore.setText("Dealer: " + data.userScore);
-                            
-                            this.revalidate();
-                            this.repaint();
-                            data.scoreChanged = false;
-                        }
+//                        if(data.scoreChanged)
+//                        {
+////                            System.out.println("DEALER SCORE CHANGED HERE\n");
+//                            dealerScore.setText("Dealer: " + data.dealerScore);
+//                            userScore.setText("Dealer: " + data.userScore);
+//                            
+//                            this.revalidate();
+//                            this.repaint();
+//                            data.scoreChanged = false;
+//                        }
                         
                         if (data.gameFinish) {
                             System.out.println("game stop");

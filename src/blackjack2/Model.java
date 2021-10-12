@@ -42,9 +42,9 @@ public class Model extends Observable {
         this.username = username;
         this.data = this.db.checkName(username);
 
-        if (data.loginFlag) {
-            System.out.println("successful");
-        }
+//        if (data.loginFlag) {
+//            System.out.println("successful");
+//        }
         this.setChanged();
         this.notifyObservers(this.data);
     }
@@ -53,9 +53,9 @@ public class Model extends Observable {
         this.username = username;
         this.data = this.db.newName(username);
 
-        if (data.loginFlag) {
-            System.out.println("successful2");
-        }
+//        if (data.loginFlag) {
+//            System.out.println("successful2");
+//        }
         this.setChanged();
         this.notifyObservers(this.data);
     }
@@ -104,33 +104,7 @@ public class Model extends Observable {
         //new deck, cards are avaialble to be drawn
         deck.shuffle();
 
-        //draw a random card
-        deck.draw();
-
-//        System.out.println(deck.getN());
-        switch (deck.getN()) {
-            //if ace
-            case 11:
-                System.out.println("Card 2: " + deck.getS());
-
-                data.dealerScore = data.dealerScore + deck.getN();
-                DealerAce1 = true;
-
-                break;
-            //normal case
-            default:
-                System.out.println("Card 2: " + deck.getS());
-                data.dealerScore = data.dealerScore + deck.getN();
-                break;
-
-        }
-        cardQueue.offer("random");
-        cardQueue.offer(deck.getS());
-        
-        
-        System.out.println("---------------------------------------------------------------");
-        System.out.println("You draw: ");
-        //draw a card
+        //users first card
         deck.draw();
         switch (deck.getN()) {
             case 11:
@@ -146,7 +120,14 @@ public class Model extends Observable {
 
         }
         cardQueue.offer(deck.getS());
-        //draw a card
+        
+        
+        //dealers first card (hidden)
+        cardQueue.offer("random");
+        
+        
+        
+        //users second card
         deck.draw();
         switch (deck.getN()) {
             case 11:
@@ -169,6 +150,36 @@ public class Model extends Observable {
 
         }
         cardQueue.offer(deck.getS());
+        
+        
+        //dealers second card
+        deck.draw();
+
+//        System.out.println(deck.getN());
+        switch (deck.getN()) {
+            //if ace
+            case 11:
+                System.out.println("Card 2: " + deck.getS());
+
+                data.dealerScore = data.dealerScore + deck.getN();
+                DealerAce1 = true;
+
+                break;
+            //normal case
+            default:
+                System.out.println("Card 2: " + deck.getS());
+                data.dealerScore = data.dealerScore + deck.getN();
+                break;
+
+        }
+        
+        cardQueue.offer(deck.getS());
+        
+        
+        
+        //draw a card
+        
+        
 
         //if score is a bust but have an ace acting as an 11
         if (data.userScore > 21 && Ace1) {
@@ -188,7 +199,63 @@ public class Model extends Observable {
         
         return cardQueue;
     }
+    
+    public Queue<String> startGame2() {
+        Queue<String> cardQueue = new LinkedList();
+        data.userScore = 0;
+        data.dealerScore = 0;
+        //new deck, cards are avaialble to be drawn
+        deck.shuffle();
+        
+        return cardQueue;
+    }
 
+    public String dealerCard()
+    {
+        deck.draw();
+        switch (deck.getN()) {
+            case 11:
+                System.out.println("Card : " + deck.getS());
+                //act as a 1
+                if (data.dealerScore > 10) {
+                    data.dealerScore = (data.dealerScore + 1);
+
+                } //act as an 11
+                else {
+                    data.dealerScore = data.dealerScore + deck.getN();
+                    DealerAce1 = true;
+                }
+                break;
+            //normal case
+            default:
+                System.out.println("Card  : " + deck.getS());
+                data.dealerScore = data.dealerScore + deck.getN();
+                break;
+
+        }
+        //if score is bust but have an ace acting as an 11
+        if (data.dealerScore > 21 && DealerAce1) {
+            System.out.println("MINUS 10 from ACE");
+            data.dealerScore = data.dealerScore - 10;
+            DealerAce1 = false;
+        }
+        //print final score (21) before dealers cards are revealed
+        if (data.dealerScore == 21) {
+            System.out.println("Dealer has: " + data.dealerScore);
+            
+        } //if bust
+        else if (data.dealerScore > 21) {
+            System.out.println("Dealer has: " + data.dealerScore);
+            System.out.println("BUST");
+//            setWin(2);
+            data.win = 1;
+            
+
+//            return;
+        }
+        return deck.getS();
+    }
+    
     public String drawCard() {
         deck.draw();
         switch (deck.getN()) {
@@ -227,7 +294,9 @@ public class Model extends Observable {
             System.out.println("BUST");
 //            setWin(2);
             data.win = 2;
-            bust();
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
 
 //            return;
         }
@@ -259,9 +328,9 @@ public class Model extends Observable {
         }
 
         System.out.println("Dealer has: " + data.dealerScore);
-        this.data.scoreChanged = true;
-        this.setChanged();
-        this.notifyObservers(this.data);
+//        this.data.scoreChanged = true;
+//        this.setChanged();
+//        this.notifyObservers(this.data);
 //        try {
 //            Thread.sleep(1000);
 //        } catch (InterruptedException ex) {
@@ -335,9 +404,9 @@ public class Model extends Observable {
                 }
 
                 System.out.println("Dealer has: " + data.dealerScore);
-                this.data.scoreChanged = true;
-                this.setChanged();
-                this.notifyObservers(this.data);
+//                this.data.scoreChanged = true;
+//                this.setChanged();
+//                this.notifyObservers(this.data);
 //                try {
 //                    Thread.sleep(1000);
 //                } catch (InterruptedException ex) {
@@ -397,11 +466,11 @@ public class Model extends Observable {
     }
 
     public void stand() {
-        this.data.stand = true;
+//        this.data.stand = true;
         dealerGame();
 //    this.data.gameFinish = true;
-        this.setChanged();
-        this.notifyObservers(this.data);
+//        this.setChanged();
+//        this.notifyObservers(this.data);
     }
 
     public void doub() {

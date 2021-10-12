@@ -283,15 +283,72 @@ public class Controller implements ActionListener {
             case "PLAY":
                 
                 model.finishBets();
+//                cardQueue = model.startGame();
                 cardQueue = model.startGame();
-            {
+                
                 try {
                     updateScores(cardQueue);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+//                
+//                //draw first card
+//                String suit1 = model.drawCard();
+//                cardQueue.offer(suit1);
+//                
+//            
+//                try {
+//                    updateScores(cardQueue);
+//                    Thread.sleep(200);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (InterruptedException ex) {
+//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//                
+//                //draw dealers first card (hidden)
+//                cardQueue.offer("random");
+//                
+//                try {
+//                    updateScores(cardQueue);
+//                    Thread.sleep(200);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (InterruptedException ex) {
+//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//                
+//                //draw second card
+//                String suit2 = model.drawCard();
+//                cardQueue.offer(suit2);
+//                
+//                try {
+//                    updateScores(cardQueue);
+//                    Thread.sleep(200);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (InterruptedException ex) {
+//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//                
+//                //draw dealers second card
+//                String dealerSuit1 = model.dealerCard();
+//                cardQueue.offer(dealerSuit1);
+//                
+//                try {
+//                    updateScores(cardQueue);
+//                    Thread.sleep(200);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (InterruptedException ex) {
+//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+                
                 break;
+
+
+
+
 
 
             case "HIT":
