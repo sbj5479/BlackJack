@@ -6,17 +6,12 @@
 package blackjack2;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.awt.event.TextListener;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -81,6 +76,8 @@ public class View extends JFrame implements Observer {
 
     //playing
     public JPanel gamePanel;
+    public JPanel topCardPanel;
+    public JPanel bottomCardPanel;
     private JButton hitButton;
     private JButton standButton;
     public JButton doubleButton;
@@ -105,8 +102,8 @@ public class View extends JFrame implements Observer {
     
     public View() {
         //home
-        this.homePanel = new JPanel();
-        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.Y_AXIS));
+        this.homePanel = new HomePanel();
+        homePanel.setLayout(new FlowLayout());
         this.newPlayer = new JButton("New Player");
         this.returnPlayer = new JButton("Returning Player");
         this.leaderboard = new JButton("Leaderboard");
@@ -118,7 +115,7 @@ public class View extends JFrame implements Observer {
         homePanel.add(leaderboard);
         homePanel.add(exit);
 
-        add(homePanel);
+        add(homePanel, BorderLayout.CENTER);
 
         //login buttons
         loginButton = new JButton("login");
@@ -183,7 +180,7 @@ public class View extends JFrame implements Observer {
 
         newLoginPanel = new JPanel();
         name = new JLabel("Name:");
-        nameField = new JTextField(20);
+        nameField = new JTextField(30);
 
         
         newLoginPanel.add(name);
@@ -203,7 +200,7 @@ public class View extends JFrame implements Observer {
     public void reLoginScreen() {
         reLoginPanel = new JPanel();
         name = new JLabel("Name:");
-        nameField = new JTextField(20);
+        nameField = new JTextField(30);
 
         
         reLoginPanel.add(name);
@@ -222,8 +219,10 @@ public class View extends JFrame implements Observer {
 
     public void leaderboardScreen() {
         leaderboardPanel = new JPanel();
+        leaderboardPanel.setLayout(new BoxLayout(leaderboardPanel, BoxLayout.Y_AXIS));
 
         leaderboardPanel.add(first);
+        first.setLocation(50, 50);
         leaderboardPanel.add(second);
         leaderboardPanel.add(third);
         leaderboardPanel.add(fourth);
@@ -233,14 +232,14 @@ public class View extends JFrame implements Observer {
 
         this.getContentPane().removeAll();
         leaderboardPanel.setVisible(true);
-        this.add(leaderboardPanel);
+        this.add(leaderboardPanel, BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
 
     }
 
     public void bettingScreen(User user) {
-        biddingPanel = new JPanel();
+        biddingPanel = new BettingPanel();
         bank = new JLabel("Bank: $" + user.getCoins());
         pot = new JLabel("Pot: $0");
 
@@ -269,16 +268,28 @@ public class View extends JFrame implements Observer {
 
     public void playGame(View view, Data data) {
 
+        topCardPanel = new JPanel();
+        topCardPanel.setLayout(new GridLayout(1, 5));
+        bottomCardPanel = new JPanel();
+        bottomCardPanel.setLayout(new GridLayout(1,5));
+        
         gamePanel = new JPanel();
-        gamePanel.add(hitButton);
-        gamePanel.add(standButton);
-        gamePanel.add(doubleButton);
-        gamePanel.add(userScore);
+        gamePanel.setLayout(new GridLayout(3, 2));
         gamePanel.add(dealerScore);
+        gamePanel.add(hitButton);
+        gamePanel.add(userScore);
+        gamePanel.add(standButton);
+        JLabel temp = new JLabel("");
+        gamePanel.add(temp);
+        gamePanel.add(doubleButton);
+        
+        
 
         this.getContentPane().removeAll();
         gamePanel.setVisible(true);
-        this.add(gamePanel);
+        this.add(topCardPanel, BorderLayout.NORTH);
+        this.add(gamePanel, BorderLayout.CENTER);
+        this.add(bottomCardPanel, BorderLayout.SOUTH);
         this.revalidate();
         this.repaint();
 

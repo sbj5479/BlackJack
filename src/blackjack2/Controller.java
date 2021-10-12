@@ -33,11 +33,13 @@ public class Controller implements ActionListener {
     View view;
     Model model;
     Queue cardQueue;
+    boolean cardTracker;
 
     public Controller(View view, Model model) {
         this.view = view;
         this.model = model;
         this.view.addActionListener(this);
+        cardTracker = false;
     }
 
     @Override
@@ -287,7 +289,7 @@ public class Controller implements ActionListener {
                 cardQueue = model.startGame();
                 
                 try {
-                    updateScores(cardQueue);
+                    updateScores(cardQueue, 1);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -356,7 +358,7 @@ public class Controller implements ActionListener {
                 cardQueue.offer(suit);
             {
                 try {
-                    updateScores(cardQueue);
+                    updateScores(cardQueue, 2);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -375,7 +377,7 @@ public class Controller implements ActionListener {
                 cardQueue.offer(suit);
             {
                 try {
-                    updateScores(cardQueue);
+                    updateScores(cardQueue, 2);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -399,10 +401,10 @@ public class Controller implements ActionListener {
     }
     
     
-    public void updateScores(Queue<String> queue) throws IOException
+    public void updateScores(Queue<String> queue, int status) throws IOException
     {
         view.dealerScore.setText("Dealer: " + model.data.dealerScore);
-        view.userScore.setText("Dealer: " + model.data.userScore);
+        view.userScore.setText("User: " + model.data.userScore);
         int origSize = queue.size();
         for(int i = 0; i < origSize; i ++)
         {
@@ -410,42 +412,93 @@ public class Controller implements ActionListener {
             String card = queue.poll();
             String subCard = card.substring(5);
             subCard = subCard.strip();
-            System.out.println("SUBSTRING: " + subCard);
+//            System.out.println("SUBSTRING: " + subCard);
             
             //m = random but after substring
             if(subCard.equals("m"))
             {
                 BufferedImage cardImage = ImageIO.read(new File("./resources/random.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.gamePanel.add(picLabel);
+                view.topCardPanel.add(picLabel);
             }
             else if(subCard.equals("Diamonds"))
             {
                 BufferedImage cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.gamePanel.add(picLabel);
+                //status  = 1 start of game
+                //2 = player hit
+                //3 dealer
+                if(status == 1)
+                {
+                    if(cardTracker)
+                        view.topCardPanel.add(picLabel);
+                    else
+                        view.bottomCardPanel.add(picLabel);
+                }
+                else if(status == 2)
+                    view.bottomCardPanel.add(picLabel);
+                else
+                    view.topCardPanel.add(picLabel);
             }
             else if(subCard.strip().equals("Spades"))
             {
                 BufferedImage cardImage = ImageIO.read(new File("./resources/spades.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.gamePanel.add(picLabel);
+                if(status == 1)
+                {
+                    if(cardTracker)
+                        view.topCardPanel.add(picLabel);
+                    else
+                        view.bottomCardPanel.add(picLabel);
+                }
+                else if(status == 2)
+                    view.bottomCardPanel.add(picLabel);
+                else
+                    view.topCardPanel.add(picLabel);
             }
             else if(subCard.strip().equals("Clubs"))
             {
                 BufferedImage cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.gamePanel.add(picLabel);
+                if(status == 1)
+                {
+                    if(cardTracker)
+                        view.topCardPanel.add(picLabel);
+                    else
+                        view.bottomCardPanel.add(picLabel);
+                }
+                else if(status == 2)
+                    view.bottomCardPanel.add(picLabel);
+                else
+                    view.topCardPanel.add(picLabel);
             }
             else
             {
                 
                 BufferedImage cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.gamePanel.add(picLabel);
+                if(status == 1)
+                {
+                    if(cardTracker)
+                        view.topCardPanel.add(picLabel);
+                    else
+                        view.bottomCardPanel.add(picLabel);
+                }
+                else if(status == 2)
+                    view.bottomCardPanel.add(picLabel);
+                else
+                    view.topCardPanel.add(picLabel);
             
             }
+            //flip cardTracker
+            if(cardTracker)
+                cardTracker = false;
+            else
+                cardTracker = true;
         }
+        
+        
+        
 
         if(model.data.userScore > 21)
         {
