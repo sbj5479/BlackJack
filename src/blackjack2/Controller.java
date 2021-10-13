@@ -398,6 +398,7 @@ public class Controller implements ActionListener {
     public void updateScores(Queue<String> queue, int status) throws IOException {
         view.dealerScore.setText("Dealer: " + model.data.dealerScore);
         view.userScore.setText("User: " + model.data.userScore);
+        BufferedImage cardImage = null;
         int origSize = queue.size();
         //normal game
         if (!model.data.startdealer) {
@@ -405,17 +406,63 @@ public class Controller implements ActionListener {
 //            System.out.println("drawing");
 //            System.out.println(i);
                 String card = queue.poll();
-                String subCard = card.substring(5);
-                subCard = subCard.strip();
-//            System.out.println("SUBSTRING: " + subCard);
+                String subSuit = card.substring(5);
+                String subNum = card.substring(0,2);
+                subSuit = subSuit.strip();
+                subNum = subNum.strip();
+                System.out.println("SUBSTRING: " + subSuit);
+                System.out.println("SUBNUM: " + subNum);
 
                 //m = random but after substring
-                if (subCard.equals("m")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/random.jpg"));
+                if (subSuit.equals("m")) {
+                    cardImage = ImageIO.read(new File("./resources/random.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     view.topCardPanel.add(picLabel);
-                } else if (subCard.equals("Diamonds")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
+                } else if (subSuit.equals("Diamonds")) {
+                    switch(subNum)
+                    {
+                        case "A":
+                            cardImage = ImageIO.read(new File("./resources/diamondsA.jpg"));
+                            break;
+                        case "K":
+                            cardImage = ImageIO.read(new File("./resources/diamondsK.jpg"));
+                            break;
+                        case "Q":
+                            cardImage = ImageIO.read(new File("./resources/diamondsQ.jpg"));
+                            break;
+                        case "J":
+                            cardImage = ImageIO.read(new File("./resources/diamondsJ.jpg"));
+                            break;
+                        case "10":
+                            cardImage = ImageIO.read(new File("./resources/diamonds10.jpg"));
+                            break;
+                        case "9":
+                            cardImage = ImageIO.read(new File("./resources/diamonds9.jpg"));
+                            break;
+                        case "8":
+                            cardImage = ImageIO.read(new File("./resources/diamonds8.jpg"));
+                            break;
+                        case "7":
+                            cardImage = ImageIO.read(new File("./resources/diamonds7.jpg"));
+                            break;
+                        case "6":
+                            cardImage = ImageIO.read(new File("./resources/diamonds6.jpg"));
+                            break;
+                        case "5":
+                            cardImage = ImageIO.read(new File("./resources/diamonds5.jpg"));
+                            break;
+                        case "4":
+                            cardImage = ImageIO.read(new File("./resources/diamonds4.jpg"));
+                            break;
+                        case "3":
+                            cardImage = ImageIO.read(new File("./resources/diamonds3.jpg"));
+                            break;
+                        default:
+                            cardImage = ImageIO.read(new File("./resources/diamonds2.jpg"));
+                            break;
+                            
+                    }
+                    
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     //status  = 1 start of game
                     //2 = player hit
@@ -431,8 +478,50 @@ public class Controller implements ActionListener {
                     } else {
                         view.topCardPanel.add(picLabel);
                     }
-                } else if (subCard.strip().equals("Spades")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/spades.jpg"));
+                } else if (subSuit.strip().equals("Spades")) {
+                    switch(subNum)
+                    {
+                        case "A":
+                            cardImage = ImageIO.read(new File("./resources/spadesA.jpg"));
+                            break;
+                        case "K":
+                            cardImage = ImageIO.read(new File("./resources/spadesK.jpg"));
+                            break;
+                        case "Q":
+                            cardImage = ImageIO.read(new File("./resources/spadesQ.jpg"));
+                            break;
+                        case "J":
+                            cardImage = ImageIO.read(new File("./resources/spadesJ.jpg"));
+                            break;
+                        case "10":
+                            cardImage = ImageIO.read(new File("./resources/spades10.jpg"));
+                            break;
+                        case "9":
+                            cardImage = ImageIO.read(new File("./resources/spades9.jpg"));
+                            break;
+                        case "8":
+                            cardImage = ImageIO.read(new File("./resources/spades8.jpg"));
+                            break;
+                        case "7":
+                            cardImage = ImageIO.read(new File("./resources/spades7.jpg"));
+                            break;
+                        case "6":
+                            cardImage = ImageIO.read(new File("./resources/spades6.jpg"));
+                            break;
+                        case "5":
+                            cardImage = ImageIO.read(new File("./resources/spades5.jpg"));
+                            break;
+                        case "4":
+                            cardImage = ImageIO.read(new File("./resources/spades4.jpg"));
+                            break;
+                        case "3":
+                            cardImage = ImageIO.read(new File("./resources/spades3.jpg"));
+                            break;
+                        default:
+                            cardImage = ImageIO.read(new File("./resources/spades2.jpg"));
+                            break;
+                            
+                    }
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     if (status == 1) {
                         if (cardTracker) {
@@ -445,8 +534,50 @@ public class Controller implements ActionListener {
                     } else {
                         view.topCardPanel.add(picLabel);
                     }
-                } else if (subCard.strip().equals("Clubs")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
+                } else if (subSuit.strip().equals("Clubs")) {
+                    switch(subNum)
+                    {
+                        case "A":
+                            cardImage = ImageIO.read(new File("./resources/clubsA.jpg"));
+                            break;
+                        case "K":
+                            cardImage = ImageIO.read(new File("./resources/clubsK.jpg"));
+                            break;
+                        case "Q":
+                            cardImage = ImageIO.read(new File("./resources/clubsQ.jpg"));
+                            break;
+                        case "J":
+                            cardImage = ImageIO.read(new File("./resources/clubsJ.jpg"));
+                            break;
+                        case "10":
+                            cardImage = ImageIO.read(new File("./resources/clubs10.jpg"));
+                            break;
+                        case "9":
+                            cardImage = ImageIO.read(new File("./resources/clubs9.jpg"));
+                            break;
+                        case "8":
+                            cardImage = ImageIO.read(new File("./resources/clubs8.jpg"));
+                            break;
+                        case "7":
+                            cardImage = ImageIO.read(new File("./resources/clubs7.jpg"));
+                            break;
+                        case "6":
+                            cardImage = ImageIO.read(new File("./resources/clubs6.jpg"));
+                            break;
+                        case "5":
+                            cardImage = ImageIO.read(new File("./resources/clubs5.jpg"));
+                            break;
+                        case "4":
+                            cardImage = ImageIO.read(new File("./resources/clubs4.jpg"));
+                            break;
+                        case "3":
+                            cardImage = ImageIO.read(new File("./resources/clubs3.jpg"));
+                            break;
+                        default:
+                            cardImage = ImageIO.read(new File("./resources/clubs2.jpg"));
+                            break;
+                            
+                    }
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     if (status == 1) {
                         if (cardTracker) {
@@ -459,9 +590,52 @@ public class Controller implements ActionListener {
                     } else {
                         view.topCardPanel.add(picLabel);
                     }
-                } else {
-
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
+                } 
+                else 
+                {
+                    switch(subNum)
+                    {
+                        case "A":
+                            cardImage = ImageIO.read(new File("./resources/heartsA.jpg"));
+                            break;
+                        case "K":
+                            cardImage = ImageIO.read(new File("./resources/heartsK.jpg"));
+                            break;
+                        case "Q":
+                            cardImage = ImageIO.read(new File("./resources/heartsQ.jpg"));
+                            break;
+                        case "J":
+                            cardImage = ImageIO.read(new File("./resources/heartsJ.jpg"));
+                            break;
+                        case "10":
+                            cardImage = ImageIO.read(new File("./resources/hearts10.jpg"));
+                            break;
+                        case "9":
+                            cardImage = ImageIO.read(new File("./resources/hearts9.jpg"));
+                            break;
+                        case "8":
+                            cardImage = ImageIO.read(new File("./resources/hearts8.jpg"));
+                            break;
+                        case "7":
+                            cardImage = ImageIO.read(new File("./resources/hearts7.jpg"));
+                            break;
+                        case "6":
+                            cardImage = ImageIO.read(new File("./resources/hearts6.jpg"));
+                            break;
+                        case "5":
+                            cardImage = ImageIO.read(new File("./resources/hearts5.jpg"));
+                            break;
+                        case "4":
+                            cardImage = ImageIO.read(new File("./resources/hearts4.jpg"));
+                            break;
+                        case "3":
+                            cardImage = ImageIO.read(new File("./resources/hearts3.jpg"));
+                            break;
+                        default:
+                            cardImage = ImageIO.read(new File("./resources/hearts2.jpg"));
+                            break;
+                            
+                    }
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     if (status == 1) {
                         if (cardTracker) {
@@ -486,63 +660,7 @@ public class Controller implements ActionListener {
         } //if blackjack (first round 21)
         else if (model.data.blackjack) {
             System.out.println("BLACKJACK");
-            for (int i = 0; i < 4; i++) {
-//            System.out.println("drawing");
-//            System.out.println(i);
-                String card = queue.poll();
-                String subCard = card.substring(5);
-                subCard = subCard.strip();
-//            System.out.println("SUBSTRING: " + subCard);
-
-                //m = random but after substring
-                if (subCard.equals("m")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/random.jpg"));
-                    JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.topCardPanel.add(picLabel);
-                } else if (subCard.equals("Diamonds")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
-                    JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-
-                    if (cardTracker) {
-                        view.topCardPanel.add(picLabel);
-                    } else {
-                        view.bottomCardPanel.add(picLabel);
-                    }
-
-                } else if (subCard.strip().equals("Spades")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/spades.jpg"));
-                    JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    if (cardTracker) {
-                        view.topCardPanel.add(picLabel);
-                    } else {
-                        view.bottomCardPanel.add(picLabel);
-                    }
-                } else if (subCard.strip().equals("Clubs")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
-                    JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    if (cardTracker) {
-                        view.topCardPanel.add(picLabel);
-                    } else {
-                        view.bottomCardPanel.add(picLabel);
-                    }
-                } else {
-
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
-                    JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    if (cardTracker) {
-                        view.topCardPanel.add(picLabel);
-                    } else {
-                        view.bottomCardPanel.add(picLabel);
-                    }
-
-                }
-                //flip cardTracker
-                if (cardTracker) {
-                    cardTracker = false;
-                } else {
-                    cardTracker = true;
-                }
-            }
+            //dealer has 1 last card to equal
             int newSize = cardQueue.size();
             for (int j = 0; j < newSize; j++) {
                 String card = queue.poll();
@@ -550,32 +668,29 @@ public class Controller implements ActionListener {
                 subCard = subCard.strip();
 //            System.out.println("SUBSTRING: " + subCard);
 
-                //m = random but after substring
-                if (subCard.equals("m")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/random.jpg"));
-                    JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.topCardPanel.add(picLabel);
-                } else if (subCard.equals("Diamonds")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
+                
+                if (subCard.equals("Diamonds")) {
+                    cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
 
                     view.topCardPanel.add(picLabel);
 
                 } else if (subCard.strip().equals("Spades")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/spades.jpg"));
+                    cardImage = ImageIO.read(new File("./resources/spades.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     view.topCardPanel.add(picLabel);
                 } else if (subCard.strip().equals("Clubs")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
+                    cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     view.topCardPanel.add(picLabel);
                 } else {
 
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
+                    cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     view.topCardPanel.add(picLabel);
 
                 }
+                model.checkWin();
             }
         } //player gets 21 and auto stands
         else {
@@ -589,27 +704,28 @@ public class Controller implements ActionListener {
 //            System.out.println("SUBSTRING: " + subCard);
 
                 if (subCard.equals("Diamonds")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
+                    cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     //status  = 1 start of game
                     //2 = player hit
                     //3 dealer
                     view.bottomCardPanel.add(picLabel);
                 } else if (subCard.strip().equals("Spades")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/spades.jpg"));
+                    cardImage = ImageIO.read(new File("./resources/spades.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     view.bottomCardPanel.add(picLabel);
                 } else if (subCard.strip().equals("Clubs")) {
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
+                    cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     view.bottomCardPanel.add(picLabel);
                 } else {
 
-                    BufferedImage cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
+                    cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     view.bottomCardPanel.add(picLabel);
 
                 }
+                
             }
             String dealerCard = model.dealerCard();
 
@@ -619,22 +735,22 @@ public class Controller implements ActionListener {
 
             //m = random but after substring
             if (subDealer.equals("Diamonds")) {
-                BufferedImage cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
+                cardImage = ImageIO.read(new File("./resources/diamonds.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
 
                 view.topCardPanel.add(picLabel);
 
             } else if (subDealer.strip().equals("Spades")) {
-                BufferedImage cardImage = ImageIO.read(new File("./resources/spades.jpg"));
+                cardImage = ImageIO.read(new File("./resources/spades.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                 view.topCardPanel.add(picLabel);
             } else if (subDealer.strip().equals("Clubs")) {
-                BufferedImage cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
+                cardImage = ImageIO.read(new File("./resources/clubs.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                 view.topCardPanel.add(picLabel);
             } else {
 
-                BufferedImage cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
+                cardImage = ImageIO.read(new File("./resources/hearts.jpg"));
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                 view.topCardPanel.add(picLabel);
 

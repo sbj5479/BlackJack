@@ -127,7 +127,7 @@ public class Model extends Observable {
         deck.draw();
         switch (deck.getN()) {
             case 11:
-                System.out.println("Your Card 2: " + deck.getS());
+                System.out.println("Your Card 2(ACE): " + deck.getS());
                 //act as a 1
                 if (data.userScore > 10) {
                     data.userScore = data.userScore + 1;
@@ -426,6 +426,14 @@ public class Model extends Observable {
                     System.out.println("MINUS 10 from ACE");
                     data.dealerScore = (data.dealerScore - 10);
                     DealerAce1 = false;
+                }
+                //stop after 1st card drawn
+                if(data.blackjack)
+                {
+                    data.win = 1;
+                    this.data.gameFinish = true;
+                    this.setChanged();
+                    this.notifyObservers(this.data);
                 }
 
             }
