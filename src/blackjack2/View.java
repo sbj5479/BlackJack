@@ -222,21 +222,51 @@ public class View extends JFrame implements Observer {
     }
 
     public void leaderboardScreen() {
+        JPanel topPanel = new LeaderBoardTopPanel();
+//        topPanel.setLayout(new GridLayout(3,4));
+        //        bottomCardPanel.setLayout(new GridLayout(1,6));
+        
         leaderboardPanel = new JPanel();
-        leaderboardPanel.setLayout(new BoxLayout(leaderboardPanel, BoxLayout.Y_AXIS));
-
+//        leaderboardPanel.setLayout(new BoxLayout(leaderboardPanel, BoxLayout.Y_AXIS));
+        leaderboardPanel.setLayout(new GridLayout(6,3));
+        JLabel temp1 = new JLabel("");
+        JLabel temp2 = new JLabel("");
+        JLabel temp3 = new JLabel("");
+        JLabel temp4 = new JLabel("");
+        JLabel temp5 = new JLabel("");
+        JLabel temp6 = new JLabel("");
+        JLabel temp7 = new JLabel("");
+        JLabel temp8 = new JLabel("");
+        JLabel temp9 = new JLabel("");
+        JLabel temp10 = new JLabel("");
+        JLabel temp11 = new JLabel("");
+        JLabel temp12 = new JLabel("");
+        leaderboardPanel.add(temp1);
         leaderboardPanel.add(first);
-        first.setLocation(50, 50);
+        leaderboardPanel.add(temp2);
+//        first.setLocation(50, 50);
+        leaderboardPanel.add(temp3);
         leaderboardPanel.add(second);
+        leaderboardPanel.add(temp4);
+        leaderboardPanel.add(temp5);
         leaderboardPanel.add(third);
+        leaderboardPanel.add(temp6);
+        leaderboardPanel.add(temp7);
         leaderboardPanel.add(fourth);
+        leaderboardPanel.add(temp8);
+        leaderboardPanel.add(temp9);
         leaderboardPanel.add(fifth);
-
+        leaderboardPanel.add(temp10);
+        leaderboardPanel.add(temp11);
         leaderboardPanel.add(close);
+        leaderboardPanel.add(temp12);
 
         this.getContentPane().removeAll();
+        topPanel.setVisible(true);
         leaderboardPanel.setVisible(true);
+        this.add(topPanel, BorderLayout.NORTH);
         this.add(leaderboardPanel, BorderLayout.CENTER);
+//        this.add(bottomPanel, BorderLayout.SOUTH);
         this.revalidate();
         this.repaint();
 
@@ -273,9 +303,10 @@ public class View extends JFrame implements Observer {
     public void playGame(View view, Data data) {
 
         topCardPanel = new JPanel();
-//        topCardPanel = new CardPanel();
         Color colour = new Color(34, 177, 76);
         topCardPanel.setBackground(colour);
+//        topCardPanel = new CardPanel();
+        
 //        topCardPanel.setLayout(new GridLayout(1, 6));
         bottomCardPanel = new JPanel();
         bottomCardPanel.setBackground(colour);
@@ -293,7 +324,9 @@ public class View extends JFrame implements Observer {
         
 
         this.getContentPane().removeAll();
+        topCardPanel.setVisible(true);
         gamePanel.setVisible(true);
+        bottomCardPanel.setVisible(true);
         this.add(topCardPanel, BorderLayout.NORTH);
         this.add(gamePanel, BorderLayout.CENTER);
         this.add(bottomCardPanel, BorderLayout.SOUTH);
