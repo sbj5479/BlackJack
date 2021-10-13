@@ -15,15 +15,15 @@ import java.util.Set;
  */
 public class TempDatabase {
     String username;
-    
+    Data data;
     public TempDatabase()
     {
-        
+        data = new Data(); // Initialize an instance of Data.
     }
     
     public Data checkName(String username)
     {
-        Data data = new Data(); // Initialize an instance of Data.
+        
         this.username = username;
         ArrayList nameList;
         HashMap scoreMap;
@@ -65,7 +65,7 @@ public class TempDatabase {
     
     public Data newName(String username)
     {
-        Data data = new Data(); // Initialize an instance of Data.
+//        Data data = new Data(); // Initialize an instance of Data.
         this.username = username;
         ArrayList nameList;
         HashMap scoreMap;
@@ -194,4 +194,27 @@ public class TempDatabase {
         return topScores;
     }
     
+    
+    public void addCoins(User a)
+    {
+        //instantiate variables
+        
+        int coins = a.getCoins();
+        String name = a.getName();
+        HashMap scoreMap;
+        
+        //create central file components for each scores.txt
+        FileIO scoresinout = new FileIO("scores");
+        
+        //read from scores.txt and add contents to hashmap
+        scoreMap = scoresinout.ReadH();
+        
+        //remove user
+        scoreMap.remove(name);
+        //put in user with new coins
+        scoreMap.put(name, coins);
+        
+        //write to scores.txt 
+        scoresinout.WriteH(scoreMap);
+    }
 }

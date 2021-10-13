@@ -11,19 +11,24 @@ package blackjack2;
  */
 public class Data {
     boolean loginFlag = false;
+    
     boolean quitFlag = false;
     int pot = 0;
     User user = new User();
     
     boolean betFinish = false;
-    boolean gameFinish = false;
+    boolean gameStart = false;
+    boolean gameFinish = true;
     
     boolean bust = false;
     boolean blackjack = false;
     boolean stand = false;
     boolean doub = false;
+    boolean showDoub = true;
+    boolean startdealer = false;
     
     int win = 0;
+    boolean scoreChanged = false;
     
     
     
