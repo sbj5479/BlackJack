@@ -20,9 +20,9 @@ public class BettingPanel extends JPanel{
         
         public BettingPanel()
         {
-            setPreferredSize(new Dimension(800, 600));
+            setPreferredSize(new Dimension(600, 600));
 //            setBackground(Color.WHITE);
-            this.image = new ImageIcon("./resources/money.jpg").getImage();
+            this.image = new ImageIcon("./resources/betting.jpg").getImage();
         }
         
         @Override

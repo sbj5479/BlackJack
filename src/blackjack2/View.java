@@ -227,6 +227,9 @@ public class View extends JFrame implements Observer {
         //        bottomCardPanel.setLayout(new GridLayout(1,6));
         
         leaderboardPanel = new JPanel();
+        Color colour = new Color(34, 177, 76);
+        leaderboardPanel.setBackground(colour);
+        
 //        leaderboardPanel.setLayout(new BoxLayout(leaderboardPanel, BoxLayout.Y_AXIS));
         leaderboardPanel.setLayout(new GridLayout(6,3));
         JLabel temp1 = new JLabel("");
