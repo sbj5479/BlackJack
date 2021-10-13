@@ -192,13 +192,13 @@ public class Model extends Observable {
             System.out.println("BLACKJACK");
             data.blackjack = true;
             Blackjack = true;
-            Queue<String> endgameQueue = dealerGame();
-            int queueSize = endgameQueue.size();
-            for(int i = 0 ; i < queueSize; i ++)
-            {
-                String card = endgameQueue.poll();
-                cardQueue.offer(card);
-            }
+//            Queue<String> endgameQueue = dealerGame();
+//            int queueSize = endgameQueue.size();
+//            for(int i = 0 ; i < queueSize; i ++)
+//            {
+//                String card = endgameQueue.poll();
+//                cardQueue.offer(card);
+//            }
         }
         
         return cardQueue;
@@ -300,17 +300,17 @@ public class Model extends Observable {
             System.out.println("STARTING DEALER");
 //            stand();
         } //if bust
-        else if (data.userScore > 21) {
-            System.out.println("You have: " + data.userScore);
-            System.out.println("BUST");
-//            setWin(2);
-            data.win = 2;
-            this.data.gameFinish = true;
-            this.setChanged();
-            this.notifyObservers(this.data);
+//        else if (data.userScore > 21) {
+//            System.out.println("You have: " + data.userScore);
+//            System.out.println("BUST");
+////            setWin(2);
+//            data.win = 2;
+//            this.data.gameFinish = true;
+//            this.setChanged();
+//            this.notifyObservers(this.data);
 
 //            return;
-        }
+        
         return deck.getS();
 
     }
@@ -505,6 +505,7 @@ public class Model extends Observable {
         this.data.restart = true;
         this.data.bust = false;
         this.data.blackjack = false;
+        this.data.startdealer = false;
         this.data.stand = false;
         this.data.betFinish = false;
         this.data.gameStart = false;
@@ -537,6 +538,7 @@ public class Model extends Observable {
     
     public void checkWin()
     {
+        
         if(data.dealerScore < data.userScore)
         {
             data.win = 1;
@@ -551,6 +553,20 @@ public class Model extends Observable {
             this.setChanged();
             this.notifyObservers(this.data);
         }
+        
     }
+    
+    public void checkBust()
+    {
+        if(data.userScore > 21)
+        {
+            data.win = 2;
+            this.data.gameFinish = true;
+            this.setChanged();
+            this.notifyObservers(this.data);
+            
+        }
+    }
+            
 
 }

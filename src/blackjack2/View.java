@@ -274,10 +274,11 @@ public class View extends JFrame implements Observer {
 
         topCardPanel = new JPanel();
 //        topCardPanel = new CardPanel();
-//        topCardPanel.setBackground(Color.);
+        Color colour = new Color(34, 177, 76);
+        topCardPanel.setBackground(colour);
 //        topCardPanel.setLayout(new GridLayout(1, 6));
         bottomCardPanel = new JPanel();
-//        bottomCardPanel.setBackground(Color.green);
+        bottomCardPanel.setBackground(colour);
 //        bottomCardPanel.setLayout(new GridLayout(1,6));
         
         gamePanel = new GamePanel();
