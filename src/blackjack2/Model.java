@@ -71,6 +71,7 @@ public class Model extends Observable {
 
     public void finishBets() {
         this.data.betFinish = true;
+        data.gameStart = true;
         data.gameFinish = false;
         this.setChanged();
         this.notifyObservers(this.data);
@@ -118,8 +119,28 @@ public class Model extends Observable {
         cardQueue.offer(deck.getS());
         
         
-        //dealers first card (hidden)
-        cardQueue.offer("random");
+        //dealers second card
+        deck.draw();
+
+//        System.out.println(deck.getN());
+        switch (deck.getN()) {
+            //if ace
+            case 11:
+                System.out.println("Dealer Card 2: " + deck.getS());
+
+                data.dealerScore = data.dealerScore + deck.getN();
+                DealerAce1 = true;
+
+                break;
+            //normal case
+            default:
+                System.out.println("Dealer Card 2: " + deck.getS());
+                data.dealerScore = data.dealerScore + deck.getN();
+                break;
+
+        }
+        
+        cardQueue.offer(deck.getS());
         
         
         
@@ -148,32 +169,13 @@ public class Model extends Observable {
         cardQueue.offer(deck.getS());
         
         
-        //dealers second card
-        deck.draw();
-
-//        System.out.println(deck.getN());
-        switch (deck.getN()) {
-            //if ace
-            case 11:
-                System.out.println("Dealer Card 2: " + deck.getS());
-
-                data.dealerScore = data.dealerScore + deck.getN();
-                DealerAce1 = true;
-
-                break;
-            //normal case
-            default:
-                System.out.println("Dealer Card 2: " + deck.getS());
-                data.dealerScore = data.dealerScore + deck.getN();
-                break;
-
-        }
-        
-        cardQueue.offer(deck.getS());
+        //dealers second card (hidden)
+        cardQueue.offer("random");
         
         
         
-        //draw a card
+        
+       
         
         
         System.out.println("Current score: " + data.userScore);
@@ -262,6 +264,7 @@ public class Model extends Observable {
     }
     
     public String drawCard() {
+        data.gameStart = false;
         deck.draw();
         switch (deck.getN()) {
             case 11:
@@ -313,6 +316,7 @@ public class Model extends Observable {
     }
 
     public Queue<String> dealerGame() {
+        data.gameStart = false;
         Queue<String> cardQueue = new LinkedList();
         System.out.println("---------------------------------------------------------------");
         System.out.println("Dealers score: " + data.dealerScore);
@@ -503,6 +507,11 @@ public class Model extends Observable {
         this.data.blackjack = false;
         this.data.stand = false;
         this.data.betFinish = false;
+        this.data.gameStart = false;
+        this.data.gameFinish = true;
+        
+        
+        
         this.data.pot = 0;
         this.setChanged();
         this.notifyObservers(this.data);

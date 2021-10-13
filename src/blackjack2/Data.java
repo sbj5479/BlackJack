@@ -17,7 +17,8 @@ public class Data {
     User user = new User();
     
     boolean betFinish = false;
-    boolean gameFinish = false;
+    boolean gameStart = false;
+    boolean gameFinish = true;
     
     boolean bust = false;
     boolean blackjack = false;

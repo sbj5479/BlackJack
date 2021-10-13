@@ -6,6 +6,7 @@
 package blackjack2;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -79,10 +80,12 @@ public class View extends JFrame implements Observer {
     public JPanel topCardPanel;
     public JPanel bottomCardPanel;
     private JButton hitButton;
+    public JLabel statusLabel;
     private JButton standButton;
     public JButton doubleButton;
     public JLabel userScore;
     public JLabel dealerScore;
+    private int status;
 
     //restart
     private JPanel restartPanel;
@@ -150,6 +153,7 @@ public class View extends JFrame implements Observer {
         doubleButton = new JButton("DOUBLE");
         userScore = new JLabel("You have: 0");
         dealerScore = new JLabel("Dealer has: 0");
+        statusLabel = new JLabel("");
         
         diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
 
@@ -269,16 +273,18 @@ public class View extends JFrame implements Observer {
     public void playGame(View view, Data data) {
 
         topCardPanel = new JPanel();
+//        topCardPanel = new CardPanel();
+//        topCardPanel.setBackground(Color.);
 //        topCardPanel.setLayout(new GridLayout(1, 6));
         bottomCardPanel = new JPanel();
+//        bottomCardPanel.setBackground(Color.green);
 //        bottomCardPanel.setLayout(new GridLayout(1,6));
         
-        gamePanel = new JPanel();
-        gamePanel.setLayout(new GridLayout(3, 2));
+        gamePanel = new GamePanel();
+        gamePanel.setLayout(new GridLayout(3, 2, 10, 20));
         gamePanel.add(dealerScore);
         gamePanel.add(hitButton);
-        JLabel temp = new JLabel("");
-        gamePanel.add(temp);
+        gamePanel.add(statusLabel);
         gamePanel.add(standButton);
         gamePanel.add(userScore);
         gamePanel.add(doubleButton);
@@ -348,13 +354,28 @@ public class View extends JFrame implements Observer {
         this.repaint();
     }
     
-    public void addButtons()
+    public void addButtons(int status)
     {
         bottomCardPanel.add(restartButton);
         bottomCardPanel.add(endGameButton);
+        if(status == 1)
+            statusLabel.setText("                      WIN");
+        else if(status == 2)
+            statusLabel.setText("                      LOSE");
+        else if(status == 3)
+            statusLabel.setText("                      DRAW");
+        else
+            statusLabel.setText("                      BLACKJACK");
         this.revalidate();
         this.repaint();
         
+    }
+    
+    public void doubleOff()
+    {
+        doubleButton.setEnabled(false);
+        this.revalidate();
+        this.repaint();
     }
     
     
@@ -418,14 +439,19 @@ public class View extends JFrame implements Observer {
             //main loop
             if (data.user.getCoins() > 0 && !data.quitFlag) {
                 do {
-                    System.out.println("starting game");
+                    if(!data.betFinish)
+                    {
+                        System.out.println("BETTING-----------");
                     //betting
-                    this.bettingScreen(data.user);
-                    if (data.betFinish) {
+                        this.bettingScreen(data.user);
+                    }
+                    if (data.gameStart) 
+                    {
                         //start game
-                        System.out.println("bet over");
+                        System.out.println("GAME START-----------");
                         
                         this.playGame(this, data);
+                    }
 //                        if(data.scoreChanged)
 //                        {
 ////                            System.out.println("DEALER SCORE CHANGED HERE\n");
@@ -439,100 +465,95 @@ public class View extends JFrame implements Observer {
 
 
 
-//                        if(!data.showDoub)
-//                        {
-//                            doubleButton.setEnabled(false);
-//                        }
+                    if(!data.showDoub)
+                    {
+
+                        doubleOff();
+                    }
 
 
 
-                        if (data.gameFinish) {
+                    if (data.gameFinish && data.betFinish) 
+                    {
+                        System.out.println("GAME FINISH--------");
 //                            System.out.println("game stop");
-                            if (data.win == 2) {
-                                //minus coins
-                                System.out.println("minus");
-                                if (data.doub) {
-                                    double multipot = data.pot * 1.5;
-                                    data.user.coins -= multipot;
-                                } else {
-                                    data.user.coins -= data.pot;
-                                }
+                        if (data.win == 2) {
+                            //minus coins
+                            System.out.println("minus");
+                            status = 2;
+                            if (data.doub) {
+                                double multipot = data.pot * 1.5;
+                                data.user.coins -= multipot;
+                            } else {
+                                data.user.coins -= data.pot;
+                            }
 //                                addButtons();
 //                                loseScreen();
-                                
 
-                            } else if (data.win == 3) {
-                                //double coins
-                                System.out.println("draw");
-                                
+
+                        } else if (data.win == 3) {
+                            //double coins
+                            status = 3;
+                            System.out.println("draw");
+
 //                                addButtons();
 //                                blackjackScreen();
-                                
+
 //                                
-                            } 
-                            else 
+                        } 
+                        else 
+                        {
+                            System.out.println("win");
+                            status = 1;
+                            if (data.doub) {
+                                System.out.println("doub");
+                                double multipot = data.pot * 2;
+                                data.user.coins += multipot;
+                            }
+                            else if(data.blackjack)
                             {
-                                System.out.println("win");
-                                if (data.doub) {
-                                    System.out.println("doub");
-                                    double multipot = data.pot * 2;
-                                    data.user.coins += multipot;
-                                }
-                                else if(data.blackjack)
-                                {
-                                    //double coins
-                                    System.out.println("double");
-                                    double multipot = data.pot * 1.5;
-                                    data.user.coins += multipot;
-                                } 
-                                else {
-                                    data.user.coins += data.pot;
-                                }
+                                status = 4;
+                                //double coins
+                                System.out.println("double");
+                                double multipot = data.pot * 1.5;
+                                data.user.coins += multipot;
+                            } 
+                            else {
+                                data.user.coins += data.pot;
+                            }
 //                                addButtons();
 //                                winScreen();
-                                
+
 //                                
-                            }
+                        }
 
                             
-                                
-                            addButtons();
+                          
+                        addButtons(status);
                            
                             
 //                            //restart
 //                            this.restartScreen();
 //                            
-                            if (!data.restart) {
-                                System.out.println("stop!!!!");
-                            } else {
-                                System.out.println("restart");
-                            }
+                        if (!data.restart) {
+                            System.out.println("stop!!!!");
+                        } else {
+                            System.out.println("restart");
                         }
-
-//                        if(data.bust)
-//                        {
-//                        //game has ended
-//                            System.out.println("bust");
-//                            this.restartScreen();
-//
-//                        }
-                        //play again
-//                        
-//                        else {
-//                           this.bettingScreen(data.user);
-//                       }
                     }
-                }
-                while(!data.restart);
+
+                }while(!data.restart);
             }
+            
+        }
 //            System.out.println("GAME IS NOW FINSIHED");
 //            if
 //            {
 //                System.out.println("Insufficient coins");
 //            }
-        }
     }
+}
 
     
 
-}
+
