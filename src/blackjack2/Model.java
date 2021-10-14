@@ -17,7 +17,7 @@ import java.util.Queue;
 public class Model extends Observable {
 
     public String username;
-    public TempDatabase db;
+    public Database db;
     public Data data;
     public Deck deck;
     boolean Ace1;
@@ -25,7 +25,8 @@ public class Model extends Observable {
     boolean Blackjack;
 
     public Model() {
-        this.db = new TempDatabase();
+        this.db = new Database();
+        this.db.dbsetup();
         deck = new Deck();
 //        Ace1 = false;
 //        DealerAce1 = false;
