@@ -420,7 +420,7 @@ public class View extends JFrame implements Observer {
         else if(status == 2)
             statusLabel.setText("                      LOSE");
         else if(status == 3)
-            statusLabel.setText("                      DRAW");
+            statusLabel.setText("                      PUSH");
         else
             statusLabel.setText("                      BLACKJACK");
         this.revalidate();
@@ -437,7 +437,7 @@ public class View extends JFrame implements Observer {
     
     public void showInstructions()
     {
-        dealerMessage.showMessageDialog(null, "<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>");
+        dealerMessage.showMessageDialog(null, "<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>", "Instructions", JOptionPane.INFORMATION_MESSAGE);
 //        instructionsButton.setVisible();
 //        bottomLoginPanel.add(dealerMessage);
     }
@@ -507,10 +507,10 @@ public class View extends JFrame implements Observer {
             if(data.reFail)
             {
 //                System.out.println("WORK?");
-                this.failMessage.showMessageDialog(null, "Name does not exist");
+                this.failMessage.showMessageDialog(null, "Name does not exist", "Invalid Name", JOptionPane.WARNING_MESSAGE);
             }
             else 
-                this.failMessage.showMessageDialog(null, "Name already exists");
+                this.failMessage.showMessageDialog(null, "Name already exists", "Invalid Name", JOptionPane.WARNING_MESSAGE);
 //            }
 //            if(data.newFlag)
 //            {
