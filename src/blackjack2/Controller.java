@@ -62,6 +62,14 @@ public class Controller implements ActionListener {
                 this.view.reLoginScreen();
 //                this.model.reLogin();
                 break;
+                
+            case "Instructions":
+                this.view.showInstructions();
+                break;
+                
+            case "X":
+                model.quitGame();
+                break;
 
             case "Leaderboard":
                 ArrayList<Player> top5 = this.model.getTopScores();

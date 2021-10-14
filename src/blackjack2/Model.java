@@ -500,6 +500,14 @@ public class Model extends Observable {
         this.setChanged();
         this.notifyObservers(this.data);
     }
+    
+    //QUIT RIGHT AWAY
+    public void quitGame() {
+        data = new Data();
+        this.data.quitFlag = true; // Mark quitFlag as false.
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
 
     public void restart() {
         this.data.restart = true;
@@ -518,7 +526,11 @@ public class Model extends Observable {
         this.notifyObservers(this.data);
     }
 
+    
+    
+    //quit after a game is played
     public void quit() {
+        
         this.data.restart = false;
         this.data.quitFlag = true;
         this.setChanged();

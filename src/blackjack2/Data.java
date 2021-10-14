@@ -17,6 +17,7 @@ public class Data {
     boolean quitFlag = false;
     int pot = 0;
     User user = new User();
+//    Dealer dealer = new Dealer("Dealer");
     
     boolean betFinish = false;
     boolean gameStart = false;

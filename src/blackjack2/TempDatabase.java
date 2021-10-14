@@ -5,9 +5,13 @@
  */
 package blackjack2;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -221,4 +225,16 @@ public class TempDatabase {
         //write to scores.txt 
         scoresinout.WriteH(scoreMap);
     }
+    
+//    public void quitGame(int score, String username) {
+//        Statement statement;
+//        try {
+//            statement = conn.createStatement();
+//            statement.executeUpdate("UPDATE UserInfo SET score=" + score + " WHERE userid='" + username + "'");
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//    }
 }

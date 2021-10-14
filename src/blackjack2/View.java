@@ -35,12 +35,17 @@ public class View extends JFrame implements Observer {
     private JButton returnPlayer;
     private JButton leaderboard;
     private JButton exit;
+    
+    Dealer dealer;
 
     //new login
     private JPanel newLoginPanel;
     private JButton createButton;
     private JLabel existLabel;
     public JButton LOGIN;
+    public JOptionPane dealerMessage;
+    public JButton instructionsButton;
+    public JPanel bottomLoginPanel;
     //both login
     private JLabel name;
     public JTextField nameField;
@@ -103,7 +108,7 @@ public class View extends JFrame implements Observer {
     public JOptionPane stopMessage;
 
     
-    private Image diamondCard;
+//    private Image diamondCard;
     
     public View() {
         //home
@@ -119,6 +124,7 @@ public class View extends JFrame implements Observer {
         homePanel.add(returnPlayer);
         homePanel.add(leaderboard);
         homePanel.add(exit);
+        dealer = new Dealer("Dealer");
 
         add(homePanel, BorderLayout.CENTER);
 
@@ -130,6 +136,7 @@ public class View extends JFrame implements Observer {
         newLabel = new JLabel("First time playing? Click here -->");
         existLabel = new JLabel("Played before? Click here -->");
         failMessage = new JOptionPane();
+        instructionsButton = new JButton("Instructions");
 
         //leaderboard buttons and labels
         close = new JButton("close");
@@ -157,7 +164,7 @@ public class View extends JFrame implements Observer {
         dealerScore = new JLabel("Dealer has: 0");
         statusLabel = new JLabel("");
         
-        diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
+//        diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
 
         //restart buttons
         restartButton = new JButton("restart");
@@ -188,18 +195,28 @@ public class View extends JFrame implements Observer {
         newLoginPanel = new JPanel();
         name = new JLabel("Name:");
         nameField = new JTextField(30);
-
+//        dealerMessage = new JLabel("<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>");
+        bottomLoginPanel = new JPanel();
+        bottomLoginPanel.setLayout(new GridLayout(1,3));
+//        instructionsButton = new JButton("Instructions");
+//        bottomLoginPanel.add(dealerMessage);
         
         newLoginPanel.add(name);
         newLoginPanel.add(nameField);
         newLoginPanel.add(createButton);
         newLoginPanel.add(existLabel);
         newLoginPanel.add(LOGIN);
+        JLabel temp = new JLabel("");
+        bottomLoginPanel.add(temp);
+        bottomLoginPanel.add(instructionsButton);
+        JLabel temp2 = new JLabel("");
+        bottomLoginPanel.add(temp2);
         
 
         this.getContentPane().removeAll();
         newLoginPanel.setVisible(true);
         this.add(newLoginPanel);
+        this.add(bottomLoginPanel, BorderLayout.SOUTH);
         this.revalidate();
         this.repaint();
     }
@@ -418,6 +435,23 @@ public class View extends JFrame implements Observer {
         this.repaint();
     }
     
+    public void showInstructions()
+    {
+        dealerMessage.showMessageDialog(null, "<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>");
+//        instructionsButton.setVisible();
+//        bottomLoginPanel.add(dealerMessage);
+    }
+    
+    private void quitGame(int score) {
+        JPanel quitPanel = new JPanel();
+        JLabel scoreLabel = new JLabel("Your score: " + score);
+        quitPanel.add(scoreLabel);
+        this.getContentPane().removeAll();
+        //calcPanel.setVisible(true);
+        this.add(quitPanel);
+        this.revalidate();
+        this.repaint();
+    }
     
     
     public void addActionListener(ActionListener listener) {
@@ -432,6 +466,7 @@ public class View extends JFrame implements Observer {
         this.createButton.addActionListener(listener);
         this.CREATE.addActionListener(listener);
         this.LOGIN.addActionListener(listener);
+        this.instructionsButton.addActionListener(listener);
 
         //leaderboard
         this.close.addActionListener(listener);
@@ -460,7 +495,11 @@ public class View extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Data data = (Data) arg;
-        if (!data.loginFlag) {
+        if(data.quitFlag)
+        {
+            this.quitGame(data.user.getCoins());
+        }
+        else if (!data.loginFlag) {
             this.nameField.setText("");
 //            if(data.reFlag)
 //            {
@@ -478,7 +517,8 @@ public class View extends JFrame implements Observer {
                 
 //                this.failMessage.showMessageDialog(null, "Name already exists");
 //            }
-        } 
+        }
+        
         else 
         {
             //main loop
@@ -593,6 +633,10 @@ public class View extends JFrame implements Observer {
         {
             this.stopMessage.showMessageDialog(null, "Insufficient coins to play.");
             //end game
+        }
+        if(data.quitFlag)
+        {
+            this.quitGame(data.userScore);
         }
         }
 //            System.out.println("GAME IS NOW FINSIHED");
