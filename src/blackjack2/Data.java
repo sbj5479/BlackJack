@@ -11,6 +11,8 @@ package blackjack2;
  */
 public class Data {
     boolean loginFlag = false;
+    boolean reFail = false;
+    boolean newFail = false;
     
     boolean quitFlag = false;
     int pot = 0;

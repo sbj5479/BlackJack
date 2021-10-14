@@ -1,4 +1,5 @@
 Pablo=925
+Camerononon=0
 James=800
 Harry=1100
 Benny=1000
@@ -6,7 +7,9 @@ John=1000
 Mark=1880
 Ben=1000
 Connor=990
-Cam=1314
+Cameron=0
+Cameronon=0
+Cam=1244
 Kenneth=1020
 Nathan=1000
 Tom=1000

@@ -38,7 +38,7 @@ public class Model extends Observable {
 
         this.username = username;
         this.data = this.db.checkName(username);
-
+        
         this.setChanged();
         this.notifyObservers(this.data);
     }
@@ -560,6 +560,7 @@ public class Model extends Observable {
     {
         if(data.userScore > 21)
         {
+//            System.out.println("BUSTTTT");
             data.win = 2;
             this.data.gameFinish = true;
             this.setChanged();

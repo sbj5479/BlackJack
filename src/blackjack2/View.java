@@ -61,7 +61,7 @@ public class View extends JFrame implements Observer {
     private JButton close;
 
     //bidding
-    private JPanel biddingPanel;
+    private JPanel bettingPanel;
     public JLabel bank;
     public JLabel pot;
 
@@ -99,6 +99,8 @@ public class View extends JFrame implements Observer {
     private JLabel winLabel;
     private JLabel loseLabel;
     private JLabel blackjackLabel;
+    
+    public JOptionPane stopMessage;
 
     
     private Image diamondCard;
@@ -125,9 +127,9 @@ public class View extends JFrame implements Observer {
         createButton = new JButton("create");
         LOGIN = new JButton("LOGIN");
         CREATE = new JButton("CREATE");
-        newLabel = new JLabel("First time playing? Click here ->");
-        existLabel = new JLabel("Played before? Click here ->");
-        failMessage = new JOptionPane("Name already exists");
+        newLabel = new JLabel("First time playing? Click here -->");
+        existLabel = new JLabel("Played before? Click here -->");
+        failMessage = new JOptionPane();
 
         //leaderboard buttons and labels
         close = new JButton("close");
@@ -160,6 +162,7 @@ public class View extends JFrame implements Observer {
         //restart buttons
         restartButton = new JButton("restart");
         endGameButton = new JButton("end game");
+        stopMessage = new JOptionPane();
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 600);
@@ -276,20 +279,20 @@ public class View extends JFrame implements Observer {
     }
 
     public void bettingScreen(User user) {
-        biddingPanel = new BettingPanel();
+        bettingPanel = new BettingPanel();
         bank = new JLabel("Bank: $" + user.getCoins());
         pot = new JLabel("Pot: $0");
 
-        biddingPanel.add(bank);
-        biddingPanel.add(pot);
-        biddingPanel.add(add1);
-        biddingPanel.add(add5);
-        biddingPanel.add(add10);
-        biddingPanel.add(add25);
-        biddingPanel.add(add50);
-        biddingPanel.add(add100);
-        biddingPanel.add(allIn);
-        biddingPanel.add(playButton);
+        bettingPanel.add(bank);
+        bettingPanel.add(pot);
+        bettingPanel.add(add1);
+        bettingPanel.add(add5);
+        bettingPanel.add(add10);
+        bettingPanel.add(add25);
+        bettingPanel.add(add50);
+        bettingPanel.add(add100);
+        bettingPanel.add(allIn);
+        bettingPanel.add(playButton);
 
         String text = bank.getText();
         String number = text.replaceAll("[^0-9]", "");
@@ -297,8 +300,8 @@ public class View extends JFrame implements Observer {
         System.out.println(bank);
 
         this.getContentPane().removeAll();
-        biddingPanel.setVisible(true);
-        this.add(biddingPanel);
+        bettingPanel.setVisible(true);
+        this.add(bettingPanel);
         this.revalidate();
         this.repaint();
     }
@@ -461,9 +464,14 @@ public class View extends JFrame implements Observer {
             this.nameField.setText("");
 //            if(data.reFlag)
 //            {
-//                
-                this.failMessage.showMessageDialog(null, "Invalid name");
-                
+            System.out.println(data.reFail);
+            if(data.reFail)
+            {
+//                System.out.println("WORK?");
+                this.failMessage.showMessageDialog(null, "Name does not exist");
+            }
+            else 
+                this.failMessage.showMessageDialog(null, "Name already exists");
 //            }
 //            if(data.newFlag)
 //            {
@@ -519,7 +527,7 @@ public class View extends JFrame implements Observer {
                             System.out.println("minus");
                             status = 2;
                             if (data.doub) {
-                                double multipot = data.pot * 1.5;
+                                double multipot = data.pot * 2;
                                 data.user.coins -= multipot;
                             } else {
                                 data.user.coins -= data.pot;
@@ -550,8 +558,7 @@ public class View extends JFrame implements Observer {
                             else if(data.blackjack)
                             {
                                 status = 4;
-                                //double coins
-                                System.out.println("double");
+                                
                                 double multipot = data.pot * 1.5;
                                 data.user.coins += multipot;
                             } 
@@ -576,12 +583,17 @@ public class View extends JFrame implements Observer {
                             System.out.println("stop!!!!");
                         } else {
                             System.out.println("restart");
+                            
                         }
                     }
 
                 }while(!data.restart);
             }
-            
+        if(data.user.getCoins() == 0)
+        {
+            this.stopMessage.showMessageDialog(null, "Insufficient coins to play.");
+            //end game
+        }
         }
 //            System.out.println("GAME IS NOW FINSIHED");
 //            if

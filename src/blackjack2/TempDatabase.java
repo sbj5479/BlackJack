@@ -53,12 +53,14 @@ public class TempDatabase {
             int pCoins = Integer.valueOf((String)scoreMap.get(username)); 
             data.user = new User(username, pCoins, true);
             data.loginFlag = true;
+            data.reFail = false;
             
             
         }
         else
         {
             data.loginFlag = false;
+            data.reFail = true;
         }
         return data;
     }
@@ -107,11 +109,13 @@ public class TempDatabase {
             scoresinout.WriteH(scoreMap);
             //return created user
             data.loginFlag = true;
+            data.newFail = false;
         } 
         //user already exists with same name
         else
         {
             data.loginFlag = false;
+            data.newFail = true;
         }
         return data;
     }
