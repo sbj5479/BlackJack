@@ -1,5 +1,5 @@
 Kenneth=1020
 Harry=1100
 Mark=1880
-Cam=1259
+Cam=1244
 Dealer=50000

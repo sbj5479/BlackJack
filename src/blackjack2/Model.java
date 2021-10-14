@@ -569,6 +569,7 @@ public class Model extends Observable {
         {
 //            System.out.println("BUSTTTT");
             data.win = 2;
+            data.bust = true;
             this.data.gameFinish = true;
             this.setChanged();
             this.notifyObservers(this.data);

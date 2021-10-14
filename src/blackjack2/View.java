@@ -35,7 +35,7 @@ public class View extends JFrame implements Observer {
     private JButton returnPlayer;
     private JButton leaderboard;
     private JButton exit;
-    
+
     Dealer dealer;
 
     //new login
@@ -104,12 +104,10 @@ public class View extends JFrame implements Observer {
     private JLabel winLabel;
     private JLabel loseLabel;
     private JLabel blackjackLabel;
-    
+
     public JOptionPane stopMessage;
 
-    
 //    private Image diamondCard;
-    
     public View() {
         //home
         this.homePanel = new HomePanel();
@@ -163,9 +161,8 @@ public class View extends JFrame implements Observer {
         userScore = new JLabel("You have: 0");
         dealerScore = new JLabel("Dealer has: 0");
         statusLabel = new JLabel("");
-        
-//        diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
 
+//        diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
         //restart buttons
         restartButton = new JButton("restart");
         endGameButton = new JButton("end game");
@@ -193,14 +190,17 @@ public class View extends JFrame implements Observer {
     public void newLoginScreen() {
 
         newLoginPanel = new JPanel();
+        Color colour = new Color(34, 177, 76);
+        newLoginPanel.setBackground(colour);
         name = new JLabel("Name:");
         nameField = new JTextField(30);
 //        dealerMessage = new JLabel("<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>");
         bottomLoginPanel = new JPanel();
-        bottomLoginPanel.setLayout(new GridLayout(1,3));
+        bottomLoginPanel.setLayout(new GridLayout(1, 3));
+        bottomLoginPanel.setBackground(colour);
 //        instructionsButton = new JButton("Instructions");
 //        bottomLoginPanel.add(dealerMessage);
-        
+
         newLoginPanel.add(name);
         newLoginPanel.add(nameField);
         newLoginPanel.add(createButton);
@@ -211,7 +211,6 @@ public class View extends JFrame implements Observer {
         bottomLoginPanel.add(instructionsButton);
         JLabel temp2 = new JLabel("");
         bottomLoginPanel.add(temp2);
-        
 
         this.getContentPane().removeAll();
         newLoginPanel.setVisible(true);
@@ -223,16 +222,16 @@ public class View extends JFrame implements Observer {
 
     public void reLoginScreen() {
         reLoginPanel = new JPanel();
+        Color colour = new Color(34, 177, 76);
+        reLoginPanel.setBackground(colour);
         name = new JLabel("Name:");
         nameField = new JTextField(30);
 
-        
         reLoginPanel.add(name);
         reLoginPanel.add(nameField);
         reLoginPanel.add(loginButton);
         reLoginPanel.add(newLabel);
         reLoginPanel.add(CREATE);
-        
 
         this.getContentPane().removeAll();
         reLoginPanel.setVisible(true);
@@ -245,13 +244,13 @@ public class View extends JFrame implements Observer {
         JPanel topPanel = new LeaderBoardTopPanel();
 //        topPanel.setLayout(new GridLayout(3,4));
         //        bottomCardPanel.setLayout(new GridLayout(1,6));
-        
+
         leaderboardPanel = new JPanel();
         Color colour = new Color(34, 177, 76);
         leaderboardPanel.setBackground(colour);
-        
+
 //        leaderboardPanel.setLayout(new BoxLayout(leaderboardPanel, BoxLayout.Y_AXIS));
-        leaderboardPanel.setLayout(new GridLayout(6,3));
+        leaderboardPanel.setLayout(new GridLayout(6, 3));
         JLabel temp1 = new JLabel("");
         JLabel temp2 = new JLabel("");
         JLabel temp3 = new JLabel("");
@@ -329,13 +328,14 @@ public class View extends JFrame implements Observer {
         Color colour = new Color(34, 177, 76);
         topCardPanel.setBackground(colour);
 //        topCardPanel = new CardPanel();
-        
+
 //        topCardPanel.setLayout(new GridLayout(1, 6));
         bottomCardPanel = new JPanel();
         bottomCardPanel.setBackground(colour);
 //        bottomCardPanel.setLayout(new GridLayout(1,6));
-        
-        gamePanel = new GamePanel();
+
+        gamePanel = new JPanel();
+        gamePanel.setBackground(colour);
         gamePanel.setLayout(new GridLayout(3, 2, 10, 20));
         gamePanel.add(dealerScore);
         gamePanel.add(hitButton);
@@ -343,8 +343,6 @@ public class View extends JFrame implements Observer {
         gamePanel.add(standButton);
         gamePanel.add(userScore);
         gamePanel.add(doubleButton);
-        
-        
 
         this.getContentPane().removeAll();
         topCardPanel.setVisible(true);
@@ -394,7 +392,6 @@ public class View extends JFrame implements Observer {
         this.add(losePanel);
         this.revalidate();
         this.repaint();
-        
 
     }
 
@@ -410,50 +407,53 @@ public class View extends JFrame implements Observer {
         this.revalidate();
         this.repaint();
     }
-    
-    public void addButtons(int status)
-    {
+
+    public void addButtons(int status) {
         bottomCardPanel.add(restartButton);
         bottomCardPanel.add(endGameButton);
-        if(status == 1)
+        if (status == 1) {
             statusLabel.setText("                      WIN");
-        else if(status == 2)
+        } else if (status == 2) {
             statusLabel.setText("                      LOSE");
-        else if(status == 3)
+        } else if (status == 3) {
             statusLabel.setText("                      PUSH");
-        else
+        } else if (status == 4) {
+            statusLabel.setText("                      BUST");
+        } else {
             statusLabel.setText("                      BLACKJACK");
+        }
         this.revalidate();
         this.repaint();
-        
+
     }
-    
-    public void doubleOff()
-    {
+
+    public void doubleOff() {
         doubleButton.setEnabled(false);
         this.revalidate();
         this.repaint();
     }
-    
-    public void showInstructions()
-    {
+
+    public void showInstructions() {
         dealerMessage.showMessageDialog(null, "<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>", "Instructions", JOptionPane.INFORMATION_MESSAGE);
 //        instructionsButton.setVisible();
 //        bottomLoginPanel.add(dealerMessage);
     }
-    
-    private void quitGame(int score) {
+
+    private void quitGame(int coins) {
         JPanel quitPanel = new JPanel();
-        JLabel scoreLabel = new JLabel("Your score: " + score);
-        quitPanel.add(scoreLabel);
+        Color colour = new Color(34, 177, 76);
+        quitPanel.setBackground(colour);
+        JLabel coinsLabel = new JLabel("Your remaining coins: " + coins);
+        JLabel thanksLabel = new JLabel("Thanks for playing!");
+        quitPanel.add(coinsLabel);
+        quitPanel.add(thanksLabel);
         this.getContentPane().removeAll();
         //calcPanel.setVisible(true);
         this.add(quitPanel);
         this.revalidate();
         this.repaint();
     }
-    
-    
+
     public void addActionListener(ActionListener listener) {
         //home
         this.newPlayer.addActionListener(listener);
@@ -495,52 +495,44 @@ public class View extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Data data = (Data) arg;
-        if(data.quitFlag)
-        {
+        if (data.quitFlag) {
             this.quitGame(data.user.getCoins());
-        }
-        else if (!data.loginFlag) {
+        } else if (!data.loginFlag) {
             this.nameField.setText("");
 //            if(data.reFlag)
 //            {
             System.out.println(data.reFail);
-            if(data.reFail)
-            {
+            if (data.reFail) {
 //                System.out.println("WORK?");
                 this.failMessage.showMessageDialog(null, "Name does not exist", "Invalid Name", JOptionPane.WARNING_MESSAGE);
-            }
-            else 
+            } else {
                 this.failMessage.showMessageDialog(null, "Name already exists", "Invalid Name", JOptionPane.WARNING_MESSAGE);
+            }
 //            }
 //            if(data.newFlag)
 //            {
-                
+
 //                this.failMessage.showMessageDialog(null, "Name already exists");
 //            }
-        }
-        
-        else 
-        {
+        } else {
             //main loop
             if (data.user.getCoins() > 0 && !data.quitFlag) {
                 do {
-                    if(!data.betFinish)
-                    {
+                    if (!data.betFinish) {
                         System.out.println("BETTING-----------");
-                    //betting
+                        //betting
                         this.bettingScreen(data.user);
                     }
-                    if (data.gameStart) 
-                    {
+                    if (data.gameStart) {
                         //start game
                         System.out.println("GAME START-----------");
-                        
+
                         this.playGame(this, data);
                         hitButton.setEnabled(true);
                         standButton.setEnabled(true);
                         doubleButton.setEnabled(true);
                     }
-                    
+
 //                        if(data.scoreChanged)
 //                        {
 ////                            System.out.println("DEALER SCORE CHANGED HERE\n");
@@ -551,15 +543,7 @@ public class View extends JFrame implements Observer {
 //                            this.repaint();
 //                            data.scoreChanged = false;
 //                        }
-
-
-
-                    
-
-
-
-                    if (data.gameFinish && data.betFinish) 
-                    {
+                    if (data.gameFinish && data.betFinish) {
                         hitButton.setEnabled(false);
                         standButton.setEnabled(false);
                         doubleButton.setEnabled(false);
@@ -569,6 +553,10 @@ public class View extends JFrame implements Observer {
                             //minus coins
                             System.out.println("minus");
                             status = 2;
+                            if (data.bust) {
+                                status = 4;
+                            }
+
                             if (data.doub) {
                                 double multipot = data.pot * 2;
                                 data.user.coins -= multipot;
@@ -578,7 +566,6 @@ public class View extends JFrame implements Observer {
 //                                addButtons();
 //                                loseScreen();
 
-
                         } else if (data.win == 3) {
                             //double coins
                             status = 3;
@@ -586,26 +573,20 @@ public class View extends JFrame implements Observer {
 
 //                                addButtons();
 //                                blackjackScreen();
-
 //                                
-                        } 
-                        else 
-                        {
+                        } else {
                             System.out.println("win");
                             status = 1;
                             if (data.doub) {
                                 System.out.println("doub");
                                 double multipot = data.pot * 2;
                                 data.user.coins += multipot;
-                            }
-                            else if(data.blackjack)
-                            {
-                                status = 4;
-                                
+                            } else if (data.blackjack) {
+                                status = 5;
+
                                 double multipot = data.pot * 1.5;
                                 data.user.coins += multipot;
-                            } 
-                            else {
+                            } else {
                                 data.user.coins += data.pot;
                             }
 //                                addButtons();
@@ -614,11 +595,8 @@ public class View extends JFrame implements Observer {
 //                                
                         }
 
-                            
-                          
                         addButtons(status);
-                           
-                            
+
 //                            //restart
 //                            this.restartScreen();
 //                            
@@ -626,21 +604,19 @@ public class View extends JFrame implements Observer {
                             System.out.println("stop!!!!");
                         } else {
                             System.out.println("restart");
-                            
+
                         }
                     }
 
-                }while(!data.restart);
+                } while (!data.restart);
             }
-        if(data.user.getCoins() == 0)
-        {
-            this.stopMessage.showMessageDialog(null, "Insufficient coins to play.", "Stopping game", JOptionPane.WARNING_MESSAGE);
-            //end game
-        }
-        if(data.quitFlag)
-        {
-            this.quitGame(data.userScore);
-        }
+            if (data.user.getCoins() == 0) {
+                this.stopMessage.showMessageDialog(null, "Insufficient coins to play.", "Stopping game", JOptionPane.WARNING_MESSAGE);
+                //end game
+            }
+            if (data.quitFlag) {
+                this.quitGame(data.userScore);
+            }
         }
 //            System.out.println("GAME IS NOW FINSIHED");
 //            if
@@ -649,7 +625,3 @@ public class View extends JFrame implements Observer {
 //            }
     }
 }
-
-    
-
-

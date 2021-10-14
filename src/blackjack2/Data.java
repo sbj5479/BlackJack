@@ -34,7 +34,7 @@ public class Data {
     
     
     
-    boolean standClicked = false;
+    
     
     boolean restart = true;
     
@@ -44,7 +44,7 @@ public class Data {
     int userScore = 0;
     int dealerScore = 0;
     
-    boolean hitClicked = false;
+    
     
     
     
