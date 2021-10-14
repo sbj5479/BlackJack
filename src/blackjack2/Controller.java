@@ -363,6 +363,7 @@ public class Controller implements ActionListener {
 //                model.showDoub();
 
                 suit = model.drawCard();
+                view.doubleButton.setEnabled(false);
                 cardQueue.offer(suit);
                  {
                     try {

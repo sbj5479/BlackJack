@@ -536,7 +536,11 @@ public class View extends JFrame implements Observer {
                         System.out.println("GAME START-----------");
                         
                         this.playGame(this, data);
+                        hitButton.setEnabled(true);
+                        standButton.setEnabled(true);
+                        doubleButton.setEnabled(true);
                     }
+                    
 //                        if(data.scoreChanged)
 //                        {
 ////                            System.out.println("DEALER SCORE CHANGED HERE\n");
@@ -550,16 +554,15 @@ public class View extends JFrame implements Observer {
 
 
 
-                    if(!data.showDoub)
-                    {
-
-                        doubleOff();
-                    }
+                    
 
 
 
                     if (data.gameFinish && data.betFinish) 
                     {
+                        hitButton.setEnabled(false);
+                        standButton.setEnabled(false);
+                        doubleButton.setEnabled(false);
                         System.out.println("GAME FINISH--------");
 //                            System.out.println("game stop");
                         if (data.win == 2) {
@@ -631,7 +634,7 @@ public class View extends JFrame implements Observer {
             }
         if(data.user.getCoins() == 0)
         {
-            this.stopMessage.showMessageDialog(null, "Insufficient coins to play.");
+            this.stopMessage.showMessageDialog(null, "Insufficient coins to play.", "Stopping game", JOptionPane.WARNING_MESSAGE);
             //end game
         }
         if(data.quitFlag)

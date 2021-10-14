@@ -214,12 +214,7 @@ public class Model extends Observable {
         return cardQueue;
     }
     
-    public void showDoub()
-    {
-        data.showDoub = false;
-        this.setChanged();
-        this.notifyObservers(this.data);
-    }
+   
 
     public String dealerCard()
     {

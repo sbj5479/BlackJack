@@ -27,7 +27,6 @@ public class Data {
     boolean blackjack = false;
     boolean stand = false;
     boolean doub = false;
-    boolean showDoub = true;
     boolean startdealer = false;
     
     int win = 0;
