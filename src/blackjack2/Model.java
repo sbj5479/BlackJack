@@ -39,13 +39,14 @@ public class Model extends Observable {
 
         this.username = username;
         this.data = this.db.checkName(username);
-        
+        System.out.println("old name here");
         this.setChanged();
         this.notifyObservers(this.data);
     }
 
     public void newName(String username) {
         this.username = username;
+        System.out.println("new name here");
         this.data = this.db.newName(username);
 
         this.setChanged();
