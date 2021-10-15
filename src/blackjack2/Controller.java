@@ -5,18 +5,12 @@
  */
 package blackjack2;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.TextEvent;
-import java.awt.event.TextListener;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +28,8 @@ public class Controller implements ActionListener {
     Model model;
     Queue cardQueue;
     boolean cardTracker;
+    public BufferedImage randomImage = null;
+    public JLabel randomLabel = null;
 
     public Controller(View view, Model model) {
         this.view = view;
@@ -44,23 +40,25 @@ public class Controller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand(); // Obtain the text displayed on the component.
+        //get button
+        String command = e.getActionCommand(); 
+        
+        //define variables
         String username;
         String text;
         String number;
         int bank;
         String suit;
 
+        //if button is:
         switch (command) {
             //login
             case "New Player":
                 this.view.newLoginScreen();
-//                this.model.newLogin();
-
                 break;
+                
             case "Returning Player":
                 this.view.reLoginScreen();
-//                this.model.reLogin();
                 break;
                 
             case "Instructions":
@@ -79,7 +77,6 @@ public class Controller implements ActionListener {
                 view.fourth.setText(top5.get(3).getName() + " " + top5.get(3).getCoins());
                 view.fifth.setText(top5.get(4).getName() + " " + top5.get(4).getCoins());
                 this.view.leaderboardScreen();
-
                 break;
 
             case "close":
@@ -90,15 +87,18 @@ public class Controller implements ActionListener {
                 username = this.view.nameField.getText();
                 this.model.checkName(username);
                 break;
+                
             case "create":
                 username = this.view.nameField.getText();
                 this.model.newName(username);
                 break;
 
+            //switch button
             case "CREATE":
                 this.view.newLoginScreen();
                 break;
 
+            //switch button
             case "LOGIN":
                 this.view.reLoginScreen();
                 break;
@@ -132,6 +132,7 @@ public class Controller implements ActionListener {
                     view.allIn.setEnabled(false);
                 }
                 break;
+                
             case "$5":
                 text = view.bank.getText();
                 number = text.replaceAll("[^0-9]", "");
@@ -160,6 +161,7 @@ public class Controller implements ActionListener {
                     view.allIn.setEnabled(false);
                 }
                 break;
+                
             case "$10":
                 text = view.bank.getText();
                 number = text.replaceAll("[^0-9]", "");
@@ -188,6 +190,7 @@ public class Controller implements ActionListener {
                     view.allIn.setEnabled(false);
                 }
                 break;
+                
             case "$25":
                 text = view.bank.getText();
                 number = text.replaceAll("[^0-9]", "");
@@ -216,6 +219,7 @@ public class Controller implements ActionListener {
                     view.allIn.setEnabled(false);
                 }
                 break;
+                
             case "$50":
                 text = view.bank.getText();
                 number = text.replaceAll("[^0-9]", "");
@@ -244,6 +248,7 @@ public class Controller implements ActionListener {
                     view.allIn.setEnabled(false);
                 }
                 break;
+                
             case "$100":
                 text = view.bank.getText();
                 number = text.replaceAll("[^0-9]", "");
@@ -271,8 +276,8 @@ public class Controller implements ActionListener {
                     view.add1.setEnabled(false);
                     view.allIn.setEnabled(false);
                 }
-
                 break;
+                
             case "ALL IN":
                 text = view.bank.getText();
                 number = text.replaceAll("[^0-9]", "");
@@ -293,75 +298,17 @@ public class Controller implements ActionListener {
                 break;
 
             case "PLAY":
-
                 cardTracker = false;
                 model.finishBets();
-//                cardQueue = model.startGame();
                 cardQueue = model.startGame();
-
                 try {
                     updateScores(cardQueue, 1);
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
-//                
-//                //draw first card
-//                String suit1 = model.drawCard();
-//                cardQueue.offer(suit1);
-//                
-//            
-//                try {
-//                    updateScores(cardQueue);
-//                    Thread.sleep(200);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (InterruptedException ex) {
-//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//                
-//                //draw dealers first card (hidden)
-//                cardQueue.offer("random");
-//                
-//                try {
-//                    updateScores(cardQueue);
-//                    Thread.sleep(200);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (InterruptedException ex) {
-//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//                
-//                //draw second card
-//                String suit2 = model.drawCard();
-//                cardQueue.offer(suit2);
-//                
-//                try {
-//                    updateScores(cardQueue);
-//                    Thread.sleep(200);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (InterruptedException ex) {
-//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//                
-//                //draw dealers second card
-//                String dealerSuit1 = model.dealerCard();
-//                cardQueue.offer(dealerSuit1);
-//                
-//                try {
-//                    updateScores(cardQueue);
-//                    Thread.sleep(200);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (InterruptedException ex) {
-//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-
                 break;
 
             case "HIT":
-//                model.showDoub();
-
                 suit = model.drawCard();
                 view.doubleButton.setEnabled(false);
                 cardQueue.offer(suit);
@@ -372,12 +319,9 @@ public class Controller implements ActionListener {
                         Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-
                 break;
 
             case "STAND":
-//                model.stand();
-//                model.showDoub();
                 cardQueue = model.dealerGame();
                 try {
                     updateScores(cardQueue, 3);
@@ -387,8 +331,6 @@ public class Controller implements ActionListener {
                 break;
 
             case "DOUBLE":
-//                model.showDoub();
-//                model.doub();
                 suit = model.drawCard();
                 model.data.startdealer = true;
                 cardQueue.offer(suit);
@@ -406,40 +348,39 @@ public class Controller implements ActionListener {
                 model.restart();
                 view.statusLabel.setText("");
                 break;
-//                view.getContentPane().removeAll();
+
             case "end game":
                 model.addCoins();
                 model.quit();
                 break;
+                
+            //no default
             default:
-
                 break;
         }
     }
-    public BufferedImage randomImage = null;
-    public JLabel randomLabel = null;
-
+    
+    
+    //draw cards, draw updated scores
     public void updateScores(Queue<String> queue, int status) throws IOException {
+        
         view.dealerScore.setText("Dealer: " + model.data.dealerScore);
-        System.out.println("User score: " + model.data.userScore);
         view.userScore.setText("User: " + model.data.userScore);
         BufferedImage cardImage = null;
-
         int origSize = queue.size();
+        
         //normal game
         if (!model.data.startdealer) {
             for (int i = 0; i < origSize; i++) {
-//            System.out.println("drawing");
-//            System.out.println(i);
                 String card = queue.poll();
                 String subSuit = card.substring(5);
                 String subNum = card.substring(0, 2);
                 subSuit = subSuit.strip();
                 subNum = subNum.strip();
-                System.out.println("SUBSTRING: " + subSuit);
-                System.out.println("SUBNUM: " + subNum);
+//                System.out.println("SUBSTRING: " + subSuit);
+//                System.out.println("SUBNUM: " + subNum);
 
-                //m = random but after substring
+                //m = random card (after substring)
                 if (subSuit.equals("m")) {
                     randomImage = ImageIO.read(new File("./resources/random.jpg"));
                     randomLabel = new JLabel(new ImageIcon(randomImage));
@@ -492,6 +433,7 @@ public class Controller implements ActionListener {
                     //status  = 1 start of game
                     //2 = player hit
                     //3 dealer
+                    //add card to top or bottom
                     if (status == 1) {
                         if (cardTracker) {
                             view.topCardPanel.add(picLabel);
@@ -682,21 +624,18 @@ public class Controller implements ActionListener {
                 }
             }
             model.checkBust();
-        } //if blackjack (first round 21)
+        } //if blackjack
         if (model.data.blackjack) {
-            System.out.println("BLACKJACK");
-            System.out.println("DEALER FLIPS CARD");
+//            System.out.println("BLACKJACK");
             //dealer has 1 last card to equal
             String dealerFlip = model.dealerCard();
-
             String subSuit = dealerFlip.substring(5);
             String subNum = dealerFlip.substring(0, 2);
             subSuit = subSuit.strip();
             subNum = subNum.strip();
-            System.out.println("SUBSTRING: " + subSuit);
-            System.out.println("SUBNUM: " + subNum);
+//            System.out.println("SUBSTRING: " + subSuit);
+//            System.out.println("SUBNUM: " + subNum);
 
-//            System.out.println("SUBSTRING: " + subCard);
             if (subSuit.equals("Diamonds")) {
                 switch (subNum) {
                     case "A":
@@ -740,7 +679,6 @@ public class Controller implements ActionListener {
                         break;
 
                 }
-
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                 view.topCardPanel.remove(randomLabel);
                 view.topCardPanel.add(picLabel);
@@ -893,17 +831,15 @@ public class Controller implements ActionListener {
         //(startdealer == true)
         else if (model.data.startdealer){
             for (int i = 0; i < origSize; i++) {
-                System.out.println("DEALER STARTS HERE");
-//            System.out.println("drawing");
-//            System.out.println(i);
+//                System.out.println("DEALER STARTS HERE");
+
                 String card = queue.poll();
                 String subSuit = card.substring(5);
                 String subNum = card.substring(0, 2);
                 subSuit = subSuit.strip();
                 subNum = subNum.strip();
-                System.out.println("SUBSTRING: " + subSuit);
-                System.out.println("SUBNUM: " + subNum);
-//            System.out.println("SUBSTRING: " + subCard);
+//                System.out.println("SUBSTRING: " + subSuit);
+//                System.out.println("SUBNUM: " + subNum);
 
                 if (subSuit.equals("Diamonds")) {
                     switch (subNum) {
@@ -950,9 +886,6 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    //status  = 1 start of game
-                    //2 = player hit
-                    //3 dealer
                     view.bottomCardPanel.add(picLabel);
                 } else if (subSuit.equals("Spades")) {
                     switch (subNum) {
@@ -1097,8 +1030,7 @@ public class Controller implements ActionListener {
 
             }
             
-//            model.checkBust();
-
+            //dealer plays
             Queue<String> dealerHand = model.dealerGame();
             int dealerhandSize = dealerHand.size();
             for (int i = 0; i < dealerhandSize; i++) {
@@ -1108,13 +1040,10 @@ public class Controller implements ActionListener {
                 String subNum = dealerCard.substring(0, 2);
                 subDealer = subDealer.strip();
                 subNum = subNum.strip();
-                System.out.println("SUBSTRING: " + subDealer);
-                System.out.println("SUBNUM: " + subNum);
-
+//                System.out.println("SUBSTRING: " + subDealer);
+//                System.out.println("SUBNUM: " + subNum);
                 view.dealerScore.setText("Dealer: " + model.data.dealerScore);
-//            System.out.println("SUBSTRING: " + subCard);
 
-                //m = random but after substring
                 if (subDealer.equals("Diamonds")) {
                     switch (subNum) {
                         case "A":
@@ -1315,12 +1244,4 @@ public class Controller implements ActionListener {
 
     }
 
-//        if(model.data.userScore > 21)
-//        {
-//            model.bust();
-//        }
-//        else if(model.data.userScore == 21)
-//        {
-//            model.blackjack();
-//        }
 }

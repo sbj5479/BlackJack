@@ -569,7 +569,6 @@ public class Model extends Observable {
     {
         if(data.userScore > 21)
         {
-//            System.out.println("BUSTTTT");
             data.win = 2;
             data.bust = true;
             this.data.gameFinish = true;
