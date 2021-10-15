@@ -62,6 +62,14 @@ public class Controller implements ActionListener {
                 this.view.reLoginScreen();
 //                this.model.reLogin();
                 break;
+                
+            case "Instructions":
+                this.view.showInstructions();
+                break;
+                
+            case "X":
+                model.quitGame();
+                break;
 
             case "Leaderboard":
                 ArrayList<Player> top5 = this.model.getTopScores();
@@ -272,7 +280,16 @@ public class Controller implements ActionListener {
 
                 this.view.bank.setText("Bank: $" + this.model.addFunds(bank, bank));
                 this.view.pot.setText("Pot: $" + model.data.pot);
+                cardTracker = false;
                 model.finishBets();
+//                cardQueue = model.startGame();
+                cardQueue = model.startGame();
+
+                try {
+                    updateScores(cardQueue, 1);
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
 
             case "PLAY":
@@ -346,6 +363,7 @@ public class Controller implements ActionListener {
 //                model.showDoub();
 
                 suit = model.drawCard();
+                view.doubleButton.setEnabled(false);
                 cardQueue.offer(suit);
                  {
                     try {
@@ -372,6 +390,7 @@ public class Controller implements ActionListener {
 //                model.showDoub();
 //                model.doub();
                 suit = model.drawCard();
+                model.data.startdealer = true;
                 cardQueue.offer(suit);
                  {
                     try {
@@ -870,7 +889,7 @@ public class Controller implements ActionListener {
 
             }
             model.checkWin();
-        } //player gets 21 and auto stands
+        } //auto stands (21 or double)
         //(startdealer == true)
         else if (model.data.startdealer){
             for (int i = 0; i < origSize; i++) {
@@ -1077,6 +1096,8 @@ public class Controller implements ActionListener {
                 }
 
             }
+            
+//            model.checkBust();
 
             Queue<String> dealerHand = model.dealerGame();
             int dealerhandSize = dealerHand.size();
@@ -1286,8 +1307,9 @@ public class Controller implements ActionListener {
 
                 }
             }
-
-            model.checkWin();
+            model.checkBust();
+            if(!model.data.gameFinish)
+                model.checkWin();
 
         }
 

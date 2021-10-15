@@ -16,14 +16,14 @@ import javax.swing.JPanel;
  *
  * @author greay
  */
-public class CardPanel extends JPanel{
+public class LeaderBoardTopPanel extends JPanel{
     public Image image;
         
-        public CardPanel()
+        public LeaderBoardTopPanel()
         {
-            setPreferredSize(new Dimension(100, 100));
+            setPreferredSize(new Dimension(600, 300));
 //            setBackground(Color.WHITE);
-            this.image = new ImageIcon("./resources/gameCard.jpg").getImage();
+            this.image = new ImageIcon("./resources/leaderboard.jpg").getImage();
 //            this.setBackground(Color.green);
 //            this.setVisible(true);
         }

@@ -17,7 +17,7 @@ import java.util.Queue;
 public class Model extends Observable {
 
     public String username;
-    public TempDatabase db;
+    public Database db;
     public Data data;
     public Deck deck;
     boolean Ace1;
@@ -25,7 +25,8 @@ public class Model extends Observable {
     boolean Blackjack;
 
     public Model() {
-        this.db = new TempDatabase();
+        this.db = new Database();
+        this.db.dbsetup();
         deck = new Deck();
 //        Ace1 = false;
 //        DealerAce1 = false;
@@ -38,13 +39,14 @@ public class Model extends Observable {
 
         this.username = username;
         this.data = this.db.checkName(username);
-
+        System.out.println("old name here");
         this.setChanged();
         this.notifyObservers(this.data);
     }
 
     public void newName(String username) {
         this.username = username;
+        System.out.println("new name here");
         this.data = this.db.newName(username);
 
         this.setChanged();
@@ -214,12 +216,7 @@ public class Model extends Observable {
         return cardQueue;
     }
     
-    public void showDoub()
-    {
-        data.showDoub = false;
-        this.setChanged();
-        this.notifyObservers(this.data);
-    }
+   
 
     public String dealerCard()
     {
@@ -500,6 +497,14 @@ public class Model extends Observable {
         this.setChanged();
         this.notifyObservers(this.data);
     }
+    
+    //QUIT RIGHT AWAY
+    public void quitGame() {
+        data = new Data();
+        this.data.quitFlag = true; // Mark quitFlag as false.
+        this.setChanged();
+        this.notifyObservers(this.data);
+    }
 
     public void restart() {
         this.data.restart = true;
@@ -518,7 +523,11 @@ public class Model extends Observable {
         this.notifyObservers(this.data);
     }
 
+    
+    
+    //quit after a game is played
     public void quit() {
+        
         this.data.restart = false;
         this.data.quitFlag = true;
         this.setChanged();
@@ -560,7 +569,9 @@ public class Model extends Observable {
     {
         if(data.userScore > 21)
         {
+//            System.out.println("BUSTTTT");
             data.win = 2;
+            data.bust = true;
             this.data.gameFinish = true;
             this.setChanged();
             this.notifyObservers(this.data);
