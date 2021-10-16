@@ -76,6 +76,7 @@ public class View extends JFrame implements Observer {
     public JButton add25;
     public JButton add50;
     public JButton add100;
+    public JButton reset;
     public JButton allIn;
 
     private JButton playButton;
@@ -152,6 +153,7 @@ public class View extends JFrame implements Observer {
         add50 = new JButton("$50");
         add100 = new JButton("$100");
         allIn = new JButton("ALL IN");
+        reset = new JButton("reset");
         playButton = new JButton("PLAY");
 
         //playing buttons
@@ -164,7 +166,7 @@ public class View extends JFrame implements Observer {
 
 //        diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
         //restart buttons
-        restartButton = new JButton("restart");
+        restartButton = new JButton("play again");
         endGameButton = new JButton("end game");
         stopMessage = new JOptionPane();
 
@@ -194,6 +196,7 @@ public class View extends JFrame implements Observer {
         newLoginPanel.setBackground(colour);
         name = new JLabel("Name:");
         nameField = new JTextField(30);
+        
 //        dealerMessage = new JLabel("<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>");
         bottomLoginPanel = new JPanel();
         bottomLoginPanel.setLayout(new GridLayout(1, 3));
@@ -308,6 +311,7 @@ public class View extends JFrame implements Observer {
         bettingPanel.add(add50);
         bettingPanel.add(add100);
         bettingPanel.add(allIn);
+        bettingPanel.add(reset);
         bettingPanel.add(playButton);
 
         String text = bank.getText();
@@ -479,6 +483,7 @@ public class View extends JFrame implements Observer {
         this.add50.addActionListener(listener);
         this.add100.addActionListener(listener);
         this.allIn.addActionListener(listener);
+        this.reset.addActionListener(listener);
         this.playButton.addActionListener(listener);
 
         //playing
@@ -558,7 +563,9 @@ public class View extends JFrame implements Observer {
                             }
 
                             if (data.doub) {
+                                System.out.println("minus doub");
                                 double multipot = data.pot * 2;
+                                System.out.println(multipot);
                                 data.user.coins -= multipot;
                             } else {
                                 data.user.coins -= data.pot;
@@ -580,32 +587,35 @@ public class View extends JFrame implements Observer {
                             if (data.doub) {
                                 System.out.println("doub");
                                 double multipot = data.pot * 2;
+                                System.out.println(multipot);
                                 data.user.coins += multipot;
                             } else if (data.blackjack) {
                                 status = 5;
-
+                                System.out.println("blackjack");
                                 double multipot = data.pot * 1.5;
+                                System.out.println(multipot);
                                 data.user.coins += multipot;
-                            } else {
-                                data.user.coins += data.pot;
+                            } 
+                            else if(data.doub && data.blackjack)
+                            {
+                                System.out.println("doub and black");
+                                double multipot = data.pot * 3.5;
+                                System.out.println(multipot);
+                                data.user.coins += multipot;
                             }
-//                                addButtons();
-//                                winScreen();
-
-//                                
+                            else {
+                                data.user.coins += data.pot;
+                            }        
                         }
-
+                        
                         addButtons(status);
 
 //                            //restart
 //                            this.restartScreen();
 //                            
-                        if (!data.restart) {
-                            System.out.println("stop!!!!");
-                        } else {
-                            System.out.println("restart");
+                        
 
-                        }
+                        
                     }
 
                 } while (!data.restart);

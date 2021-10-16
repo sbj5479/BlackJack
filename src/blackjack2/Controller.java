@@ -296,7 +296,34 @@ public class Controller implements ActionListener {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
+            
+            case "reset":
+                text = view.bank.getText();
+                number = text.replaceAll("[^0-9]", "");
+                bank = Integer.valueOf(number);
 
+                this.view.bank.setText("Bank: $" + this.model.resetFunds(bank));
+                this.view.pot.setText("Pot: $" + model.data.pot);
+                
+
+                
+                    view.add100.setEnabled(true);
+               
+                    view.add50.setEnabled(true);
+                
+                
+                    view.add25.setEnabled(true);
+               
+                    view.add10.setEnabled(true);
+                
+                    view.add5.setEnabled(true);
+                
+                    view.add1.setEnabled(true);
+                    view.allIn.setEnabled(true);
+                    break;
+                
+                
+            
             case "PLAY":
                 cardTracker = false;
                 model.finishBets();
@@ -332,6 +359,7 @@ public class Controller implements ActionListener {
 
             case "DOUBLE":
                 suit = model.drawCard();
+                model.data.doub = true;
                 model.data.startdealer = true;
                 cardQueue.offer(suit);
                  {
@@ -343,7 +371,7 @@ public class Controller implements ActionListener {
                 }
                 break;
 
-            case "restart":
+            case "play again":
                 model.addCoins();
                 model.restart();
                 view.statusLabel.setText("");
@@ -371,6 +399,7 @@ public class Controller implements ActionListener {
         
         //normal game
         if (!model.data.startdealer) {
+            System.out.println("START OF GAME \n");
             for (int i = 0; i < origSize; i++) {
                 String card = queue.poll();
                 String subSuit = card.substring(5);
@@ -379,11 +408,12 @@ public class Controller implements ActionListener {
                 subNum = subNum.strip();
 //                System.out.println("SUBSTRING: " + subSuit);
 //                System.out.println("SUBNUM: " + subNum);
-
+                System.out.println("drawing a card");
                 //m = random card (after substring)
                 if (subSuit.equals("m")) {
                     randomImage = ImageIO.read(new File("./resources/random.jpg"));
                     randomLabel = new JLabel(new ImageIcon(randomImage));
+                    
                     view.topCardPanel.add(randomLabel);
                 } else if (subSuit.equals("Diamonds")) {
                     switch (subNum) {
@@ -441,6 +471,7 @@ public class Controller implements ActionListener {
                             view.bottomCardPanel.add(picLabel);
                         }
                     } else if (status == 2) {
+                        System.out.println("ADDING CARD HERE");
                         view.bottomCardPanel.add(picLabel);
                     } else {
                         view.topCardPanel.remove(randomLabel);
@@ -624,9 +655,15 @@ public class Controller implements ActionListener {
                 }
             }
             model.checkBust();
-        } //if blackjack
+        } 
+
+        
+//        
+           
+        
+        //if blackjack
         if (model.data.blackjack) {
-//            System.out.println("BLACKJACK");
+            System.out.println("BLACKJACK START \n");
             //dealer has 1 last card to equal
             String dealerFlip = model.dealerCard();
             String subSuit = dealerFlip.substring(5);
@@ -635,7 +672,7 @@ public class Controller implements ActionListener {
             subNum = subNum.strip();
 //            System.out.println("SUBSTRING: " + subSuit);
 //            System.out.println("SUBNUM: " + subNum);
-
+            System.out.println("drawing last card");
             if (subSuit.equals("Diamonds")) {
                 switch (subNum) {
                     case "A":
@@ -826,9 +863,18 @@ public class Controller implements ActionListener {
                 view.topCardPanel.add(picLabel);
 
             }
+            view.dealerScore.setText("Dealer: " + model.data.dealerScore);
+            view.userScore.setText("User: " + model.data.userScore);
             model.checkWin();
-        } //auto stands (21 or double)
+//            model.checkBust();
+//                model.checkBlackjack();
+        } 
+
+
+
+        //auto stands (21 or double)
         //(startdealer == true)
+        
         else if (model.data.startdealer){
             for (int i = 0; i < origSize; i++) {
 //                System.out.println("DEALER STARTS HERE");
