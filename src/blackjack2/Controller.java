@@ -399,7 +399,7 @@ public class Controller implements ActionListener {
         
         //normal game
         if (!model.data.startdealer) {
-            System.out.println("START OF GAME \n");
+//            System.out.println("START OF GAME \n");
             for (int i = 0; i < origSize; i++) {
                 String card = queue.poll();
                 String subSuit = card.substring(5);

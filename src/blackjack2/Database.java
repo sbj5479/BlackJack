@@ -54,49 +54,6 @@ public class Database {
 
     }
 
-//    public Data checkName(String username)
-//    {
-//        
-//        this.username = username;
-//        ArrayList nameList;
-//        HashMap scoreMap;
-//        int counter = 0;
-//        
-//        //create central file components for each file
-//        FileIO namesinout = new FileIO("names");
-//        FileIO scoresinout = new FileIO("scores");
-//        //read from names.txt and add contents to arraylist
-//        nameList = namesinout.ReadL();
-//        //read from scores.txt and add contents to hashmap
-//        scoreMap = scoresinout.ReadH();
-//        
-//        //search for name
-//        for(Object e : nameList)
-//        {
-//            //if name is found
-//            if(e.equals(username))
-//            {
-//                counter++;
-//            }
-//        }
-//        //if found
-//        if(counter == 1)
-//        {
-//            
-//            int pCoins = Integer.valueOf((String)scoreMap.get(username)); 
-//            data.user = new User(username, pCoins, true);
-//            data.loginFlag = true;
-//            data.reFail = false;
-//            
-//            
-//        }
-//        else
-//        {
-//            data.loginFlag = false;
-//            data.reFail = true;
-//        }
-//        return data;
-//    }
     public Data checkName(String username) {
 //        Data data = new Data(); // Initialize an instance of Data.
         try {
@@ -132,60 +89,6 @@ public class Database {
         return data; //Back to checkName() of Model.java.
     }
 
-//    public Data newName(String username)
-//    {
-////        Data data = new Data(); // Initialize an instance of Data.
-//        this.username = username;
-//        ArrayList nameList;
-//        HashMap scoreMap;
-//        int counter = 0;
-//        
-//        
-//        //create central file components for each file
-//        FileIO namesinout = new FileIO("names");
-//        FileIO scoresinout = new FileIO("scores");
-//        
-//        //read from names.txt and add contents to arraylist
-//        nameList = namesinout.ReadL();
-//        //read from scores.txt and add contents to hashmap
-//        scoreMap = scoresinout.ReadH();
-//        
-//        
-//            
-//        //loop and search for existing user with name input
-//        for(Object e : nameList)
-//        {
-//            //if already exists
-//            if(e.equals(username))
-//            {
-//                
-//                counter++;
-//            } 
-//        }
-//        //if user does not exist
-//        if(counter == 0)
-//        {
-//            
-//            nameList.add(username);
-//            scoreMap.put(username, 1000);
-//            data.user = new User(username, 1000,true);
-//            System.out.println("a " + data.user.getCoins());
-//            //write new list of names to names.txt 
-//            namesinout.WriteL(nameList);
-//            //write new hashmap of names with scores to scores.txt
-//            scoresinout.WriteH(scoreMap);
-//            //return created user
-//            data.loginFlag = true;
-//            data.newFail = false;
-//        } 
-//        //user already exists with same name
-//        else
-//        {
-//            data.loginFlag = false;
-//            data.newFail = true;
-//        }
-//        return data;
-//    }
     public Data newName(String username) {
 
         try {
@@ -384,6 +287,7 @@ public class Database {
         return flag;
     }
 
+    
 //    public void quitGame(int score, String username) {
 //        Statement statement;
 //        try {

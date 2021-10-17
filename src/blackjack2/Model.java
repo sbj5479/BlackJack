@@ -266,7 +266,13 @@ public class Model extends Observable {
             System.out.println("Dealer has: " + data.dealerScore);
             data.win = 3;
             
-        } //if bust
+        } 
+        else if (data.dealerScore > 21 && DealerAce1) {
+            System.out.println("MINUS 10 from ACE");
+            data.dealerScore = data.dealerScore - 10;
+            DealerAce1 = false;
+            System.out.println("SCORE AFTER ACE: " + data.dealerScore);
+        }//if bust
         else if (data.dealerScore > 21) {
             System.out.println("Dealer has: " + data.dealerScore);
             System.out.println("BUST");
