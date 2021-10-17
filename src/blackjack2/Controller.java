@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -78,10 +79,16 @@ public class Controller implements ActionListener {
                 view.fifth.setText(top5.get(4).getName() + " " + top5.get(4).getCoins());
                 this.view.leaderboardScreen();
                 break;
-
+                
             case "close":
                 this.view.homeScreen();
                 break;
+                
+            case "back":
+                this.view.homeScreen();
+                break;
+
+            
 
             case "login":
                 username = this.view.nameField.getText();
@@ -325,13 +332,18 @@ public class Controller implements ActionListener {
                 
             
             case "PLAY":
-                cardTracker = false;
-                model.finishBets();
-                cardQueue = model.startGame();
-                try {
-                    updateScores(cardQueue, 1);
-                } catch (IOException ex) {
-                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                if(model.data.pot == 0)
+                    view.noPotMessage.showMessageDialog(null, "No coins added to pot", "Cannot Play", JOptionPane.WARNING_MESSAGE);
+                else
+                {
+                    cardTracker = false;
+                    model.finishBets();
+                    cardQueue = model.startGame();
+                    try {
+                        updateScores(cardQueue, 1);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 break;
 
@@ -380,6 +392,12 @@ public class Controller implements ActionListener {
             case "end game":
                 model.addCoins();
                 model.quit();
+                break;
+                
+            case "Main Menu":
+                model.addCoins();
+                model.restart();
+                view.homeScreen();
                 break;
                 
             //no default
