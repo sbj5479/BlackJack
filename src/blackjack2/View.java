@@ -50,11 +50,13 @@ public class View extends JFrame implements Observer {
     private JLabel name;
     public JTextField nameField;
     private JOptionPane failMessage;
+    public JButton backButton;
     //relogin
     private JPanel reLoginPanel;
     private JButton loginButton;
     private JLabel newLabel;
     public JButton CREATE;
+    public JPanel bottomRePanel;
 
     //leaderboard
     private JPanel leaderboardPanel;
@@ -76,9 +78,12 @@ public class View extends JFrame implements Observer {
     public JButton add25;
     public JButton add50;
     public JButton add100;
+    public JButton reset;
     public JButton allIn;
 
     private JButton playButton;
+    
+    private JPanel bottomBetPanel;
 
     //playing
     public JPanel gamePanel;
@@ -90,6 +95,8 @@ public class View extends JFrame implements Observer {
     public JButton doubleButton;
     public JLabel userScore;
     public JLabel dealerScore;
+    public JButton mainMenuButton;
+    public JOptionPane noPotMessage;
     private int status;
 
     //restart
@@ -135,6 +142,7 @@ public class View extends JFrame implements Observer {
         existLabel = new JLabel("Played before? Click here -->");
         failMessage = new JOptionPane();
         instructionsButton = new JButton("Instructions");
+        backButton = new JButton("back");
 
         //leaderboard buttons and labels
         close = new JButton("close");
@@ -152,6 +160,7 @@ public class View extends JFrame implements Observer {
         add50 = new JButton("$50");
         add100 = new JButton("$100");
         allIn = new JButton("ALL IN");
+        reset = new JButton("reset");
         playButton = new JButton("PLAY");
 
         //playing buttons
@@ -161,10 +170,11 @@ public class View extends JFrame implements Observer {
         userScore = new JLabel("You have: 0");
         dealerScore = new JLabel("Dealer has: 0");
         statusLabel = new JLabel("");
+        mainMenuButton = new JButton("Main Menu");
 
 //        diamondCard = new ImageIcon("./resources/diamonds.jpg").getImage();
         //restart buttons
-        restartButton = new JButton("restart");
+        restartButton = new JButton("play again");
         endGameButton = new JButton("end game");
         stopMessage = new JOptionPane();
 
@@ -194,6 +204,7 @@ public class View extends JFrame implements Observer {
         newLoginPanel.setBackground(colour);
         name = new JLabel("Name:");
         nameField = new JTextField(30);
+        
 //        dealerMessage = new JLabel("<html>" + dealer.toString().replaceAll("\n", "<br/>") + "</html>");
         bottomLoginPanel = new JPanel();
         bottomLoginPanel.setLayout(new GridLayout(1, 3));
@@ -206,8 +217,8 @@ public class View extends JFrame implements Observer {
         newLoginPanel.add(createButton);
         newLoginPanel.add(existLabel);
         newLoginPanel.add(LOGIN);
-        JLabel temp = new JLabel("");
-        bottomLoginPanel.add(temp);
+        
+        bottomLoginPanel.add(backButton);
         bottomLoginPanel.add(instructionsButton);
         JLabel temp2 = new JLabel("");
         bottomLoginPanel.add(temp2);
@@ -226,16 +237,27 @@ public class View extends JFrame implements Observer {
         reLoginPanel.setBackground(colour);
         name = new JLabel("Name:");
         nameField = new JTextField(30);
+        
+        bottomRePanel = new JPanel();
+        bottomRePanel.setLayout(new GridLayout(1, 3));
+        bottomRePanel.setBackground(colour);
 
         reLoginPanel.add(name);
         reLoginPanel.add(nameField);
         reLoginPanel.add(loginButton);
         reLoginPanel.add(newLabel);
         reLoginPanel.add(CREATE);
+        
+        
+        bottomRePanel.add(backButton);
+        bottomRePanel.add(instructionsButton);
+        JLabel temp2 = new JLabel("");
+        bottomRePanel.add(temp2);
 
         this.getContentPane().removeAll();
         reLoginPanel.setVisible(true);
         this.add(reLoginPanel);
+        this.add(bottomRePanel, BorderLayout.SOUTH);
         this.revalidate();
         this.repaint();
     }
@@ -308,7 +330,21 @@ public class View extends JFrame implements Observer {
         bettingPanel.add(add50);
         bettingPanel.add(add100);
         bettingPanel.add(allIn);
+        bettingPanel.add(reset);
         bettingPanel.add(playButton);
+        
+        
+        
+        Color colour = new Color(34, 177, 76);
+        bottomBetPanel = new JPanel();
+        bottomBetPanel.setLayout(new GridLayout(1, 3));
+        bottomBetPanel.setBackground(colour);
+        
+        bottomBetPanel.add(backButton);
+         JLabel temp1 = new JLabel("");
+        JLabel temp2 = new JLabel("");
+        bottomBetPanel.add(temp1);
+        bottomBetPanel.add(temp2);
 
         String text = bank.getText();
         String number = text.replaceAll("[^0-9]", "");
@@ -318,6 +354,7 @@ public class View extends JFrame implements Observer {
         this.getContentPane().removeAll();
         bettingPanel.setVisible(true);
         this.add(bettingPanel);
+        this.add(bottomBetPanel, BorderLayout.SOUTH);
         this.revalidate();
         this.repaint();
     }
@@ -336,12 +373,19 @@ public class View extends JFrame implements Observer {
 
         gamePanel = new JPanel();
         gamePanel.setBackground(colour);
-        gamePanel.setLayout(new GridLayout(3, 2, 10, 20));
+        gamePanel.setLayout(new GridLayout(3, 3, 10, 20));
         gamePanel.add(dealerScore);
+         JLabel temp1 = new JLabel("");
+        gamePanel.add(temp1);
         gamePanel.add(hitButton);
+         
+        
+        gamePanel.add(mainMenuButton);
         gamePanel.add(statusLabel);
         gamePanel.add(standButton);
         gamePanel.add(userScore);
+         JLabel temp3 = new JLabel("");
+        gamePanel.add(temp3);
         gamePanel.add(doubleButton);
 
         this.getContentPane().removeAll();
@@ -443,7 +487,10 @@ public class View extends JFrame implements Observer {
         JPanel quitPanel = new JPanel();
         Color colour = new Color(34, 177, 76);
         quitPanel.setBackground(colour);
+        
+            
         JLabel coinsLabel = new JLabel("Your remaining coins: " + coins);
+        
         JLabel thanksLabel = new JLabel("Thanks for playing!");
         quitPanel.add(coinsLabel);
         quitPanel.add(thanksLabel);
@@ -467,6 +514,7 @@ public class View extends JFrame implements Observer {
         this.CREATE.addActionListener(listener);
         this.LOGIN.addActionListener(listener);
         this.instructionsButton.addActionListener(listener);
+        this.backButton.addActionListener(listener);
 
         //leaderboard
         this.close.addActionListener(listener);
@@ -479,7 +527,9 @@ public class View extends JFrame implements Observer {
         this.add50.addActionListener(listener);
         this.add100.addActionListener(listener);
         this.allIn.addActionListener(listener);
+        this.reset.addActionListener(listener);
         this.playButton.addActionListener(listener);
+        this.mainMenuButton.addActionListener(listener);
 
         //playing
         this.hitButton.addActionListener(listener);
@@ -558,7 +608,9 @@ public class View extends JFrame implements Observer {
                             }
 
                             if (data.doub) {
+                                System.out.println("minus doub");
                                 double multipot = data.pot * 2;
+                                System.out.println(multipot);
                                 data.user.coins -= multipot;
                             } else {
                                 data.user.coins -= data.pot;
@@ -580,32 +632,35 @@ public class View extends JFrame implements Observer {
                             if (data.doub) {
                                 System.out.println("doub");
                                 double multipot = data.pot * 2;
+                                System.out.println(multipot);
                                 data.user.coins += multipot;
                             } else if (data.blackjack) {
                                 status = 5;
-
+                                System.out.println("blackjack");
                                 double multipot = data.pot * 1.5;
+                                System.out.println(multipot);
                                 data.user.coins += multipot;
-                            } else {
-                                data.user.coins += data.pot;
+                            } 
+                            else if(data.doub && data.blackjack)
+                            {
+                                System.out.println("doub and black");
+                                double multipot = data.pot * 3.5;
+                                System.out.println(multipot);
+                                data.user.coins += multipot;
                             }
-//                                addButtons();
-//                                winScreen();
-
-//                                
+                            else {
+                                data.user.coins += data.pot;
+                            }        
                         }
-
+                        
                         addButtons(status);
 
 //                            //restart
 //                            this.restartScreen();
 //                            
-                        if (!data.restart) {
-                            System.out.println("stop!!!!");
-                        } else {
-                            System.out.println("restart");
+                        
 
-                        }
+                        
                     }
 
                 } while (!data.restart);
