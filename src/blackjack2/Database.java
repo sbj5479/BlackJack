@@ -23,6 +23,7 @@ import java.util.logging.Logger;
  */
 public class Database {
 
+    //info for database
     Connection connection = null;
     String url = "jdbc:derby:BlackjackDB;create=true";
     String dbusername = "pdc";
@@ -32,20 +33,24 @@ public class Database {
     Data data;
 
     public Database() {
-        data = new Data(); // Initialize an instance of Data.
+        //initialize data
+        data = new Data(); 
     }
 
     public void dbsetup() {
+        //connect to the database
         try {
             connection = DriverManager.getConnection(url, dbusername, dbpassword);
             Statement statement = connection.createStatement();
+            
+            //create table if not exist
             String tableName = "PlayerTable";
 
             if (!checkTableExisting(tableName)) {
-                System.out.println("NEW TABLE");
+//                System.out.println("NEW TABLE");
                 statement.execute("CREATE TABLE " + tableName + " (username VARCHAR(20), coins INT)");
             }
-            System.out.println("OLD TABLE");
+//            System.out.println("OLD TABLE");
             statement.close();
 
         } catch (SQLException ex) {
@@ -55,17 +60,19 @@ public class Database {
     }
 
     public Data checkName(String username) {
-//        Data data = new Data(); // Initialize an instance of Data.
+        //check for name in database
         try {
             Statement statement = connection.createStatement();
+            //select name
             ResultSet rs = statement.executeQuery("SELECT username, coins FROM PlayerTable "
                     + "WHERE username = '" + username + "'");
+            //if name exists
             if (rs.next()) {
 
-                System.out.println("found user");
-
+//                System.out.println("found user");
+                //create user
                 int pCoins = rs.getInt("coins");
-                System.out.println(pCoins);
+//                System.out.println(pCoins);
                 data.user = new User(username, pCoins, true);
 
                 /**
@@ -77,6 +84,7 @@ public class Database {
                 data.reFail = false;
 
             } else {
+                //user does not exist
                 System.out.println("no user");
                 data.loginFlag = false;
                 data.reFail = true;
@@ -86,26 +94,31 @@ public class Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return data; //Back to checkName() of Model.java.
+        return data; 
     }
 
     public Data newName(String username) {
-
+        //create a new user
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT username, coins FROM PlayerTable "
                     + "WHERE username = '" + username + "'");
+            //if name does not exist
             if (rs.next() == false) {
 
-                System.out.println("USER NOT FOUND");
+//                System.out.println("USER NOT FOUND");
+                //create a new user
                 statement.executeUpdate("INSERT INTO PlayerTable "
                         + "VALUES('" + username + "', 1000)");
                 data.user = new User(username, 1000, true);
                 data.loginFlag = true;
                 data.reFail = false;
 
-            } else {
-                System.out.println("TEST");
+            } 
+            //user does exist
+            else {
+//                System.out.println("TEST");
+                
                 data.loginFlag = false;
                 data.reFail = false;
 
@@ -116,7 +129,7 @@ public class Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return data; //Back to checkName() of Model.java.
+        return data; 
     }
 
     public ArrayList topScores() {
@@ -129,9 +142,10 @@ public class Database {
         Statement statement;
         try {
             statement = connection.createStatement();
-
+            //select everything form table
             ResultSet rs = statement.executeQuery("SELECT * FROM PlayerTable");
             
+            //put name and coins into a map
             while (rs.next()) {
                 int pCoins = rs.getInt("coins");
                 String pName = rs.getString("username");
@@ -144,10 +158,7 @@ public class Database {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        //create central file components for scores.txt
-//        FileIO scoresinout = new FileIO("scores");
-//        //read from scores.txt and add contents to hashmap
-//        scoreMap = scoresinout.ReadH();
+
         //create entrySet for scoreMap
         Set sSet = scoreMap.entrySet();
         //loop through each object in the hashmap/set
@@ -187,21 +198,12 @@ public class Database {
             topPlayers.put(top.getName(), top.getCoins());
             nameList.remove(top);
         }
-        //print out top scores
-//        System.out.println("---------------------------------------------------------------");
-//        for(int k = 0 ; k < topScores.size(); k++)
-//        {
-////            System.out.println(k+1 + "." + topScores.get(k).getName() + "  " + topScores.get(k).getCoins());
-//        }
-//        System.out.println("---------------------------------------------------------------");
+        
         try {
-            //        //create central file components for topScores.txt
-//        FileIO topinout = new FileIO("topScores");
-//        //write to topScores.txt 
-//        topinout.WriteH(topPlayers);
-
+            
+            //connect to the database
             connection = DriverManager.getConnection(url, dbusername, dbpassword);
-
+            //create new leaderboard table
             statement = connection.createStatement();
             String tableName = "LeaderboardTable";
 
@@ -217,9 +219,9 @@ public class Database {
             for (int k = 0; k < topScores.size(); k++) {
                 connection = DriverManager.getConnection(url, dbusername, dbpassword);
                 statement = connection.createStatement();
+                //insert top 5 players
                 statement.executeUpdate("INSERT INTO LeaderboardTable "
                         + "VALUES('" + topScores.get(k).getName() + "', " + topScores.get(k).getCoins()+")");
-//            System.out.println(k+1 + "." + topScores.get(k).getName() + "  " + topScores.get(k).getCoins());
             }
         } catch (SQLException ex)  {
                 Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -237,24 +239,11 @@ public class Database {
 
         int coins = a.getCoins();
         String name = a.getName();
-//        HashMap scoreMap;
 //        
-//        //create central file components for each scores.txt
-//        FileIO scoresinout = new FileIO("scores");
-//        
-//        //read from scores.txt and add contents to hashmap
-//        scoreMap = scoresinout.ReadH();
-//        
-//        //remove user
-//        scoreMap.remove(name);
-//        //put in user with new coins
-//        scoreMap.put(name, coins);
-//        
-//        //write to scores.txt 
-//        scoresinout.WriteH(scoreMap);
         Statement statement;
         try {
             statement = connection.createStatement();
+            //update players coins
             statement.executeUpdate("UPDATE PlayerTable SET coins = " + coins + " "
                     + "WHERE username = '" + name + "'");
         } catch (SQLException ex) {
@@ -264,18 +253,18 @@ public class Database {
     }
 
     private boolean checkTableExisting(String newTableName) {
+        //check table from lab9
         boolean flag = false;
         try {
 
-//            System.out.println("check existing tables.... ");
             String[] types = {"TABLE"};
             DatabaseMetaData dbmd = connection.getMetaData();
             ResultSet rsDBMeta = dbmd.getTables(null, null, null, null);//types);
-            //Statement dropStatement=null;
+
             while (rsDBMeta.next()) {
                 String tableName = rsDBMeta.getString("TABLE_NAME");
                 if (tableName.compareToIgnoreCase(newTableName) == 0) {
-//                    System.out.println(tableName + "  is there");
+
                     flag = true;
                 }
             }
@@ -288,15 +277,4 @@ public class Database {
     }
 
     
-//    public void quitGame(int score, String username) {
-//        Statement statement;
-//        try {
-//            statement = conn.createStatement();
-//            statement.executeUpdate("UPDATE UserInfo SET score=" + score + " WHERE userid='" + username + "'");
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//    }
 }

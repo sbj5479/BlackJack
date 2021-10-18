@@ -10,16 +10,19 @@ package blackjack2;
  * @author greay
  */
 public class Data {
+    //main flags
     boolean loginFlag = false;
     boolean reFail = false;
     boolean quitFlag = false;
     
+    //global varaibles
     int pot = 0;
     User user = new User();
     int userScore = 0;
     int dealerScore = 0;
     int win = 0;
     
+    //game conditions
     boolean betFinish = false;
     boolean gameStart = false;
     boolean gameFinish = true;

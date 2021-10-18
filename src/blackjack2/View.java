@@ -185,6 +185,7 @@ public class View extends JFrame implements Observer {
     }
 
     public void homeScreen() {
+        //add buttons to home
         homePanel.add(newPlayer);
         homePanel.add(returnPlayer);
         homePanel.add(leaderboard);
@@ -545,34 +546,39 @@ public class View extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Data data = (Data) arg;
+        //while quit is not true
         if (data.quitFlag) {
             this.quitGame(data.user.getCoins());
-        } else if (!data.loginFlag) {
+        } 
+        //keep trying to login
+        else if (!data.loginFlag) {
             this.nameField.setText("");
-//            if(data.reFlag)
-//            {
-            System.out.println(data.reFail);
+
+//            System.out.println(data.reFail);
+            //if name does not exist and trying login
             if (data.reFail) {
 //                System.out.println("WORK?");
                 this.failMessage.showMessageDialog(null, "Name does not exist", "Invalid Name", JOptionPane.WARNING_MESSAGE);
-            } else {
+            } 
+            //if name exists and trying to create new 
+            else {
                 this.failMessage.showMessageDialog(null, "Name already exists", "Invalid Name", JOptionPane.WARNING_MESSAGE);
             }
-//            }
-//            if(data.newFlag)
-//            {
-
-//                this.failMessage.showMessageDialog(null, "Name already exists");
-//            }
-        } else {
-            //main loop
+            
+        } 
+        //main loop
+        else {
+            //while user has coins and not quitting
             if (data.user.getCoins() > 0 && !data.quitFlag) {
+                //keeping looping 
                 do {
+                    //get bets
                     if (!data.betFinish) {
                         System.out.println("BETTING-----------");
-                        //betting
+                        
                         this.bettingScreen(data.user);
                     }
+                    //start game
                     if (data.gameStart) {
                         //start game
                         System.out.println("GAME START-----------");
@@ -582,101 +588,90 @@ public class View extends JFrame implements Observer {
                         standButton.setEnabled(true);
                         doubleButton.setEnabled(true);
                     }
+                    //play game 
 
-//                        if(data.scoreChanged)
-//                        {
-////                            System.out.println("DEALER SCORE CHANGED HERE\n");
-//                            dealerScore.setText("Dealer: " + data.dealerScore);
-//                            userScore.setText("Dealer: " + data.userScore);
-//                            
-//                            this.revalidate();
-//                            this.repaint();
-//                            data.scoreChanged = false;
-//                        }
+                    //after game is finished
                     if (data.gameFinish && data.betFinish) {
                         hitButton.setEnabled(false);
                         standButton.setEnabled(false);
                         doubleButton.setEnabled(false);
-                        System.out.println("GAME FINISH--------");
+//                        System.out.println("GAME FINISH--------");
 //                            System.out.println("game stop");
+                        //if lose
                         if (data.win == 2) {
                             //minus coins
                             System.out.println("minus");
                             status = 2;
+                            //show bust on end screen
                             if (data.bust) {
                                 status = 4;
                             }
-
+                            //if player doubled pot minus 2x
                             if (data.doub) {
                                 System.out.println("minus doub");
                                 double multipot = data.pot * 2;
                                 System.out.println(multipot);
                                 data.user.coins -= multipot;
-                            } else {
+                            } 
+                            //minus normal pot
+                            else {
                                 data.user.coins -= data.pot;
-                            }
-//                                addButtons();
-//                                loseScreen();
-
+                            }                               
+                        //if draw
                         } else if (data.win == 3) {
-                            //double coins
+                            
                             status = 3;
-                            System.out.println("draw");
+//                            System.out.println("draw");
 
-//                                addButtons();
-//                                blackjackScreen();
-//                                
-                        } else {
-                            System.out.println("win");
+                               
+                        } 
+                        //if win
+                        else {
+//                            System.out.println("win");
                             status = 1;
+                            //if player doubled
                             if (data.doub) {
-                                System.out.println("doub");
+//                                System.out.println("doub");
                                 double multipot = data.pot * 2;
                                 System.out.println(multipot);
                                 data.user.coins += multipot;
-                            } else if (data.blackjack) {
+                            } 
+                            //if player hits blackjack
+                            else if (data.blackjack) {
                                 status = 5;
-                                System.out.println("blackjack");
+//                                System.out.println("blackjack");
                                 double multipot = data.pot * 1.5;
                                 System.out.println(multipot);
                                 data.user.coins += multipot;
                             } 
-                            else if(data.doub && data.blackjack)
-                            {
-                                System.out.println("doub and black");
-                                double multipot = data.pot * 3.5;
-                                System.out.println(multipot);
-                                data.user.coins += multipot;
-                            }
+                            //normal win
                             else {
                                 data.user.coins += data.pot;
                             }        
                         }
-                        
+                        //add restart and quit game buttons
                         addButtons(status);
 
-//                            //restart
-//                            this.restartScreen();
-//                            
+
                         
 
                         
                     }
-
+                //keep looping while restart is false
+                //if retart is clicked check for quit game then make restat false again
                 } while (!data.restart);
             }
             if (data.user.getCoins() == 0) {
+                //quit game
                 this.stopMessage.showMessageDialog(null, "Insufficient coins to play.", "Stopping game", JOptionPane.WARNING_MESSAGE);
-                //end game
+                this.quitGame(0);
+                
             }
+            //quit game screen
             if (data.quitFlag) {
                 this.quitGame(data.userScore);
             }
         }
-//            System.out.println("GAME IS NOW FINSIHED");
-//            if
-//            {
-//                System.out.println("Insufficient coins");
-//            }
+  
     }
 }

@@ -5,7 +5,7 @@
  */
 package blackjack2;
 
-import blackjack.*;
+
 
 /**
  *
@@ -20,9 +20,9 @@ public class MVCRunner {
     public MVCRunner() {
         Model myModel = new Model();
         View myView = new View();
-//        myModel.addObserver(myView);
         
         Controller myController = new Controller(myView, myModel);
-        myModel.addObserver(myView); // Build connection between the view and the model.
+        // Build connection between the view and the model.
+        myModel.addObserver(myView); 
     }
 }

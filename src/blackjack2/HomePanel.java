@@ -9,7 +9,7 @@ package blackjack2;
  *
  * @author greay
  */
-import blackjack.*;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
