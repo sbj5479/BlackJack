@@ -33,12 +33,14 @@ public class Controller implements ActionListener {
     public JLabel randomLabel = null;
 
     public Controller(View view, Model model) {
+        //instantiate view, model and actionlistener for view
         this.view = view;
         this.model = model;
         this.view.addActionListener(this);
 
     }
 
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         //get button
@@ -53,248 +55,269 @@ public class Controller implements ActionListener {
 
         //if button is:
         switch (command) {
-            //login
+            //home screen
             case "New Player":
+                //new login screen
                 this.view.newLoginScreen();
                 break;
                 
             case "Returning Player":
+                //old user login screen
                 this.view.reLoginScreen();
                 break;
+            
                 
-            case "Instructions":
-                this.view.showInstructions();
-                break;
-                
-            case "X":
+            case "Exit":
+                //quit screen
                 model.quitGame();
                 break;
 
             case "Leaderboard":
+                //get top 5 scores and names
                 ArrayList<Player> top5 = this.model.getTopScores();
-                view.first.setText(top5.get(0).getName() + " " + top5.get(0).getCoins());
-                view.second.setText(top5.get(1).getName() + " " + top5.get(1).getCoins());
-                view.third.setText(top5.get(2).getName() + " " + top5.get(2).getCoins());
-                view.fourth.setText(top5.get(3).getName() + " " + top5.get(3).getCoins());
-                view.fifth.setText(top5.get(4).getName() + " " + top5.get(4).getCoins());
+                //set labels to names + scores
+                view.getFirst().setText(top5.get(0).getName() + " " + top5.get(0).getCoins());
+                view.getSecond().setText(top5.get(1).getName() + " " + top5.get(1).getCoins());
+                view.getThird().setText(top5.get(2).getName() + " " + top5.get(2).getCoins());
+                view.getFourth().setText(top5.get(3).getName() + " " + top5.get(3).getCoins());
+                view.getFifth().setText(top5.get(4).getName() + " " + top5.get(4).getCoins());
+                //leaderboard screen
                 this.view.leaderboardScreen();
                 break;
                 
             case "close":
+                //back to home screen after leaderboard
                 this.view.homeScreen();
                 break;
                 
-            case "back":
-                this.view.homeScreen();
-                break;
+            
 
             
             //login pages
             case "login":
-                username = this.view.nameField.getText();
+                //check if name in field is contained in database
+                username = this.view.getNameField().getText();
                 this.model.checkName(username);
                 break;
                 
             case "create":
-                username = this.view.nameField.getText();
+                //check if name is not in database
+                username = this.view.getNameField().getText();
                 this.model.newName(username);
                 break;
+                
+            case "Instructions":
+                //instructions message
+                this.view.showInstructions();
+                break;
 
-            //switch button
+            //switch to new login screen
             case "CREATE":
+                //new login screen
                 this.view.newLoginScreen();
                 break;
 
-            //switch button
+            //switch to old login screen
             case "LOGIN":
+                //old login screen
                 this.view.reLoginScreen();
+                break;
+                
+            case "back":
+                //back to home screen from either login screen
+                this.view.homeScreen();
                 break;
 
             //betting
             case "$1":
-                text = view.bank.getText();
+                //get string of old bank value
+                text = view.getBank().getText();
+                //keep only numbers
                 number = text.replaceAll("[^0-9]", "");
+                //convert to an integer
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.addFunds(1, bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
-
+                //set text of new bank and new pot after button click
+                this.view.getBank().setText("Bank: $" + this.model.addFunds(1, bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
+                //disable buttons if insufficient funds
                 if (bank - 1 < 100) {
-                    view.add100.setEnabled(false);
+                    view.getAdd100().setEnabled(false);
                 }
                 if (bank - 1 < 50) {
-                    view.add50.setEnabled(false);
+                    view.getAdd50().setEnabled(false);
                 }
                 if (bank - 1 < 25) {
-                    view.add25.setEnabled(false);
+                    view.getAdd25().setEnabled(false);
                 }
                 if (bank - 1 < 10) {
-                    view.add10.setEnabled(false);
+                    view.getAdd10().setEnabled(false);
                 }
                 if (bank - 1 < 5) {
-                    view.add5.setEnabled(false);
+                    view.getAdd5().setEnabled(false);
                 }
                 if (bank - 1 == 0) {
-                    view.add1.setEnabled(false);
-                    view.allIn.setEnabled(false);
+                    view.getAdd1().setEnabled(false);
+                    view.getAllIn().setEnabled(false);
                 }
                 break;
                 
             case "$5":
-                text = view.bank.getText();
+                text = view.getBank().getText();
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.addFunds(5, bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
+                this.view.getBank().setText("Bank: $" + this.model.addFunds(5, bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
 
                 if (bank - 5 < 100) {
-                    view.add100.setEnabled(false);
+                    view.getAdd100().setEnabled(false);
                 }
                 if (bank - 5 < 50) {
-                    view.add50.setEnabled(false);
+                    view.getAdd50().setEnabled(false);
                 }
                 if (bank - 5 < 25) {
-                    view.add25.setEnabled(false);
+                    view.getAdd25().setEnabled(false);
                 }
                 if (bank - 5 < 10) {
-                    view.add10.setEnabled(false);
+                    view.getAdd10().setEnabled(false);
                 }
                 if (bank - 5 < 5) {
-                    view.add5.setEnabled(false);
+                    view.getAdd5().setEnabled(false);
                 }
                 if (bank - 5 == 0) {
-                    view.add1.setEnabled(false);
-                    view.allIn.setEnabled(false);
+                    view.getAdd1().setEnabled(false);
+                    view.getAllIn().setEnabled(false);
                 }
                 break;
                 
             case "$10":
-                text = view.bank.getText();
+                text = view.getBank().getText();
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.addFunds(10, bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
+                this.view.getBank().setText("Bank: $" + this.model.addFunds(10, bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
 
                 if (bank - 10 < 100) {
-                    view.add100.setEnabled(false);
+                    view.getAdd100().setEnabled(false);
                 }
                 if (bank - 10 < 50) {
-                    view.add50.setEnabled(false);
+                    view.getAdd50().setEnabled(false);
                 }
                 if (bank - 10 < 25) {
-                    view.add25.setEnabled(false);
+                    view.getAdd25().setEnabled(false);
                 }
                 if (bank - 10 < 10) {
-                    view.add10.setEnabled(false);
+                    view.getAdd10().setEnabled(false);
                 }
                 if (bank - 10 < 5) {
-                    view.add5.setEnabled(false);
+                    view.getAdd5().setEnabled(false);
                 }
                 if (bank - 10 == 0) {
-                    view.add1.setEnabled(false);
-                    view.allIn.setEnabled(false);
+                    view.getAdd1().setEnabled(false);
+                    view.getAllIn().setEnabled(false);
                 }
                 break;
                 
             case "$25":
-                text = view.bank.getText();
+                text = view.getBank().getText();
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.addFunds(25, bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
+                this.view.getBank().setText("Bank: $" + this.model.addFunds(25, bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
 
                 if (bank - 25 < 100) {
-                    view.add100.setEnabled(false);
+                    view.getAdd100().setEnabled(false);
                 }
                 if (bank - 25 < 50) {
-                    view.add50.setEnabled(false);
+                    view.getAdd50().setEnabled(false);
                 }
                 if (bank - 25 < 25) {
-                    view.add25.setEnabled(false);
+                    view.getAdd25().setEnabled(false);
                 }
                 if (bank - 25 < 10) {
-                    view.add10.setEnabled(false);
+                    view.getAdd10().setEnabled(false);
                 }
                 if (bank - 25 < 5) {
-                    view.add5.setEnabled(false);
+                    view.getAdd5().setEnabled(false);
                 }
                 if (bank - 25 == 0) {
-                    view.add1.setEnabled(false);
-                    view.allIn.setEnabled(false);
+                    view.getAdd1().setEnabled(false);
+                    view.getAllIn().setEnabled(false);
                 }
                 break;
                 
             case "$50":
-                text = view.bank.getText();
+                text = view.getBank().getText();
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.addFunds(50, bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
+                this.view.getBank().setText("Bank: $" + this.model.addFunds(50, bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
 
                 if (bank - 50 < 100) {
-                    view.add100.setEnabled(false);
+                    view.getAdd100().setEnabled(false);
                 }
                 if (bank - 50 < 50) {
-                    view.add50.setEnabled(false);
+                    view.getAdd50().setEnabled(false);
                 }
                 if (bank - 50 < 25) {
-                    view.add25.setEnabled(false);
+                    view.getAdd25().setEnabled(false);
                 }
                 if (bank - 50 < 10) {
-                    view.add10.setEnabled(false);
+                    view.getAdd10().setEnabled(false);
                 }
                 if (bank - 50 < 5) {
-                    view.add5.setEnabled(false);
+                    view.getAdd5().setEnabled(false);
                 }
                 if (bank - 50 == 0) {
-                    view.add1.setEnabled(false);
-                    view.allIn.setEnabled(false);
+                    view.getAdd1().setEnabled(false);
+                    view.getAllIn().setEnabled(false);
                 }
                 break;
                 
             case "$100":
-                text = view.bank.getText();
+                text = view.getBank().getText();
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.addFunds(100, bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
+                this.view.getBank().setText("Bank: $" + this.model.addFunds(100, bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
 
                 if (bank - 100 < 100) {
-                    view.add100.setEnabled(false);
+                    view.getAdd100().setEnabled(false);
                 }
                 if (bank - 100 < 50) {
-                    view.add50.setEnabled(false);
+                    view.getAdd50().setEnabled(false);
                 }
                 if (bank - 100 < 25) {
-                    view.add25.setEnabled(false);
+                    view.getAdd25().setEnabled(false);
                 }
                 if (bank - 100 < 10) {
-                    view.add10.setEnabled(false);
+                    view.getAdd10().setEnabled(false);
                 }
                 if (bank - 100 < 5) {
-                    view.add5.setEnabled(false);
+                    view.getAdd5().setEnabled(false);
                 }
                 if (bank - 100 == 0) {
-                    view.add1.setEnabled(false);
-                    view.allIn.setEnabled(false);
+                    view.getAdd1().setEnabled(false);
+                    view.getAllIn().setEnabled(false);
                 }
                 break;
                 
             case "ALL IN":
-                text = view.bank.getText();
+                text = view.getBank().getText();
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.addFunds(bank, bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
+                this.view.getBank().setText("Bank: $" + this.model.addFunds(bank, bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
+                
+                //starting game automatically
                 cardTracker = false;
                 model.finishBets();
-//                cardQueue = model.startGame();
                 cardQueue = model.startGame();
 
                 try {
@@ -305,40 +328,66 @@ public class Controller implements ActionListener {
                 break;
             
             case "reset":
-                text = view.bank.getText();
+                text = view.getBank().getText();
                 number = text.replaceAll("[^0-9]", "");
                 bank = Integer.valueOf(number);
 
-                this.view.bank.setText("Bank: $" + this.model.resetFunds(bank));
-                this.view.pot.setText("Pot: $" + model.data.pot);
+                this.view.getBank().setText("Bank: $" + this.model.resetFunds(bank));
+                this.view.getPot().setText("Pot: $" + model.data.pot);
                 
 
+                //set all buttons to enabled
+                view.getAdd100().setEnabled(true);
+
+                view.getAdd50().setEnabled(true);
+
+
+                view.getAdd25().setEnabled(true);
+
+                view.getAdd10().setEnabled(true);
+
+                view.getAdd5().setEnabled(true);
+
+                view.getAdd1().setEnabled(true);
+                view.getAllIn().setEnabled(true);
                 
-                    view.add100.setEnabled(true);
-               
-                    view.add50.setEnabled(true);
+                //check if they should be disabled again
+                    
+                if (bank - 100 < 100) {
+                view.getAdd100().setEnabled(false);
+                }
+                if (bank - 100 < 50) {
+                    view.getAdd50().setEnabled(false);
+                }
+                if (bank - 100 < 25) {
+                    view.getAdd25().setEnabled(false);
+                }
+                if (bank - 100 < 10) {
+                    view.getAdd10().setEnabled(false);
+                }
+                if (bank - 100 < 5) {
+                    view.getAdd5().setEnabled(false);
+                }
+                if (bank - 100 == 0) {
+                    view.getAdd1().setEnabled(false);
+                    view.getAllIn().setEnabled(false);
+                }
+                break;
+                    
+                   
                 
-                
-                    view.add25.setEnabled(true);
-               
-                    view.add10.setEnabled(true);
-                
-                    view.add5.setEnabled(true);
-                
-                    view.add1.setEnabled(true);
-                    view.allIn.setEnabled(true);
-                    break;
-                
-                
-            //game screen
+             
             case "PLAY":
+                //must have coins in the pot
                 if(model.data.pot == 0)
-                    view.noPotMessage.showMessageDialog(null, "No coins added to pot", "Cannot Play", JOptionPane.WARNING_MESSAGE);
+                    view.getNoPotMessage().showMessageDialog(null, "No coins added to pot", "Cannot Play", JOptionPane.WARNING_MESSAGE);
                 else
                 {
+                    //start the game
                     cardTracker = false;
                     model.finishBets();
                     cardQueue = model.startGame();
+                    //draw first 4 cards
                     try {
                         updateScores(cardQueue, 1);
                     } catch (IOException ex) {
@@ -346,11 +395,17 @@ public class Controller implements ActionListener {
                     }
                 }
                 break;
-
+                
+                
+                
+            //game screen
             case "HIT":
+                //draw a card
                 suit = model.drawCard();
-                view.doubleButton.setEnabled(false);
+                //disabled double button
+                view.getDoubleButton().setEnabled(false);
                 cardQueue.offer(suit);
+                //draw next card
                  {
                     try {
                         updateScores(cardQueue, 2);
@@ -361,7 +416,9 @@ public class Controller implements ActionListener {
                 break;
 
             case "STAND":
+                //start dealers game
                 cardQueue = model.dealerGame();
+                //draw cards from dealer game
                 try {
                     updateScores(cardQueue, 3);
                 } catch (IOException ex) {
@@ -370,10 +427,13 @@ public class Controller implements ActionListener {
                 break;
 
             case "DOUBLE":
+                //draw last card
                 suit = model.drawCard();
                 model.data.doub = true;
+                //start dealer game
                 model.data.startdealer = true;
                 cardQueue.offer(suit);
+                //draw user thrid card and dealers cards
                  {
                     try {
                         updateScores(cardQueue, 2);
@@ -384,6 +444,8 @@ public class Controller implements ActionListener {
                 break;
                 
             case "Main Menu":
+                //access back to main screen
+                //add current coins
                 model.addCoins();
                 model.restart();
                 view.homeScreen();
@@ -391,21 +453,20 @@ public class Controller implements ActionListener {
 
             //end of game
             case "play again":
+                //go to betting
+                //add current coins
                 model.addCoins();
                 model.restart();
-                view.statusLabel.setText("");
+                view.getStatusLabel().setText("");
                 break;
 
             case "end game":
+                //add current coins
                 model.addCoins();
+                //quit screen
                 model.quit();
                 break;
-                
-           
-                
-            //no default
-            default:
-                break;
+
         }
     }
     
@@ -414,8 +475,8 @@ public class Controller implements ActionListener {
     public void updateScores(Queue<String> queue, int status) throws IOException {
         
         //update dealer and user score text
-        view.dealerScore.setText("Dealer: " + model.data.dealerScore);
-        view.userScore.setText("User: " + model.data.userScore);
+        view.getDealerScore().setText("Dealer: " + model.data.dealerScore);
+        view.getUserScore().setText("User: " + model.data.userScore);
         BufferedImage cardImage = null;
         int origSize = queue.size();
         
@@ -432,14 +493,13 @@ public class Controller implements ActionListener {
                 subSuit = subSuit.strip();
                 subNum = subNum.strip();
 
-//                System.out.println("drawing a card");
                 //m = random card (after substring)
                 if (subSuit.equals("m")) {
                     //hidden card of dealer
                     randomImage = ImageIO.read(new File("./resources/random.jpg"));
                     randomLabel = new JLabel(new ImageIcon(randomImage));
                     
-                    view.topCardPanel.add(randomLabel);
+                    view.getTopCardPanel().add(randomLabel);
                 } else if (subSuit.equals("Diamonds")) {
                     switch (subNum) {
                         case "A":
@@ -492,20 +552,20 @@ public class Controller implements ActionListener {
                     if (status == 1) {
                         //add to dealers cards
                         if (cardTracker) {
-                            view.topCardPanel.add(picLabel);
+                            view.getTopCardPanel().add(picLabel);
                         } 
                         //add to users cards
                         else {
-                            view.bottomCardPanel.add(picLabel);
+                            view.getBottomCardPanel().add(picLabel);
                         }
                     } else if (status == 2) {
                         //add to users cards
 //                        System.out.println("ADDING CARD HERE");
-                        view.bottomCardPanel.add(picLabel);
+                        view.getBottomCardPanel().add(picLabel);
                     } else {
                         //remove hidden card and place new card
-                        view.topCardPanel.remove(randomLabel);
-                        view.topCardPanel.add(picLabel);
+                        view.getTopCardPanel().remove(randomLabel);
+                        view.getTopCardPanel().add(picLabel);
                     }
                 } else if (subSuit.equals("Spades")) {
                     switch (subNum) {
@@ -553,15 +613,15 @@ public class Controller implements ActionListener {
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     if (status == 1) {
                         if (cardTracker) {
-                            view.topCardPanel.add(picLabel);
+                            view.getTopCardPanel().add(picLabel);
                         } else {
-                            view.bottomCardPanel.add(picLabel);
+                            view.getBottomCardPanel().add(picLabel);
                         }
                     } else if (status == 2) {
-                        view.bottomCardPanel.add(picLabel);
+                        view.getBottomCardPanel().add(picLabel);
                     } else {
-                        view.topCardPanel.remove(randomLabel);
-                        view.topCardPanel.add(picLabel);
+                        view.getTopCardPanel().remove(randomLabel);
+                        view.getTopCardPanel().add(picLabel);
                     }
                 } else if (subSuit.equals("Clubs")) {
                     switch (subNum) {
@@ -609,15 +669,15 @@ public class Controller implements ActionListener {
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     if (status == 1) {
                         if (cardTracker) {
-                            view.topCardPanel.add(picLabel);
+                            view.getTopCardPanel().add(picLabel);
                         } else {
-                            view.bottomCardPanel.add(picLabel);
+                            view.getBottomCardPanel().add(picLabel);
                         }
                     } else if (status == 2) {
-                        view.bottomCardPanel.add(picLabel);
+                        view.getBottomCardPanel().add(picLabel);
                     } else {
-                        view.topCardPanel.remove(randomLabel);
-                        view.topCardPanel.add(picLabel);
+                        view.getTopCardPanel().remove(randomLabel);
+                        view.getTopCardPanel().add(picLabel);
                     }
                 } else {
                     switch (subNum) {
@@ -665,15 +725,15 @@ public class Controller implements ActionListener {
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
                     if (status == 1) {
                         if (cardTracker) {
-                            view.topCardPanel.add(picLabel);
+                            view.getTopCardPanel().add(picLabel);
                         } else {
-                            view.bottomCardPanel.add(picLabel);
+                            view.getBottomCardPanel().add(picLabel);
                         }
                     } else if (status == 2) {
-                        view.bottomCardPanel.add(picLabel);
+                        view.getBottomCardPanel().add(picLabel);
                     } else {
-                        view.topCardPanel.remove(randomLabel);
-                        view.topCardPanel.add(picLabel);
+                        view.getTopCardPanel().remove(randomLabel);
+                        view.getTopCardPanel().add(picLabel);
                     }
 
                 }
@@ -702,7 +762,6 @@ public class Controller implements ActionListener {
             subSuit = subSuit.strip();
             subNum = subNum.strip();
 
-//            System.out.println("drawing last card");
             if (subSuit.equals("Diamonds")) {
                 switch (subNum) {
                     case "A":
@@ -747,8 +806,8 @@ public class Controller implements ActionListener {
 
                 }
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.topCardPanel.remove(randomLabel);
-                view.topCardPanel.add(picLabel);
+                view.getTopCardPanel().remove(randomLabel);
+                view.getTopCardPanel().add(picLabel);
 
             } else if (subSuit.equals("Spades")) {
                 switch (subNum) {
@@ -795,8 +854,8 @@ public class Controller implements ActionListener {
                 }
 
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.topCardPanel.remove(randomLabel);
-                view.topCardPanel.add(picLabel);
+                view.getTopCardPanel().remove(randomLabel);
+                view.getTopCardPanel().add(picLabel);
             } else if (subSuit.equals("Clubs")) {
                 switch (subNum) {
                     case "A":
@@ -842,8 +901,8 @@ public class Controller implements ActionListener {
                 }
 
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.topCardPanel.remove(randomLabel);
-                view.topCardPanel.add(picLabel);
+                view.getTopCardPanel().remove(randomLabel);
+                view.getTopCardPanel().add(picLabel);
             } else {
                 switch (subNum) {
                     case "A":
@@ -889,13 +948,13 @@ public class Controller implements ActionListener {
                 }
 
                 JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                view.topCardPanel.remove(randomLabel);
-                view.topCardPanel.add(picLabel);
+                view.getTopCardPanel().remove(randomLabel);
+                view.getTopCardPanel().add(picLabel);
 
             }
             //update scores text
-            view.dealerScore.setText("Dealer: " + model.data.dealerScore);
-            view.userScore.setText("User: " + model.data.userScore);
+            view.getDealerScore().setText("Dealer: " + model.data.dealerScore);
+            view.getUserScore().setText("User: " + model.data.userScore);
             //check for win
             model.checkWin();
         } 
@@ -961,7 +1020,7 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.bottomCardPanel.add(picLabel);
+                    view.getBottomCardPanel().add(picLabel);
                 } else if (subSuit.equals("Spades")) {
                     switch (subNum) {
                         case "A":
@@ -1007,7 +1066,7 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.bottomCardPanel.add(picLabel);
+                    view.getBottomCardPanel().add(picLabel);
                 } else if (subSuit.equals("Clubs")) {
                     switch (subNum) {
                         case "A":
@@ -1053,7 +1112,7 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.bottomCardPanel.add(picLabel);
+                    view.getBottomCardPanel().add(picLabel);
                 } else {
                     switch (subNum) {
                         case "A":
@@ -1099,7 +1158,7 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.bottomCardPanel.add(picLabel);
+                    view.getBottomCardPanel().add(picLabel);
 
                 }
 
@@ -1118,7 +1177,7 @@ public class Controller implements ActionListener {
                 subNum = subNum.strip();
                 
                 //update dealers score
-                view.dealerScore.setText("Dealer: " + model.data.dealerScore);
+                view.getDealerScore().setText("Dealer: " + model.data.dealerScore);
 
                 if (subDealer.equals("Diamonds")) {
                     switch (subNum) {
@@ -1165,8 +1224,8 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.topCardPanel.remove(randomLabel);
-                    view.topCardPanel.add(picLabel);
+                    view.getTopCardPanel().remove(randomLabel);
+                    view.getTopCardPanel().add(picLabel);
 
                 } else if (subDealer.equals("Spades")) {
                     switch (subNum) {
@@ -1213,8 +1272,8 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.topCardPanel.remove(randomLabel);
-                    view.topCardPanel.add(picLabel);
+                    view.getTopCardPanel().remove(randomLabel);
+                    view.getTopCardPanel().add(picLabel);
                 } else if (subDealer.equals("Clubs")) {
                     switch (subNum) {
                         case "A":
@@ -1260,8 +1319,8 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.topCardPanel.remove(randomLabel);
-                    view.topCardPanel.add(picLabel);
+                    view.getTopCardPanel().remove(randomLabel);
+                    view.getTopCardPanel().add(picLabel);
                 } else {
                     switch (subNum) {
                         case "A":
@@ -1307,8 +1366,8 @@ public class Controller implements ActionListener {
                     }
 
                     JLabel picLabel = new JLabel(new ImageIcon(cardImage));
-                    view.topCardPanel.remove(randomLabel);
-                    view.topCardPanel.add(picLabel);
+                    view.getTopCardPanel().remove(randomLabel);
+                    view.getTopCardPanel().add(picLabel);
 
                 }
             }

@@ -18,6 +18,7 @@ public class MVCRunner {
     }
 
     public MVCRunner() {
+        //instantiate the model view and controller
         Model myModel = new Model();
         View myView = new View();
         
