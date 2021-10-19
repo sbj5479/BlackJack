@@ -43,7 +43,7 @@ public class Deck {
             }
             
         }
-        System.out.println("Shuffling deck");
+//        System.out.println("Shuffling deck");
     }
     //draw a random card
     public void draw(){

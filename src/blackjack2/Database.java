@@ -72,25 +72,19 @@ public class Database {
 //                System.out.println("found user");
                 //create user
                 int pCoins = rs.getInt("coins");
-//                System.out.println(pCoins);
                 data.user = new User(username, pCoins, true);
 
-                /**
-                 * If the username exists in the USERINFO table, and the
-                 * password is correct, change the value of relating attributes
-                 * of data. Otherwise, keep loginFlag as false.
-                 */
+          
                 data.loginFlag = true;
                 data.reFail = false;
 
             } else {
                 //user does not exist
-                System.out.println("no user");
+//                System.out.println("no user");
                 data.loginFlag = false;
                 data.reFail = true;
             }
             rs.close();
-//            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -117,7 +111,6 @@ public class Database {
             } 
             //user does exist
             else {
-//                System.out.println("TEST");
                 
                 data.loginFlag = false;
                 data.reFail = false;
@@ -125,7 +118,6 @@ public class Database {
             }
 
             rs.close();
-//            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -238,8 +230,7 @@ public class Database {
         //instantiate variables
 
         int coins = a.getCoins();
-        String name = a.getName();
-//        
+        String name = a.getName();  
         Statement statement;
         try {
             statement = connection.createStatement();
